@@ -1,0 +1,9 @@
+{
+  "predef":
+    [
+      "require", "module", "console", "process", "global", "window",
+      "angular",
+      "it", "describe", "beforeEach", "inject", "expect"
+    ],
+  "globalstrict": true
+}
