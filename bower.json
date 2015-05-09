@@ -1,0 +1,22 @@
+{
+  "name": "Vegalite UI",
+  "version": "0.6.0",
+  "homepage": "https://github.com/uwdata/vegalite-ui",
+  "authors": [
+    "Interactive Data Lab (http://idl.cs.washington.edu)"
+  ],
+  "description": "Angular Components for Graphical User Interface based on Vegalite Visualization Grammar",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "BSD-3-Clause",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
