@@ -4,55 +4,67 @@ var datasets = [{
   name: 'Barley',
   url: 'data/barley.json',
   id: 'barley',
-
+  group: 'sample'
 },{
   name: 'Cars',
   url: 'data/cars.json',
-  id: 'cars'
+  id: 'cars',
+  group: 'sample'
 },{
   name: 'Crimea',
   url: 'data/crimea.json',
-  id: 'crimea'
+  id: 'crimea',
+  group: 'sample'
 },{
   name: 'Driving',
   url: 'data/driving.json',
-  id: 'driving'
+  id: 'driving',
+  group: 'sample'
 },{
   name: 'Iris',
   url: 'data/iris.json',
-  id: 'iris'
+  id: 'iris',
+  group: 'sample'
 },{
   name: 'Jobs',
   url: 'data/jobs.json',
-  id: 'jobs'
+  id: 'jobs',
+  group: 'sample'
 },{
   name: 'Population',
   url: 'data/population.json',
-  id: 'population'
+  id: 'population',
+  group: 'sample'
 },{
   name: 'Movies',
   url: 'data/movies.json',
-  id: 'movies'
+  id: 'movies',
+  group: 'sample'
 },{
   name: 'Birdstrikes',
   url: 'data/birdstrikes.json',
-  id: 'birdstrikes'
+  id: 'birdstrikes',
+  group: 'sample'
 },{
   name: 'Burtin',
   url: 'data/burtin.json',
-  id: 'burtin'
+  id: 'burtin',
+  group: 'sample'
 },{
   name: 'Budget 2016',
   url: 'data/budget.json',
-  id: 'budget'
+  id: 'budget',
+  group: 'sample'
 },{
   name: 'Climate Normals',
   url: 'data/climate.json',
-  id: 'climate'
+  id: 'climate',
+  group: 'sample'
 },{
   name: 'Campaigns',
   url: 'data/weball26.json',
-  id: 'weball26'
+  id: 'weball26',
+  group: 'sample'
 }];
 
 function getNameMap(dataschema) {
@@ -63,11 +75,12 @@ function getNameMap(dataschema) {
 }
 
 angular.module('vlui')
-  .factory('Dataset', function($http, Alerts, _, Papa, dl, vl) {
+  .factory('Dataset', function($http, $q, Alerts, _, Papa, dl, vl) {
     var Dataset = {};
 
-    Dataset.datasets = datasets;
-    Dataset.dataset = datasets[1];
+    Dataset.datasets = undefined;
+    Dataset.currentDataset = undefined;  // dataset before update
+    Dataset.dataset = undefined;
     Dataset.dataschema = [];
     Dataset.dataschema.byName = {};
     Dataset.stats = {};
@@ -92,16 +105,6 @@ angular.module('vlui')
       schema = dl.stablesort(schema, order || vl.field.order.typeThenName, vl.field.order.name);
 
       schema.push(vl.field.count());
-
-      schema.forEach(function(field) {
-        // if fewer than 2% of values or unique, assume the field to be ordinal,
-        // or <= 7 unique values
-        var profile = stats[field.name];
-        if (profile !== undefined && (field.type === 'Q' && profile.distinct <= 20 &&
-              (profile.distinct < (profile.count - profile.numNulls)/50 || profile.distinct <= 7))) {
-          field.type = 'O';
-        }
-      });
       return schema;
     };
 
@@ -139,9 +142,24 @@ angular.module('vlui')
           }
         }
 
+        console.log(Dataset.data);
+
+        Dataset.currentDataset = dataset;
         Dataset.stats = Dataset.getStats(Dataset.data);
         Dataset.dataschema = Dataset.getSchema(Dataset.data, Dataset.stats);
         Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
+      });
+    };
+
+    // sets datasets and calls update
+    Dataset.initialize = function() {
+      return $q(function(resolve, reject) {
+        Dataset.datasets = datasets;
+        Dataset.dataset = datasets[1];
+
+        Dataset.update(Dataset.dataset).then(function() {
+          resolve();
+        });
       });
     };
 
@@ -150,6 +168,8 @@ angular.module('vlui')
         dataset.id = dataset.url;
       }
       datasets.push(dataset);
+
+      return dataset;
     };
 
     return Dataset;
