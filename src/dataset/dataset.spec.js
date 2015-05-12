@@ -18,9 +18,8 @@ describe('Service: Dataset', function() {
   }));
 
   it('datasets should be there', function() {
-    dataset.initialize().then(function() {
-      expect(dataset.datasets).to.be.ok();
-      expect(dataset.datasets.length).to.equal(13);
-    });
+    expect(dataset.dataset).to.be.ok;
+    expect(dataset.datasets).to.be.ok;
+    expect(dataset.datasets.length).to.equal(13);
   });
 });

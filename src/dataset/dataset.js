@@ -78,9 +78,9 @@ angular.module('vlui')
   .factory('Dataset', function($http, $q, Alerts, _, Papa, dl, vl) {
     var Dataset = {};
 
-    Dataset.datasets = undefined;
+    Dataset.datasets = datasets;
+    Dataset.dataset = datasets[1];
     Dataset.currentDataset = undefined;  // dataset before update
-    Dataset.dataset = undefined;
     Dataset.dataschema = [];
     Dataset.dataschema.byName = {};
     Dataset.stats = {};
@@ -142,24 +142,10 @@ angular.module('vlui')
           }
         }
 
-        console.log(Dataset.data);
-
         Dataset.currentDataset = dataset;
         Dataset.stats = Dataset.getStats(Dataset.data);
         Dataset.dataschema = Dataset.getSchema(Dataset.data, Dataset.stats);
         Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
-      });
-    };
-
-    // sets datasets and calls update
-    Dataset.initialize = function() {
-      return $q(function(resolve, reject) {
-        Dataset.datasets = datasets;
-        Dataset.dataset = datasets[1];
-
-        Dataset.update(Dataset.dataset).then(function() {
-          resolve();
-        });
       });
     };
 
