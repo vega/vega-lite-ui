@@ -1,2 +1,2 @@
 # vegalite-ui
-Common UI Library that powers Polestar and Voyager
+Common UI Library for [Polestar](https://github.com/uwdata/polestar) and [Voyager](https://github.com/uwdata/voyager).
