@@ -120,10 +120,20 @@ angular.module('vlui')
 
     // update the schema and stats
     Dataset.update = function(dataset) {
+      if (dataset.values) {
+        return $q(function(resolve, reject) {
+          Dataset.type = undefined;
+          Dataset.updateFromData(dataset, dataset.values);
+          resolve();
+        });
+      }
+
       return $http.get(dataset.url, {cache: true}).then(function(response) {
+        var data;
+
         // first see whether the data is JSON, otherwise try to parse CSV
         if (_.isObject(response.data)) {
-           Dataset.data = response.data;
+           data = response.data;
            Dataset.type = 'json';
         } else {
            var result = Papa.parse(response.data, {
@@ -132,7 +142,7 @@ angular.module('vlui')
           });
 
           if (result.errors.length === 0) {
-            Dataset.data = result.data;
+            data = result.data;
             Dataset.type = 'csv';
           } else {
             _.each(result.errors, function(err) {
@@ -142,11 +152,17 @@ angular.module('vlui')
           }
         }
 
-        Dataset.currentDataset = dataset;
-        Dataset.stats = Dataset.getStats(Dataset.data);
-        Dataset.dataschema = Dataset.getSchema(Dataset.data, Dataset.stats);
-        Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
+        Dataset.updateFromData(dataset, data);
       });
+    };
+
+    Dataset.updateFromData = function(dataset, data) {
+      Dataset.data = data;
+
+      Dataset.currentDataset = dataset;
+      Dataset.stats = Dataset.getStats(Dataset.data);
+      Dataset.dataschema = Dataset.getSchema(Dataset.data, Dataset.stats);
+      Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
     };
 
     Dataset.add = function(dataset) {
