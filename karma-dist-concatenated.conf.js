@@ -27,7 +27,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/lodash/lodash.js',
-      'bower_components/vegalite/vegalite.js',
+      'bower_components/vega-lite/vega-lite.js',
       'bower_components/datalib/datalib.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-cookies/angular-cookies.js',
