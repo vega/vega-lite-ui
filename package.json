@@ -3,9 +3,13 @@
   "version": "0.1.1",
   "repository": "http://github.com/uwdata/vega-lite-ui",
   "author": {
-    "name": "Interactive Data Lab",
-    "email": "kanitw@gmail.com"
+    "name": "UW Interactive Data Lab",
+    "url": "http://idl.cs.washington.edu"
   },
+  "collaborators": [
+    "Dominik Moritz <domoritz@cs.washington.edu> (http://domoritz.de)",
+    "Kanit Wongsuphasawat <kanitw@gmail.com> (http://kanitw.yellowpigz.com)"
+  ],
   "dependencies": {
     "gulp-filter": "^2.0.2",
     "wiredep": "^2.2.2"
