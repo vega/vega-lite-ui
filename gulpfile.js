@@ -39,10 +39,10 @@ gulp.task('build', function() {
     // .pipe(filter('-'+path.join(sourceDirectory, '/**/*.spec.js')))
     .pipe(plumber())
     .pipe(concat('vlui.js'))
-    .pipe(gulp.dest('./dist/'))
+    .pipe(gulp.dest('.'))
     .pipe(uglify())
     .pipe(rename('vlui.min.js'))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('.'));
 });
 
 /**

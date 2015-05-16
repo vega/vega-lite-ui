@@ -1,6 +1,6 @@
 {
   "name": "vega-lite-ui",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "homepage": "https://github.com/uwdata/vega-lite-ui",
   "authors": [
     "Interactive Data Lab (http://idl.cs.washington.edu)"
@@ -12,7 +12,7 @@
     "node"
   ],
   "main": [
-    "dist/vlui.js"
+    "vlui.js"
   ],
   "license": "BSD-3-Clause",
   "ignore": [
