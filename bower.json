@@ -34,6 +34,7 @@
     "angular-resource": ">=1.2.0",
     "angular-cookies": ">=1.2.0",
     "angular-sanitize": ">=1.2.0",
-    "vega-lite": "~0.6.8"
+    "vega-lite": "~0.6.8",
+    "angular-local-storage": "~0.2.1"
   }
 }

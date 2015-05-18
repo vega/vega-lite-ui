@@ -1,9 +1,11 @@
 {
-  "predef":
-    [
-      "require", "module", "console", "process", "global", "window",
-      "angular",
-      "it", "describe", "beforeEach", "inject", "expect"
-    ],
+	"undef":   true,
+  "unused":  true,
+  "eqnull":  true,
+  "freeze":  true,
+  "noarg":   true,
+  "node":    true,
+  "browser": true,
+  "mocha": true,
   "globalstrict": true
 }
