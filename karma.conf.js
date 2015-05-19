@@ -1,18 +1,79 @@
 'use strict';
 
+var wiredep = require('wiredep');
+
+var bowerDeps = wiredep({
+  directory: 'bower_components',
+  dependencies: true,
+  devDependencies: true
+}); 
+
+var src = 'src';
+
+var testFiles = bowerDeps.js.concat([
+  src + '/index.js',
+  src + '/**/*.spec.js',
+  src + '/**/*.js',
+  src + '/vendor/*.js',
+  src + '/partials/templateCacheHtml.js'
+]);
+
 module.exports = function(config) {
   config.set({
-    autoWatch : false,
 
-    frameworks: ['mocha'],
+    // base path that will be used to resolve all patterns (eg. files, exclude)
+    basePath: '',
 
-    browsers : ['PhantomJS'],
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: ['mocha', 'chai-jquery', 'jquery-1.8.3', 'sinon-chai'],
 
+    plugins: [
+      'karma-mocha',
+      'karma-chai',
+      'karma-sinon-chai',
+      'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
+      'karma-jquery',
+      'karma-chai-jquery',
+      'karma-spec-reporter'
+    ],
+
+    // list of files / patterns to load in the browser
+    files: testFiles,
+
+    // list of files to exclude
+    exclude: [],
+
+    // preprocess matching files before serving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {},
+
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['spec'],
+
+    // web server port
+    port: 9875,
+
+    // enable / disable colors in the output (reporters and logs)
     colors: true,
 
-    plugins : [
-        'karma-phantomjs-launcher',
-        'karma-mocha'
-    ]
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
+
+
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: true,
+
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['PhantomJS'],
+
+    // Continuous Integration mode
+    // if true, Karma captures browsers, runs the tests and exits
+    singleRun: false
   });
 };
