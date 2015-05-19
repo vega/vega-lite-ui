@@ -29,12 +29,12 @@
     "lodash": "~3.8.0",
     "datalib": "~1.0.11",
     "angular-mocks": ">=1.2.0",
-    "angular-scenario": ">=1.2.0",
     "angular": ">=1.2.0",
     "angular-resource": ">=1.2.0",
     "angular-cookies": ">=1.2.0",
     "angular-sanitize": ">=1.2.0",
     "vega-lite": "~0.6.8",
-    "angular-local-storage": "~0.2.1"
+    "angular-local-storage": "~0.2.1",
+    "angular-websql": "~1.0.2"
   }
 }

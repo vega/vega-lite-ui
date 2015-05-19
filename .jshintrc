@@ -7,5 +7,13 @@
   "node":    true,
   "browser": true,
   "mocha": true,
-  "globalstrict": true
+  "globalstrict": true,
+  // to allow myvalue.should.be.true style
+  "expr": true,
+  "globals": {
+    "angular": false,
+    "inject": false,
+    // assert
+    "expect": false
+  }
 }

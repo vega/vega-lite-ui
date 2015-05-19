@@ -12,11 +12,12 @@ var src = 'src';
 
 var testFiles = bowerDeps.js.concat([
   src + '/index.js',
-  src + '/**/*.spec.js',
   src + '/**/*.js',
-  src + '/vendor/*.js',
-  src + '/partials/templateCacheHtml.js'
+  // src + '/vendor/*.js',
+  // src + '/partials/templateCacheHtml.js'
 ]);
+
+// console.log('testFiles', testFiles);
 
 module.exports = function(config) {
   config.set({
