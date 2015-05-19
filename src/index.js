@@ -6,12 +6,17 @@ angular.module('vlui', [
   'angular-websql'
   ])
   .constant('_', window._)
+  // datalib, vegalite, vega
+  .constant('dl', window.dl)
   .constant('vl', window.vl)
   .constant('vg', window.vg)
+  // Papa
   .constant('Papa', window.Papa)
-  .constant('dl', window.dl)
-  .constant('Blob', window.Blob) // Papa
-  .constant('URL', window.URL) // Papa
+  .constant('Blob', window.Blob) 
+  .constant('URL', window.URL) 
+  // Drop
+  .constant('Drop', window.Drop)
+  // constants
   .constant('consts', {
     addCount: true, // add count field to Dataset.dataschema
     debug: true,
