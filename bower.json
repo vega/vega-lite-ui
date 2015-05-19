@@ -12,7 +12,8 @@
     "node"
   ],
   "main": [
-    "vlui.js"
+    "vlui.js",
+    "vlui.scss"
   ],
   "license": "BSD-3-Clause",
   "ignore": [

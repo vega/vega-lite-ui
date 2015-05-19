@@ -55,4 +55,14 @@ gulp.task('build', ['partials'], function() {
     .pipe($.uglify())
     .pipe($.rename('vlui.min.js'))
     .pipe(gulp.dest('.'));
+gulp.task('css', function() {
+  gulp.src([
+      path.join(sourceDirectory, '/index.scss'),
+      path.join(sourceDirectory, '/**/*.scss'),
+    ])
+  .pipe($.wrapper({
+    header: '// ====== ${filename} ====== \n'
+  }))
+  .pipe($.concat('vlui.scss'))
+  .pipe(gulp.dest('.'));
 });

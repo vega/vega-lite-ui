@@ -5,6 +5,7 @@
 .idea
 .project
 .settings
+.tmp
 
 # Ignore node stuff
 node_modules/
@@ -16,4 +17,4 @@ libpeerconnection.log
 
 # Bower components
 bower_components
-vlui*.js
+vlui*.*
