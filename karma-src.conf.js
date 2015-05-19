@@ -9,12 +9,9 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai-jquery', 'jquery-1.8.3'
-    , 'sinon-chai'
-    ],
+    frameworks: ['mocha', 'chai-jquery', 'jquery-1.8.3', 'sinon-chai'],
 
     plugins: [
       'karma-mocha',
