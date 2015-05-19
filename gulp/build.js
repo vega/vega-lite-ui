@@ -47,6 +47,9 @@ gulp.task('build', ['partials'], function() {
   gulp.src(sourceFiles)
     // .pipe(filter('-'+path.join(sourceDirectory, '/**/*.spec.js')))
     .pipe($.plumber())
+    .pipe($.iife({
+      useStrict: false
+    }))
     .pipe($.concat('vlui.js'))
     .pipe(gulp.dest('.'))
     .pipe($.uglify())
