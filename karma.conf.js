@@ -8,13 +8,14 @@ var bowerDeps = wiredep({
   devDependencies: true
 }); 
 
-var src = 'src';
+var src = 'src',
+  tmp = '.tmp';
 
 var testFiles = bowerDeps.js.concat([
   src + '/index.js',
   src + '/**/*.js',
-  // src + '/vendor/*.js',
-  // src + '/partials/templateCacheHtml.js'
+  src + '/vendor/*.js',
+  tmp + '/partials/templateCacheHtml.js'
 ]);
 
 // console.log('testFiles', testFiles);
