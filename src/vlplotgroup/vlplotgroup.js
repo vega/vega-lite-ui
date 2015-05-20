@@ -110,8 +110,6 @@ angular.module('vlui')
           constrainToWindow: true
         });
 
-        console.log('bind', Function.prototype.bind);
-
         scope.toggleSortClass = function(vlSpec) {
           var direction = vlSpec && vl.Encoding.toggleSort.direction(vlSpec),
             mode = vlSpec && vl.Encoding.toggleSort.mode(vlSpec);

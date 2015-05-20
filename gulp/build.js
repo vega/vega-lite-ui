@@ -44,10 +44,12 @@ gulp.task('build', ['partials', 'css'], function() {
   gulp.src(sourceFiles)
     // .pipe(filter('-'+path.join(sourceDirectory, '/**/*.spec.js')))
     .pipe($.plumber())
-    .pipe($.iife({
-      useStrict: false
-    }))
+    .pipe($.sourcemaps.init())
+      .pipe($.iife({
+        useStrict: false
+      }))
     .pipe($.concat('vlui.js'))
+    .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.'))
     .pipe($.uglify())
     .pipe($.rename('vlui.min.js'))
