@@ -1,0 +1,2051 @@
+;(function() {
+'use strict';
+/* globals window, angular */
+
+angular.module('vlui', [
+  'LocalStorageModule', 
+  'angular-websql'
+  ])
+  .constant('_', window._)
+  // datalib, vegalite, vega
+  .constant('dl', window.dl)
+  .constant('vl', window.vl)
+  .constant('vg', window.vg)
+  // Papa
+  .constant('Papa', window.Papa)
+  .constant('Blob', window.Blob) 
+  .constant('URL', window.URL) 
+  // Drop
+  .constant('Drop', window.Drop)
+  // constants
+  .constant('consts', {
+    addCount: true, // add count field to Dataset.dataschema
+    debug: true,
+    useUrl: true,
+    logging: false,
+    defaultConfigSet: 'large',
+    appId: 'vlui'
+  });
+  // .config(function(uiZeroclipConfigProvider) {
+  //   // config ZeroClipboard
+  //   uiZeroclipConfigProvider.setZcConf({
+  //     swfPath: 'bower_components/zeroclipboard/dist/ZeroClipboard.swf'
+  //   });
+  // });
+}());
+
+;(function() {
+angular.module("vlui").run(["$templateCache", function($templateCache) {$templateCache.put("bookmarklist/bookmarklist.html","<div class=\"modal\" ng-show=\"active\"><div class=\"wrapper\"><div class=\"vflex full-width full-height\" id=\"evs\" ng-if=\"active\"><div class=\"modal-header no-shrink card no-top-margin no-right-margin\"><div class=\"right\"><a ng-click=\"deactivate()\" class=\"right\">Close</a></div><h2 class=\"no-bottom-margin\">Bookmarks ({{ Bookmarks.length }})</h2><a ng-click=\"Bookmarks.clear()\"><i class=\"fa fa-trash-o\"></i> Clear all</a></div><div class=\"flex-grow-1 scroll-y\"><div ng-if=\"Bookmarks.length > 0\" class=\"vis-list hflex flex-wrap\"><vl-plot-group ng-repeat=\"chart in Bookmarks.dict | orderObjectBy : \'timeAdded\' : false\" class=\"wrapped-vl-plot-group\" chart=\"chart\" field-set=\"chart.fieldSet\" show-bookmark=\"true\" show-debug=\"consts.debug\" show-expand=\"false\" always-selected=\"true\" highlighted=\"highlighted\" ng-mouseover=\"(highlighted||{})[field.name] = true\" ng-mouseout=\"(highlighted||{})[field.name] = false\" overflow=\"true\" tooltip=\"true\"></vl-plot-group></div><div class=\"vis-list-empty\" ng-if=\"Bookmarks.length === 0\">You have no bookmarks</div></div></div></div></div>");
+$templateCache.put("fieldinfo/fieldinfo.html","<span class=\"field-info\"><span class=\"hflex full-width\" ng-click=\"clicked($event)\"><span class=\"type-caret\" ng-class=\"{active: !disableCountOrOCaret || (field.type!==\'O\' && field.aggr!==\'count\')}\"><i class=\"fa fa-caret-down\" ng-show=\"showCaret\"></i> <span class=\"type icon-small icon-type-{{typeNames[field.type]}}\" ng-show=\"showType\" title=\"{{typeNames[field.type]}}\">{{field.type}}</span></span> <span ng-if=\"field.aggr!==\'count\'\" class=\"field-info-text\"><span ng-if=\"func(field)\" class=\"field-func\" ng-class=\"{any: field._any}\">{{ func(field) }}</span><span class=\"field-name\" ng-class=\"{hasfunc: func(field), any: field._any}\">{{ field.name | underscore2space }}</span></span> <span ng-if=\"field.aggr===\'count\'\" class=\"field-count field-info-text\"><span class=\"field-name\">COUNT</span></span> <span class=\"no-shrink remove\" ng-show=\"showRemove\"><a class=\"remove-field\" ng-click=\"removeAction()\"><i class=\"fa fa-times\"></i></a></span> <span class=\"no-shrink info\" ng-show=\"showInfo\"><i ng-if=\"field.aggr !== \'count\' && field.type === \'O\'\" class=\"fa fa-info-circle\" tooltips=\"\" tooltip-size=\"small\" tooltip-content=\"<div class=\'tooltip-content\'> <strong>Name:</strong> {{field.name}}<br> <strong>Cardinality:</strong> {{stats.distinct | number}}<br> <strong>Min:</strong> {{stats.min}}<br> <strong>Max:</strong> {{stats.max}}<br> <strong>Max length:</strong> {{stats.maxlength | number}}<br> <strong>Sample:</strong> <span class=\'sample\'>{{stats.sample.join(\', \')}}</span> </div>\" tooltip-side=\"right\"></i> <i ng-if=\"field.aggr !== \'count\' && field.type === \'T\'\" class=\"fa fa-info-circle\" tooltips=\"\" tooltip-size=\"small\" tooltip-content=\"<div class=\'tooltip-content\'> <strong>Name:</strong> {{field.name}}<br> <strong>Cardinality:</strong> {{stats.distinct | number}}<br> <strong>Min:</strong> {{stats.min | date: short}}<br> <strong>Max:</strong> {{stats.max | date: short}}<br> <strong>Sample:</strong> <span class=\'sample\'>{{stats.sample.join(\', \')}}</span> </div>\" tooltip-side=\"right\"></i> <i ng-if=\"field.aggr !== \'count\' && field.type === \'Q\'\" class=\"fa fa-info-circle\" tooltips=\"\" tooltip-size=\"small\" tooltip-content=\"<div class=\'tooltip-content\'> <strong>Name:</strong> {{field.name}}<br> <strong>Cardinality:</strong> {{stats.distinct | number}}<br> <strong>Min:</strong> {{stats.min | number}}<br> <strong>Max:</strong> {{stats.max | number}}<br> <strong>Stdev:</strong> {{stats.stdev | number:2}}<br> <strong>Mean:</strong> {{stats.mean | number:2}}<br> <strong>Median:</strong> {{stats.median | number}}<br> <strong>Sample:</strong> <span class=\'sample\'>{{stats.sample.join(\', \')}}</span> </div>\" tooltip-side=\"right\"></i><i ng-if=\"field.aggr === \'count\'\" class=\"fa fa-info-circle\" tooltips=\"\" tooltip-size=\"small\" tooltip-content=\"<div class=\'tooltip-content\'> <strong>Count:</strong> {{count}} </div>\" tooltip-side=\"right\"></i></span></span></span>");
+$templateCache.put("vlplot/vlplot.html","<div class=\"vis\" id=\"vis-{{visId}}\" ng-class=\"{ fit: !alwaysScrollable && !overflow && (maxHeight && (!height || height <= maxHeight)) && (maxWidth && (!width || width <= maxWidth)), overflow: alwaysScrollable || overflow || (maxHeight && height && height > maxHeight) || (maxWidth && width && width > maxWidth), scroll: alwaysScrollable || unlocked || hoverFocus }\" ng-mousedown=\"unlocked=!thumbnail\" ng-mouseup=\"unlocked=false\" ng-mouseover=\"mouseover()\" ng-mouseout=\"mouseout()\"><div class=\"vis-tooltip\" ng-show=\"tooltipActive\"><table><tr ng-repeat=\"p in data\"><td class=\"key\">{{p[0]}}</td><td class=\"value\"><b ng-if=\"p.isNumber\">{{p[1]| number: 2}}</b> <b ng-if=\"!p.isNumber\">{{p[1]}}</b></td></tr></table></div></div>");
+$templateCache.put("vlplotgroup/vlplotgroup.html","<div class=\"vl-plot-group card vflex\"><div ng-show=\"showExpand || fieldSet || showBookmark || showToggle\" class=\"vl-plot-group-header full-width no-shrink\"><div class=\"field-set-info\"><field-info ng-repeat=\"field in fieldSet\" ng-if=\"fieldSet\" field=\"field\" show-type=\"true\" ng-class=\"{ selected: alwaysSelected || (isSelected && isSelected(field.name)), unselected: isSelected && !isSelected(field.name), highlighted: (highlighted||{})[field.name] }\" ng-mouseover=\"(highlighted||{})[field.name] = true\" ng-mouseout=\"(highlighted||{})[field.name] = false\"></field-info></div><div class=\"toolbox\"><a ng-show=\"consts.debug && showDebug\" class=\"command debug\"><i class=\"fa fa-wrench\"></i></a><div class=\"drop-container\"><div class=\"popup-menu popup-command no-shrink dev-tool\"><a class=\"command debug\" ui-zeroclip=\"\" zeroclip-model=\"chart.shorthand\">Copy Vls</a> <a class=\"command debug\" ui-zeroclip=\"\" zeroclip-model=\"chart.vlSpec | compactJSON\">Copy Vl</a> <a class=\"command debug\" ui-zeroclip=\"\" zeroclip-model=\"chart.vgSpec | compactJSON\">Copy Vg</a> <a class=\"command debug\" ng-href=\"{{ {type:\'vl\', encoding: chart.vlSpec} | reportUrl }}\" target=\"_blank\">Report Bad Render</a> <a ng-click=\"showFeature=!showFeature\" class=\"command debug\">{{chart.score}}</a><div ng-repeat=\"f in chart.scoreFeatures track by f.reason\">[{{f.score}}] {{f.reason}}</div></div></div><a ng-if=\"showMarkType\" class=\"command disabled\"><i class=\"fa fa-font\"></i> <i class=\"fa fa-line-chart\"></i> <i class=\"fa fa-area-chart\"></i> <i class=\"fa fa-bar-chart\"></i> <i class=\"fa fa-circle-o\"></i></a> <a ng-if=\"showLog && chart.vlSpec && log.support(chart.vlSpec, \'x\')\" class=\"command\" ng-click=\"log.toggle(chart.vlSpec, \'x\')\" ng-class=\"{active: log.active(chart.vlSpec, \'x\')}\"><i class=\"fa fa-long-arrow-right\"></i> <small>LOG X</small></a> <a ng-if=\"showLog && chart.vlSpec && log.support(chart.vlSpec, \'y\')\" class=\"command\" ng-click=\"log.toggle(chart.vlSpec, \'y\')\" ng-class=\"{active: log.active(chart.vlSpec, \'y\')}\"><i class=\"fa fa-long-arrow-up\"></i> <small>LOG Y</small></a> <a ng-show=\"showSort && chart.vlSpec && toggleSort.support(chart.vlSpec, Dataset.stats)\" class=\"command\" ng-click=\"toggleSort(chart.vlSpec)\"><i class=\"fa sort\" ng-class=\"toggleSortClass(chart.vlSpec)\"></i> <small ng-if=\"showLabel\">Sort</small></a> <a ng-if=\"showFilterNull && chart.vlSpec && toggleFilterNull.support(chart.vlSpec, Dataset.stats)\" class=\"command\" ng-click=\"toggleFilterNull(chart.vlSpec)\" ng-class=\"{active: chart.vlSpec && chart.vlSpec.cfg.filterNull.O}\"><i class=\"fa fa-filter\"></i> <small ng-if=\"showLabel\">Filter</small> <small>NULL</small></a> <a ng-if=\"showTranspose\" class=\"command\" ng-click=\"transpose()\"><i class=\"fa fa-refresh transpose\"></i> <small ng-if=\"showLabel\">Transpose</small></a> <a ng-if=\"showBookmark\" class=\"command\" ng-click=\"Bookmarks.toggle(chart)\" ng-class=\"{disabled: !chart.vlSpec.enc, active: Bookmarks.isBookmarked(chart.shorthand)}\"><i class=\"fa fa-bookmark\"></i> <small ng-if=\"showLabel\">Bookmark</small></a> <a ng-if=\"showExpand\" ng-click=\"expandAction()\" class=\"command\"><i class=\"fa fa-expand\"></i></a></div></div><div class=\"vl-plot-wrapper full-width vis-{{fieldSet.key}} flex-grow-1\"><vl-plot vl-spec=\"chart.vlSpec\" disabled=\"disabled\" field-set-key=\"chart.fieldSetKey\" is-in-list=\"isInList\" shorthand=\"chart.shorthand\" config-set=\"{{configSet||\'small\'}}\" max-height=\"maxHeight\" max-width=\"maxWidth\" overflow=\"overflow\" tooltip=\"tooltip\" rescale=\"rescale\" thumbnail=\"thumbnail\" always-scrollable=\"alwaysScrollable\"></vl-plot></div></div>");}]);
+}());
+
+;(function() {
+'use strict';
+
+angular.module('vlui')
+  .service('Alerts', function($timeout, _) {
+    var Alerts = {};
+
+    Alerts.alerts = [];
+
+    Alerts.add = function(msg, dismiss) {
+      var message = {msg: msg};
+      Alerts.alerts.push(message);
+      if (dismiss) {
+        $timeout(function() {
+          var index = _.findIndex(Alerts.alerts, message);
+          Alerts.closeAlert(index);
+        }, dismiss);
+      }
+    };
+
+    Alerts.closeAlert = function(index) {
+      Alerts.alerts.splice(index, 1);
+    };
+
+    return Alerts;
+  });
+}());
+
+;(function() {
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name vlui.directive:bookmarkList
+ * @description
+ * # bookmarkList
+ */
+angular.module('vlui')
+  .directive('bookmarkList', function (Bookmarks, consts) {
+    return {
+      templateUrl: 'bookmarklist/bookmarklist.html',
+      restrict: 'E',
+      replace: true,
+      scope: {
+        active:'=',
+        deactivate: '&',
+        highlighted: '='
+      },
+      link: function postLink(scope, element, attrs) {
+        // jshint unused:false
+        scope.Bookmarks = Bookmarks;
+        scope.consts = consts;
+      }
+    };
+  });
+}());
+
+;(function() {
+'use strict';
+
+/**
+ * @ngdoc service
+ * @name vlui.Bookmarks
+ * @description
+ * # Bookmarks
+ * Service in the vlui.
+ */
+angular.module('vlui')
+  .service('Bookmarks', function(_, vl, localStorageService, Logger) {
+    var Bookmarks = function() {
+      this.dict = {};
+      this.length = 0;
+    };
+
+    var proto = Bookmarks.prototype;
+
+    proto.updateLength = function() {
+      this.length = Object.keys(this.dict).length;
+    };
+
+    proto.save = function() {
+      localStorageService.set('bookmarks', this.dict);
+    };
+
+    proto.load = function() {
+      this.dict = localStorageService.get('bookmarks') || {};
+      this.updateLength();
+    };
+
+    proto.clear = function() {
+      this.dict = {};
+      this.updateLength();
+      this.save();
+
+      Logger.logInteraction(Logger.actions.BOOKMARKS_CLEAR);
+    };
+
+    proto.toggle = function(chart) {
+      var shorthand = chart.shorthand;
+
+      if (this.dict[shorthand]) {
+        this.remove(chart);
+      } else {
+        this.add(chart);
+      }
+    };
+
+    proto.add = function(chart) {
+      var shorthand = chart.shorthand;
+
+      console.log('adding', chart.vlSpec, shorthand);
+
+      chart.timeAdded = (new Date().getTime());
+
+      this.dict[shorthand] = _.cloneDeep(chart);
+      this.updateLength();
+      this.save();
+
+      Logger.logInteraction(Logger.actions.BOOKMARK_ADD, shorthand);
+    };
+
+    proto.remove = function(chart) {
+      var shorthand = chart.shorthand;
+
+      console.log('removing', chart.vlSpec, shorthand);
+
+      delete this.dict[shorthand];
+      this.updateLength();
+      this.save();
+
+      Logger.logInteraction(Logger.actions.BOOKMARK_REMOVE, shorthand);
+    };
+
+    proto.isBookmarked = function(shorthand) {
+      return shorthand in this.dict;
+    };
+
+    return new Bookmarks();
+  });
+}());
+
+;(function() {
+'use strict';
+
+// Service for the spec config.
+// We keep this separate so that changes are kept even if the spec changes.
+angular.module('vlui')
+  .factory('Config', function(vl, _) {
+    var Config = {};
+
+    Config.schema = vl.schema.schema.properties.config;
+    Config.dataschema = vl.schema.schema.properties.data;
+
+    Config.data = vl.schema.util.instantiate(Config.dataschema);
+    Config.config = vl.schema.util.instantiate(Config.schema);
+
+    Config.getConfig = function() {
+      return _.cloneDeep(Config.config);
+    };
+
+    Config.getData = function() {
+      return _.cloneDeep(Config.data);
+    };
+
+    Config.large = function() {
+      return {
+        singleWidth: 400,
+        singleHeight: 400,
+        largeBandMaxCardinality: 20
+      };
+    };
+
+    Config.small = function() {
+      return {};
+    };
+
+    Config.updateDataset = function(dataset, type) {
+      if (dataset.values) {
+        Config.data.values = dataset.values;
+        Config.data.formatType = undefined;
+      } else {
+        Config.data.url = dataset.url;
+        Config.data.formatType = type;
+      }
+    };
+
+    return Config;
+  });
+}());
+
+;(function() {
+'use strict';
+
+var datasets = [{
+  name: 'Barley',
+  url: 'data/barley.json',
+  id: 'barley',
+
+},{
+  name: 'Cars',
+  url: 'data/cars.json',
+  id: 'cars'
+},{
+  name: 'Crimea',
+  url: 'data/crimea.json',
+  id: 'crimea'
+},{
+  name: 'Driving',
+  url: 'data/driving.json',
+  id: 'driving'
+},{
+  name: 'Iris',
+  url: 'data/iris.json',
+  id: 'iris'
+},{
+  name: 'Jobs',
+  url: 'data/jobs.json',
+  id: 'jobs'
+},{
+  name: 'Population',
+  url: 'data/population.json',
+  id: 'population'
+},{
+  name: 'Movies',
+  url: 'data/movies.json',
+  id: 'movies'
+},{
+  name: 'Birdstrikes',
+  url: 'data/birdstrikes.json',
+  id: 'birdstrikes'
+},{
+  name: 'Burtin',
+  url: 'data/burtin.json',
+  id: 'burtin'
+},{
+  name: 'Budget 2016',
+  url: 'data/budget.json',
+  id: 'budget'
+},{
+  name: 'Climate Normals',
+  url: 'data/climate.json',
+  id: 'climate'
+},{
+  name: 'Campaigns',
+  url: 'data/weball26.json',
+  id: 'weball26'
+}];
+
+function getNameMap(dataschema) {
+  return dataschema.reduce(function(m, field) {
+    m[field.name] = field;
+    return m;
+  }, {});
+}
+
+angular.module('vlui')
+  .factory('Dataset', function($http, Alerts, _, Papa, dl, vl) {
+    var Dataset = {};
+
+    Dataset.datasets = datasets;
+    Dataset.dataset = datasets[1];
+    Dataset.dataschema = [];
+    Dataset.dataschema.byName = {};
+    Dataset.stats = {};
+    Dataset.type = undefined;
+
+    // TODO move these to constant to a universal vlui constant file
+    Dataset.typeNames = {
+      O: 'text',
+      Q: 'number',
+      T: 'time',
+      G: 'geo'
+    };
+
+    Dataset.fieldOrder = vl.field.order.typeThenName;
+    Dataset.getSchema = function(data, stats, order) {
+      var types = dl.read.types(data),
+        schema = _.reduce(types, function(s, type, name){
+          s.push({name: name, type: vl.data.types[type]});
+          return s;
+        }, []);
+
+      schema = dl.stablesort(schema, order || vl.field.order.typeThenName, vl.field.order.name);
+
+      schema.push(vl.field.count());
+
+      schema.forEach(function(field) {
+        // if fewer than 2% of values or unique, assume the field to be ordinal,
+        // or <= 7 unique values
+        var profile = stats[field.name];
+        if (profile !== undefined && (field.type === 'Q' && profile.distinct <= 20 &&
+              (profile.distinct < (profile.count - profile.numNulls)/50 || profile.distinct <= 7))) {
+          field.type = 'O';
+        }
+      });
+      return schema;
+    };
+
+    Dataset.getStats = function(data) {
+      // TODO add sampling back here, but that's less important for now
+      var summary = dl.summary(data);
+
+      return summary.reduce(function(s, profile) {
+        s[profile.field] = profile;
+        return s;
+      }, {count: data.length});
+    };
+
+    // update the schema and stats
+    Dataset.update = function(dataset) {
+      return $http.get(dataset.url, {cache: true}).then(function(response) {
+        // first see whether the data is JSON, otherwise try to parse CSV
+        if (_.isObject(response.data)) {
+           Dataset.data = response.data;
+           Dataset.type = 'json';
+        } else {
+           var result = Papa.parse(response.data, {
+            dynamicTyping: true,
+            header: true
+          });
+
+          if (result.errors.length === 0) {
+            Dataset.data = result.data;
+            Dataset.type = 'csv';
+          } else {
+            _.each(result.errors, function(err) {
+              Alerts.add(err.message, 2000);
+            });
+            return;
+          }
+        }
+
+        Dataset.stats = Dataset.getStats(Dataset.data);
+        Dataset.dataschema = Dataset.getSchema(Dataset.data, Dataset.stats);
+        Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
+      });
+    };
+
+    Dataset.add = function(dataset) {
+      if (!dataset.id) {
+        dataset.id = dataset.url;
+      }
+      datasets.push(dataset);
+    };
+
+    return Dataset;
+  });
+}());
+
+;(function() {
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name vlui.directive:fieldInfo
+ * @description
+ * # fieldInfo
+ */
+angular.module('vlui')
+  .directive('fieldInfo', function (Dataset, Drop) {
+    return {
+      templateUrl: 'fieldinfo/fieldinfo.html',
+      restrict: 'E',
+      replace: true,
+      scope: {
+        field: '=',
+        showType: '=',
+        showInfo: '=',
+        showCaret: '=',
+        popupContent: '=',
+        showRemove: '=',
+        removeAction: '&',
+        action: '&',
+        disableCountOrOCaret: '='
+      },
+      link: function(scope, element) {
+        var funcsPopup;
+
+        scope.typeNames = Dataset.typeNames;
+        scope.stats = Dataset.stats[scope.field.name];
+        scope.count = Dataset.stats.count;
+
+        scope.clicked = function($event){
+          if(scope.action && $event.target !== element.find('.fa-caret-down')[0] &&
+            $event.target !== element.find('span.type')[0]) {
+            scope.action($event);
+          }
+        };
+
+        scope.func = function(field) {
+          return field.aggr || field.fn ||
+            (field.bin && 'bin') ||
+            field._aggr || field._fn ||
+            (field._bin && 'bin') || (field._any && 'auto');
+        };
+
+        scope.$watch('popupContent', function(popupContent) {
+          if (!popupContent) { return; }
+
+          funcsPopup = new Drop({
+            content: popupContent,
+            target: element.find('.type-caret')[0],
+            position: 'bottom left',
+            openOn: 'click'
+          });
+        });
+      }
+    };
+  });
+}());
+
+;(function() {
+'use strict';
+
+/**
+ * @ngdoc service
+ * @name vega-lite-ui.logger
+ * @description
+ * # logger
+ * Service in the vega-lite-ui.
+ */
+angular.module('vlui')
+  .service('Logger', function ($location, $window, $webSql, consts, Papa, Blob, URL) {
+
+    var service = {};
+
+    // get user id once in the beginning
+    var user = $location.search().user;
+
+    service.db = $webSql.openDatabase('logs', '1.0', 'Logs', 2 * 1024 * 1024);
+
+    service.tableName = 'log_' + consts.appId;
+
+    service.actions = {
+      UNDO: 'UNDO',
+      REDO: 'REDO',
+      DATASET_CHANGE: 'DATASET_CHANGE',
+      CHART_MOUSEOVER: 'CHART_MOUSEOVER',
+      CHART_MOUSEOUT: 'CHART_MOUSEOUT',
+      CHART_RENDER: 'CHART_RENDER',
+      CHART_EXPOSE: 'CHART_EXPOSE',
+      CHART_TOOLTIP: 'CHART_TOOLTIP',
+      BOOKMARK_ADD: 'BOOKMARK_ADD',
+      BOOKMARK_REMOVE: 'BOOKMARK_REMOVE',
+      BOOKMARKS_CLEAR: 'BOOKMARKS_CLEAR',
+
+      NULL_FILTER_TOGGLE: 'NULL_FILTER_TOGGLE',
+      TRANSPOSE_TOGGLE: 'TRANSPOSE_TOGGLE',
+      SORT_TOGGLE: 'SORT_TOGGLE',
+      MARKTYPE_TOGGLE: 'MARKTYPE_TOGGLE',
+      LOG_TOGGLE: 'LOG_TOGGLE',
+
+      FUNC_CHANGE: 'FUNC_CHANGE',
+      // Polestar only
+      SPEC_CHANGE: 'SPEC_CHANGE',
+      FIELD_DROP: 'FIELD_DROP',
+      MARK_CHANGE: 'MARK_CHANGE',
+      // Voyager only
+      FIELDS_CHANGE: 'FIELDS_CHANGE',
+      FIELDS_RESET: 'FIELDS_RESET',
+      DRILL_DOWN_OPEN: 'DRILL_DOWN_OPEN',
+      DRILL_DOWN_CLOSE: 'DRILL_DOWN_CLOSE',
+      CLUSTER_SELECT: 'CLUSTER_SELECT',
+      LOAD_MORE: 'LOAD_MORE'
+    };
+
+    service.createTableIfNotExists = function() {
+      service.db.createTable(service.tableName, {
+        'userid':{
+          'type': 'INTEGER',
+          'null': 'NOT NULL'
+        },
+        'time':{
+          'type': 'TIMESTAMP',
+          'null': 'NOT NULL',
+          'default': 'CURRENT_TIMESTAMP'
+        },
+        'action':{
+          'type': 'TEXT',
+          'null': 'NOT NULL'
+        },
+        'data': {
+          'type': 'TEXT'
+        },
+        'diff': {
+          'type': 'TEXT'
+        }
+      });
+    };
+
+    service.clear = function() {
+      var r = $window.confirm('Really clear the logs?');
+      if (r === true) {
+        service.db.dropTable(service.tableName);
+        service.createTableIfNotExists();
+      }
+    };
+
+    service.export = function() {
+      service.db.selectAll(service.tableName).then(function(results) {
+        if (results.rows.length === 0) {
+          console.warn('No logs');
+          return;
+        }
+
+        var rows = [];
+
+        for(var i=0; i < results.rows.length; i++) {
+          rows.push(results.rows.item(i));
+        }
+        var csv = Papa.unparse(rows);
+
+        var csvData = new Blob([csv], { type: 'text/csv' });
+        var csvUrl = URL.createObjectURL(csvData);
+
+        var element = angular.element('<a/>');
+        element.attr({
+          href: csvUrl,
+          target: '_blank',
+          download: service.tableName + '.csv'
+        })[0].click();
+      });
+    };
+
+    service.logInteraction = function(action, data, diff) {
+      if (!consts.logging) {
+        return;
+      }
+
+      // console.log('[Logging] ', action, data);
+
+      var row = {userid: user, action: action};
+      if (data !== undefined) {
+        row.data = JSON.stringify(data);
+      }
+
+      if (diff !== undefined) {
+        row.diff = JSON.stringify(diff);
+      }
+
+      service.db.insert(service.tableName, row).then(function(/*results*/) {});
+    };
+
+    service.createTableIfNotExists();
+
+    return service;
+  });
+}());
+
+;(function() {
+/*!
+ * JSON3 with compact stringify -- Modified by Kanit Wongsuphasawat.   https://github.com/kanitw/json3
+ *
+ * Forked from JSON v3.3.2 | https://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org
+ */
+;(function () {
+  // Detect the `define` function exposed by asynchronous module loaders. The
+  // strict `define` check is necessary for compatibility with `r.js`.
+  var isLoader = typeof define === "function" && define.amd;
+
+  // A set of types used to distinguish objects from primitives.
+  var objectTypes = {
+    "function": true,
+    "object": true
+  };
+
+  // Detect the `exports` object exposed by CommonJS implementations.
+  var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
+
+  // Use the `global` object exposed by Node (including Browserify via
+  // `insert-module-globals`), Narwhal, and Ringo as the default context,
+  // and the `window` object in browsers. Rhino exports a `global` function
+  // instead.
+  var root = objectTypes[typeof window] && window || this,
+      freeGlobal = freeExports && objectTypes[typeof module] && module && !module.nodeType && typeof global == "object" && global;
+
+  if (freeGlobal && (freeGlobal["global"] === freeGlobal || freeGlobal["window"] === freeGlobal || freeGlobal["self"] === freeGlobal)) {
+    root = freeGlobal;
+  }
+
+  // Public: Initializes JSON 3 using the given `context` object, attaching the
+  // `stringify` and `parse` functions to the specified `exports` object.
+  function runInContext(context, exports) {
+    context || (context = root["Object"]());
+    exports || (exports = root["Object"]());
+
+    // Native constructor aliases.
+    var Number = context["Number"] || root["Number"],
+        String = context["String"] || root["String"],
+        Object = context["Object"] || root["Object"],
+        Date = context["Date"] || root["Date"],
+        SyntaxError = context["SyntaxError"] || root["SyntaxError"],
+        TypeError = context["TypeError"] || root["TypeError"],
+        Math = context["Math"] || root["Math"],
+        nativeJSON = context["JSON"] || root["JSON"];
+
+    // Delegate to the native `stringify` and `parse` implementations.
+    if (typeof nativeJSON == "object" && nativeJSON) {
+      exports.stringify = nativeJSON.stringify;
+      exports.parse = nativeJSON.parse;
+    }
+
+    // Convenience aliases.
+    var objectProto = Object.prototype,
+        getClass = objectProto.toString,
+        isProperty, forEach, undef;
+
+    // Test the `Date#getUTC*` methods. Based on work by @Yaffle.
+    var isExtended = new Date(-3509827334573292);
+    try {
+      // The `getUTCFullYear`, `Month`, and `Date` methods return nonsensical
+      // results for certain dates in Opera >= 10.53.
+      isExtended = isExtended.getUTCFullYear() == -109252 && isExtended.getUTCMonth() === 0 && isExtended.getUTCDate() === 1 &&
+        // Safari < 2.0.2 stores the internal millisecond time value correctly,
+        // but clips the values returned by the date methods to the range of
+        // signed 32-bit integers ([-2 ** 31, 2 ** 31 - 1]).
+        isExtended.getUTCHours() == 10 && isExtended.getUTCMinutes() == 37 && isExtended.getUTCSeconds() == 6 && isExtended.getUTCMilliseconds() == 708;
+    } catch (exception) {}
+
+    // Internal: Determines whether the native `JSON.stringify` and `parse`
+    // implementations are spec-compliant. Based on work by Ken Snyder.
+    function has(name) {
+      if (has[name] !== undef) {
+        // Return cached feature test result.
+        return has[name];
+      }
+      var isSupported;
+      if (name == "bug-string-char-index") {
+        // IE <= 7 doesn't support accessing string characters using square
+        // bracket notation. IE 8 only supports this for primitives.
+        isSupported = "a"[0] != "a";
+      } else if (name == "json") {
+        // Indicates whether both `JSON.stringify` and `JSON.parse` are
+        // supported.
+        isSupported = has("json-stringify") && has("json-parse");
+      } else {
+        var value, serialized = '{"a":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}';
+        // Test `JSON.stringify`.
+        if (name == "json-stringify") {
+          var stringify = exports.stringify, stringifySupported = typeof stringify == "function" && isExtended;
+          if (stringifySupported) {
+            // A test function object with a custom `toJSON` method.
+            (value = function () {
+              return 1;
+            }).toJSON = value;
+            try {
+              stringifySupported =
+                // Firefox 3.1b1 and b2 serialize string, number, and boolean
+                // primitives as object literals.
+                stringify(0) === "0" &&
+                // FF 3.1b1, b2, and JSON 2 serialize wrapped primitives as object
+                // literals.
+                stringify(new Number()) === "0" &&
+                stringify(new String()) == '""' &&
+                // FF 3.1b1, 2 throw an error if the value is `null`, `undefined`, or
+                // does not define a canonical JSON representation (this applies to
+                // objects with `toJSON` properties as well, *unless* they are nested
+                // within an object or array).
+                stringify(getClass) === undef &&
+                // IE 8 serializes `undefined` as `"undefined"`. Safari <= 5.1.7 and
+                // FF 3.1b3 pass this test.
+                stringify(undef) === undef &&
+                // Safari <= 5.1.7 and FF 3.1b3 throw `Error`s and `TypeError`s,
+                // respectively, if the value is omitted entirely.
+                stringify() === undef &&
+                // FF 3.1b1, 2 throw an error if the given value is not a number,
+                // string, array, object, Boolean, or `null` literal. This applies to
+                // objects with custom `toJSON` methods as well, unless they are nested
+                // inside object or array literals. YUI 3.0.0b1 ignores custom `toJSON`
+                // methods entirely.
+                stringify(value) === "1" &&
+                stringify([value]) == "[1]" &&
+                // Prototype <= 1.6.1 serializes `[undefined]` as `"[]"` instead of
+                // `"[null]"`.
+                stringify([undef]) == "[null]" &&
+                // YUI 3.0.0b1 fails to serialize `null` literals.
+                stringify(null) == "null" &&
+                // FF 3.1b1, 2 halts serialization if an array contains a function:
+                // `[1, true, getClass, 1]` serializes as "[1,true,],". FF 3.1b3
+                // elides non-JSON values from objects and arrays, unless they
+                // define custom `toJSON` methods.
+                stringify([undef, getClass, null]) == "[null,null,null]" &&
+                // Simple serialization test. FF 3.1b1 uses Unicode escape sequences
+                // where character escape codes are expected (e.g., `\b` => `\u0008`).
+                stringify({ "a": [value, true, false, null, "\x00\b\n\f\r\t"] }) == serialized &&
+                // FF 3.1b1 and b2 ignore the `filter` and `width` arguments.
+                stringify(null, value) === "1" &&
+                stringify([1, 2], null, 1) == "[\n 1,\n 2\n]" &&
+                // JSON 2, Prototype <= 1.7, and older WebKit builds incorrectly
+                // serialize extended years.
+                stringify(new Date(-8.64e15)) == '"-271821-04-20T00:00:00.000Z"' &&
+                // The milliseconds are optional in ES 5, but required in 5.1.
+                stringify(new Date(8.64e15)) == '"+275760-09-13T00:00:00.000Z"' &&
+                // Firefox <= 11.0 incorrectly serializes years prior to 0 as negative
+                // four-digit years instead of six-digit years. Credits: @Yaffle.
+                stringify(new Date(-621987552e5)) == '"-000001-01-01T00:00:00.000Z"' &&
+                // Safari <= 5.1.5 and Opera >= 10.53 incorrectly serialize millisecond
+                // values less than 1000. Credits: @Yaffle.
+                stringify(new Date(-1)) == '"1969-12-31T23:59:59.999Z"';
+            } catch (exception) {
+              stringifySupported = false;
+            }
+          }
+          isSupported = stringifySupported;
+        }
+        // Test `JSON.parse`.
+        if (name == "json-parse") {
+          var parse = exports.parse;
+          if (typeof parse == "function") {
+            try {
+              // FF 3.1b1, b2 will throw an exception if a bare literal is provided.
+              // Conforming implementations should also coerce the initial argument to
+              // a string prior to parsing.
+              if (parse("0") === 0 && !parse(false)) {
+                // Simple parsing test.
+                value = parse(serialized);
+                var parseSupported = value["a"].length == 5 && value["a"][0] === 1;
+                if (parseSupported) {
+                  try {
+                    // Safari <= 5.1.2 and FF 3.1b1 allow unescaped tabs in strings.
+                    parseSupported = !parse('"\t"');
+                  } catch (exception) {}
+                  if (parseSupported) {
+                    try {
+                      // FF 4.0 and 4.0.1 allow leading `+` signs and leading
+                      // decimal points. FF 4.0, 4.0.1, and IE 9-10 also allow
+                      // certain octal literals.
+                      parseSupported = parse("01") !== 1;
+                    } catch (exception) {}
+                  }
+                  if (parseSupported) {
+                    try {
+                      // FF 4.0, 4.0.1, and Rhino 1.7R3-R4 allow trailing decimal
+                      // points. These environments, along with FF 3.1b1 and 2,
+                      // also allow trailing commas in JSON objects and arrays.
+                      parseSupported = parse("1.") !== 1;
+                    } catch (exception) {}
+                  }
+                }
+              }
+            } catch (exception) {
+              parseSupported = false;
+            }
+          }
+          isSupported = parseSupported;
+        }
+      }
+      return has[name] = !!isSupported;
+    }
+
+    if (true) { // used to be !has("json")
+      // Common `[[Class]]` name aliases.
+      var functionClass = "[object Function]",
+          dateClass = "[object Date]",
+          numberClass = "[object Number]",
+          stringClass = "[object String]",
+          arrayClass = "[object Array]",
+          booleanClass = "[object Boolean]";
+
+      // Detect incomplete support for accessing string characters by index.
+      var charIndexBuggy = has("bug-string-char-index");
+
+      // Define additional utility methods if the `Date` methods are buggy.
+      if (!isExtended) {
+        var floor = Math.floor;
+        // A mapping between the months of the year and the number of days between
+        // January 1st and the first of the respective month.
+        var Months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+        // Internal: Calculates the number of days between the Unix epoch and the
+        // first day of the given month.
+        var getDay = function (year, month) {
+          return Months[month] + 365 * (year - 1970) + floor((year - 1969 + (month = +(month > 1))) / 4) - floor((year - 1901 + month) / 100) + floor((year - 1601 + month) / 400);
+        };
+      }
+
+      // Internal: Determines if a property is a direct property of the given
+      // object. Delegates to the native `Object#hasOwnProperty` method.
+      if (!(isProperty = objectProto.hasOwnProperty)) {
+        isProperty = function (property) {
+          var members = {}, constructor;
+          if ((members.__proto__ = null, members.__proto__ = {
+            // The *proto* property cannot be set multiple times in recent
+            // versions of Firefox and SeaMonkey.
+            "toString": 1
+          }, members).toString != getClass) {
+            // Safari <= 2.0.3 doesn't implement `Object#hasOwnProperty`, but
+            // supports the mutable *proto* property.
+            isProperty = function (property) {
+              // Capture and break the object's prototype chain (see section 8.6.2
+              // of the ES 5.1 spec). The parenthesized expression prevents an
+              // unsafe transformation by the Closure Compiler.
+              var original = this.__proto__, result = property in (this.__proto__ = null, this);
+              // Restore the original prototype chain.
+              this.__proto__ = original;
+              return result;
+            };
+          } else {
+            // Capture a reference to the top-level `Object` constructor.
+            constructor = members.constructor;
+            // Use the `constructor` property to simulate `Object#hasOwnProperty` in
+            // other environments.
+            isProperty = function (property) {
+              var parent = (this.constructor || constructor).prototype;
+              return property in this && !(property in parent && this[property] === parent[property]);
+            };
+          }
+          members = null;
+          return isProperty.call(this, property);
+        };
+      }
+
+      // Internal: Normalizes the `for...in` iteration algorithm across
+      // environments. Each enumerated key is yielded to a `callback` function.
+      forEach = function (object, callback) {
+        var size = 0, Properties, members, property;
+
+        // Tests for bugs in the current environment's `for...in` algorithm. The
+        // `valueOf` property inherits the non-enumerable flag from
+        // `Object.prototype` in older versions of IE, Netscape, and Mozilla.
+        (Properties = function () {
+          this.valueOf = 0;
+        }).prototype.valueOf = 0;
+
+        // Iterate over a new instance of the `Properties` class.
+        members = new Properties();
+        for (property in members) {
+          // Ignore all properties inherited from `Object.prototype`.
+          if (isProperty.call(members, property)) {
+            size++;
+          }
+        }
+        Properties = members = null;
+
+        // Normalize the iteration algorithm.
+        if (!size) {
+          // A list of non-enumerable properties inherited from `Object.prototype`.
+          members = ["valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor"];
+          // IE <= 8, Mozilla 1.0, and Netscape 6.2 ignore shadowed non-enumerable
+          // properties.
+          forEach = function (object, callback) {
+            var isFunction = getClass.call(object) == functionClass, property, length;
+            var hasProperty = !isFunction && typeof object.constructor != "function" && objectTypes[typeof object.hasOwnProperty] && object.hasOwnProperty || isProperty;
+            for (property in object) {
+              // Gecko <= 1.0 enumerates the `prototype` property of functions under
+              // certain conditions; IE does not.
+              if (!(isFunction && property == "prototype") && hasProperty.call(object, property)) {
+                callback(property);
+              }
+            }
+            // Manually invoke the callback for each non-enumerable property.
+            for (length = members.length; property = members[--length]; hasProperty.call(object, property) && callback(property));
+          };
+        } else if (size == 2) {
+          // Safari <= 2.0.4 enumerates shadowed properties twice.
+          forEach = function (object, callback) {
+            // Create a set of iterated properties.
+            var members = {}, isFunction = getClass.call(object) == functionClass, property;
+            for (property in object) {
+              // Store each property name to prevent double enumeration. The
+              // `prototype` property of functions is not enumerated due to cross-
+              // environment inconsistencies.
+              if (!(isFunction && property == "prototype") && !isProperty.call(members, property) && (members[property] = 1) && isProperty.call(object, property)) {
+                callback(property);
+              }
+            }
+          };
+        } else {
+          // No bugs detected; use the standard `for...in` algorithm.
+          forEach = function (object, callback) {
+            var isFunction = getClass.call(object) == functionClass, property, isConstructor;
+            for (property in object) {
+              if (!(isFunction && property == "prototype") && isProperty.call(object, property) && !(isConstructor = property === "constructor")) {
+                callback(property);
+              }
+            }
+            // Manually invoke the callback for the `constructor` property due to
+            // cross-environment inconsistencies.
+            if (isConstructor || isProperty.call(object, (property = "constructor"))) {
+              callback(property);
+            }
+          };
+        }
+        return forEach(object, callback);
+      };
+
+      // Public: Serializes a JavaScript `value` as a JSON string. The optional
+      // `filter` argument may specify either a function that alters how object and
+      // array members are serialized, or an array of strings and numbers that
+      // indicates which properties should be serialized. The optional `width`
+      // argument may be either a string or number that specifies the indentation
+      // level of the output.
+      if (true) {
+        // Internal: A map of control characters and their escaped equivalents.
+        var Escapes = {
+          92: "\\\\",
+          34: '\\"',
+          8: "\\b",
+          12: "\\f",
+          10: "\\n",
+          13: "\\r",
+          9: "\\t"
+        };
+
+        // Internal: Converts `value` into a zero-padded string such that its
+        // length is at least equal to `width`. The `width` must be <= 6.
+        var leadingZeroes = "000000";
+        var toPaddedString = function (width, value) {
+          // The `|| 0` expression is necessary to work around a bug in
+          // Opera <= 7.54u2 where `0 == -0`, but `String(-0) !== "0"`.
+          return (leadingZeroes + (value || 0)).slice(-width);
+        };
+
+        // Internal: Double-quotes a string `value`, replacing all ASCII control
+        // characters (characters with code unit values between 0 and 31) with
+        // their escaped equivalents. This is an implementation of the
+        // `Quote(value)` operation defined in ES 5.1 section 15.12.3.
+        var unicodePrefix = "\\u00";
+        var quote = function (value) {
+          var result = '"', index = 0, length = value.length, useCharIndex = !charIndexBuggy || length > 10;
+          var symbols = useCharIndex && (charIndexBuggy ? value.split("") : value);
+          for (; index < length; index++) {
+            var charCode = value.charCodeAt(index);
+            // If the character is a control character, append its Unicode or
+            // shorthand escape sequence; otherwise, append the character as-is.
+            switch (charCode) {
+              case 8: case 9: case 10: case 12: case 13: case 34: case 92:
+                result += Escapes[charCode];
+                break;
+              default:
+                if (charCode < 32) {
+                  result += unicodePrefix + toPaddedString(2, charCode.toString(16));
+                  break;
+                }
+                result += useCharIndex ? symbols[index] : value.charAt(index);
+            }
+          }
+          return result + '"';
+        };
+
+        // Internal: Recursively serializes an object. Implements the
+        // `Str(key, holder)`, `JO(value)`, and `JA(value)` operations.
+        var serialize = function (property, object, callback, properties, whitespace, indentation, stack, maxLineLength) {
+          var value, className, year, month, date, time, hours, minutes, seconds, milliseconds, results, element, index, length, prefix, result;
+
+          maxLineLength = maxLineLength || 0;
+
+          try {
+            // Necessary for host object support.
+            value = object[property];
+          } catch (exception) {}
+          if (typeof value == "object" && value) {
+            className = getClass.call(value);
+            if (className == dateClass && !isProperty.call(value, "toJSON")) {
+              if (value > -1 / 0 && value < 1 / 0) {
+                // Dates are serialized according to the `Date#toJSON` method
+                // specified in ES 5.1 section 15.9.5.44. See section 15.9.1.15
+                // for the ISO 8601 date time string format.
+                if (getDay) {
+                  // Manually compute the year, month, date, hours, minutes,
+                  // seconds, and milliseconds if the `getUTC*` methods are
+                  // buggy. Adapted from @Yaffle's `date-shim` project.
+                  date = floor(value / 864e5);
+                  for (year = floor(date / 365.2425) + 1970 - 1; getDay(year + 1, 0) <= date; year++);
+                  for (month = floor((date - getDay(year, 0)) / 30.42); getDay(year, month + 1) <= date; month++);
+                  date = 1 + date - getDay(year, month);
+                  // The `time` value specifies the time within the day (see ES
+                  // 5.1 section 15.9.1.2). The formula `(A % B + B) % B` is used
+                  // to compute `A modulo B`, as the `%` operator does not
+                  // correspond to the `modulo` operation for negative numbers.
+                  time = (value % 864e5 + 864e5) % 864e5;
+                  // The hours, minutes, seconds, and milliseconds are obtained by
+                  // decomposing the time within the day. See section 15.9.1.10.
+                  hours = floor(time / 36e5) % 24;
+                  minutes = floor(time / 6e4) % 60;
+                  seconds = floor(time / 1e3) % 60;
+                  milliseconds = time % 1e3;
+                } else {
+                  year = value.getUTCFullYear();
+                  month = value.getUTCMonth();
+                  date = value.getUTCDate();
+                  hours = value.getUTCHours();
+                  minutes = value.getUTCMinutes();
+                  seconds = value.getUTCSeconds();
+                  milliseconds = value.getUTCMilliseconds();
+                }
+                // Serialize extended years correctly.
+                value = (year <= 0 || year >= 1e4 ? (year < 0 ? "-" : "+") + toPaddedString(6, year < 0 ? -year : year) : toPaddedString(4, year)) +
+                  "-" + toPaddedString(2, month + 1) + "-" + toPaddedString(2, date) +
+                  // Months, dates, hours, minutes, and seconds should have two
+                  // digits; milliseconds should have three.
+                  "T" + toPaddedString(2, hours) + ":" + toPaddedString(2, minutes) + ":" + toPaddedString(2, seconds) +
+                  // Milliseconds are optional in ES 5.0, but required in 5.1.
+                  "." + toPaddedString(3, milliseconds) + "Z";
+              } else {
+                value = null;
+              }
+            } else if (typeof value.toJSON == "function" && ((className != numberClass && className != stringClass && className != arrayClass) || isProperty.call(value, "toJSON"))) {
+              // Prototype <= 1.6.1 adds non-standard `toJSON` methods to the
+              // `Number`, `String`, `Date`, and `Array` prototypes. JSON 3
+              // ignores all `toJSON` methods on these objects unless they are
+              // defined directly on an instance.
+              value = value.toJSON(property);
+            }
+          }
+          if (callback) {
+            // If a replacement function was provided, call it to obtain the value
+            // for serialization.
+            value = callback.call(object, property, value);
+          }
+          if (value === null) {
+            return "null";
+          }
+          className = getClass.call(value);
+          if (className == booleanClass) {
+            // Booleans are represented literally.
+            return "" + value;
+          } else if (className == numberClass) {
+            // JSON numbers must be finite. `Infinity` and `NaN` are serialized as
+            // `"null"`.
+            return value > -1 / 0 && value < 1 / 0 ? "" + value : "null";
+          } else if (className == stringClass) {
+            // Strings are double-quoted and escaped.
+            return quote("" + value);
+          }
+          // Recursively serialize objects and arrays.
+          if (typeof value == "object") {
+            // Check for cyclic structures. This is a linear search; performance
+            // is inversely proportional to the number of unique nested objects.
+            for (length = stack.length; length--;) {
+              if (stack[length] === value) {
+                // Cyclic structures cannot be serialized by `JSON.stringify`.
+                throw TypeError();
+              }
+            }
+            // Add the object to the stack of traversed objects.
+            stack.push(value);
+            results = [];
+            // Save the current indentation level and indent one additional level.
+            prefix = indentation;
+            indentation += whitespace;
+            if (className == arrayClass) {
+              var totalLength = indentation.length, result;
+              // Recursively serialize array elements.
+              for (index = 0, length = value.length; index < length; index++) {
+                element = serialize(index, value, callback, properties, whitespace, indentation,
+                  stack, maxLineLength);
+                result = element === undef ? "null" : element;
+                totalLength += result.length + (index > 0 ? 1 : 0);
+                results.push(result);
+              }
+              result = results.length ?
+                (
+                  whitespace && (totalLength > maxLineLength) ?
+                  "[\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "]" :
+                  "[" + results.join(",") + "]"
+                )
+                : "[]";
+            } else {
+              var totalLength = indentation.length, index=0;
+              // Recursively serialize object members. Members are selected from
+              // either a user-specified list of property names, or the object
+              // itself.
+              forEach(properties || value, function (property) {
+                var result, element = serialize(property, value, callback, properties, whitespace, indentation,
+                                        stack, maxLineLength);
+
+                if (element !== undef) {
+                  // According to ES 5.1 section 15.12.3: "If `gap` {whitespace}
+                  // is not the empty string, let `member` {quote(property) + ":"}
+                  // be the concatenation of `member` and the `space` character."
+                  // The "`space` character" refers to the literal space
+                  // character, not the `space` {width} argument provided to
+                  // `JSON.stringify`.
+                  result = quote(property) + ":" + (whitespace ? " " : "") + element;
+                  totalLength += result.length + (index++ > 0 ? 1 : 0);
+                  results.push(result);
+                }
+              });
+              result = results.length ?
+                (
+                  whitespace && (totalLength > maxLineLength) ?
+                  "{\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "}" :
+                  "{" + results.join(",") + "}"
+                )
+                : "{}";
+            }
+            // Remove the object from the traversed object stack.
+            stack.pop();
+            return result;
+          }
+        };
+
+        // Public: `JSON.stringify`. See ES 5.1 section 15.12.3.
+
+        exports.stringify = function (source, filter, width, maxLineLength) {
+          var whitespace, callback, properties, className;
+          if (objectTypes[typeof filter] && filter) {
+            if ((className = getClass.call(filter)) == functionClass) {
+              callback = filter;
+            } else if (className == arrayClass) {
+              // Convert the property names array into a makeshift set.
+              properties = {};
+              for (var index = 0, length = filter.length, value; index < length; value = filter[index++], ((className = getClass.call(value)), className == stringClass || className == numberClass) && (properties[value] = 1));
+            }
+          }
+          if (width) {
+            if ((className = getClass.call(width)) == numberClass) {
+              // Convert the `width` to an integer and create a string containing
+              // `width` number of space characters.
+              if ((width -= width % 1) > 0) {
+                for (whitespace = "", width > 10 && (width = 10); whitespace.length < width; whitespace += " ");
+              }
+            } else if (className == stringClass) {
+              whitespace = width.length <= 10 ? width : width.slice(0, 10);
+            }
+          }
+          // Opera <= 7.54u2 discards the values associated with empty string keys
+          // (`""`) only if they are used directly within an object member list
+          // (e.g., `!("" in { "": 1})`).
+          return serialize("", (value = {}, value[""] = source, value), callback, properties, whitespace, "", [], maxLineLength);
+        };
+
+        exports.compactStringify = function (source, filter, width){
+          return exports.stringify(source, filter, width, 60);
+        }
+      }
+
+      // Public: Parses a JSON source string.
+      if (!has("json-parse")) {
+        var fromCharCode = String.fromCharCode;
+
+        // Internal: A map of escaped control characters and their unescaped
+        // equivalents.
+        var Unescapes = {
+          92: "\\",
+          34: '"',
+          47: "/",
+          98: "\b",
+          116: "\t",
+          110: "\n",
+          102: "\f",
+          114: "\r"
+        };
+
+        // Internal: Stores the parser state.
+        var Index, Source;
+
+        // Internal: Resets the parser state and throws a `SyntaxError`.
+        var abort = function () {
+          Index = Source = null;
+          throw SyntaxError();
+        };
+
+        // Internal: Returns the next token, or `"$"` if the parser has reached
+        // the end of the source string. A token may be a string, number, `null`
+        // literal, or Boolean literal.
+        var lex = function () {
+          var source = Source, length = source.length, value, begin, position, isSigned, charCode;
+          while (Index < length) {
+            charCode = source.charCodeAt(Index);
+            switch (charCode) {
+              case 9: case 10: case 13: case 32:
+                // Skip whitespace tokens, including tabs, carriage returns, line
+                // feeds, and space characters.
+                Index++;
+                break;
+              case 123: case 125: case 91: case 93: case 58: case 44:
+                // Parse a punctuator token (`{`, `}`, `[`, `]`, `:`, or `,`) at
+                // the current position.
+                value = charIndexBuggy ? source.charAt(Index) : source[Index];
+                Index++;
+                return value;
+              case 34:
+                // `"` delimits a JSON string; advance to the next character and
+                // begin parsing the string. String tokens are prefixed with the
+                // sentinel `@` character to distinguish them from punctuators and
+                // end-of-string tokens.
+                for (value = "@", Index++; Index < length;) {
+                  charCode = source.charCodeAt(Index);
+                  if (charCode < 32) {
+                    // Unescaped ASCII control characters (those with a code unit
+                    // less than the space character) are not permitted.
+                    abort();
+                  } else if (charCode == 92) {
+                    // A reverse solidus (`\`) marks the beginning of an escaped
+                    // control character (including `"`, `\`, and `/`) or Unicode
+                    // escape sequence.
+                    charCode = source.charCodeAt(++Index);
+                    switch (charCode) {
+                      case 92: case 34: case 47: case 98: case 116: case 110: case 102: case 114:
+                        // Revive escaped control characters.
+                        value += Unescapes[charCode];
+                        Index++;
+                        break;
+                      case 117:
+                        // `\u` marks the beginning of a Unicode escape sequence.
+                        // Advance to the first character and validate the
+                        // four-digit code point.
+                        begin = ++Index;
+                        for (position = Index + 4; Index < position; Index++) {
+                          charCode = source.charCodeAt(Index);
+                          // A valid sequence comprises four hexdigits (case-
+                          // insensitive) that form a single hexadecimal value.
+                          if (!(charCode >= 48 && charCode <= 57 || charCode >= 97 && charCode <= 102 || charCode >= 65 && charCode <= 70)) {
+                            // Invalid Unicode escape sequence.
+                            abort();
+                          }
+                        }
+                        // Revive the escaped character.
+                        value += fromCharCode("0x" + source.slice(begin, Index));
+                        break;
+                      default:
+                        // Invalid escape sequence.
+                        abort();
+                    }
+                  } else {
+                    if (charCode == 34) {
+                      // An unescaped double-quote character marks the end of the
+                      // string.
+                      break;
+                    }
+                    charCode = source.charCodeAt(Index);
+                    begin = Index;
+                    // Optimize for the common case where a string is valid.
+                    while (charCode >= 32 && charCode != 92 && charCode != 34) {
+                      charCode = source.charCodeAt(++Index);
+                    }
+                    // Append the string as-is.
+                    value += source.slice(begin, Index);
+                  }
+                }
+                if (source.charCodeAt(Index) == 34) {
+                  // Advance to the next character and return the revived string.
+                  Index++;
+                  return value;
+                }
+                // Unterminated string.
+                abort();
+              default:
+                // Parse numbers and literals.
+                begin = Index;
+                // Advance past the negative sign, if one is specified.
+                if (charCode == 45) {
+                  isSigned = true;
+                  charCode = source.charCodeAt(++Index);
+                }
+                // Parse an integer or floating-point value.
+                if (charCode >= 48 && charCode <= 57) {
+                  // Leading zeroes are interpreted as octal literals.
+                  if (charCode == 48 && ((charCode = source.charCodeAt(Index + 1)), charCode >= 48 && charCode <= 57)) {
+                    // Illegal octal literal.
+                    abort();
+                  }
+                  isSigned = false;
+                  // Parse the integer component.
+                  for (; Index < length && ((charCode = source.charCodeAt(Index)), charCode >= 48 && charCode <= 57); Index++);
+                  // Floats cannot contain a leading decimal point; however, this
+                  // case is already accounted for by the parser.
+                  if (source.charCodeAt(Index) == 46) {
+                    position = ++Index;
+                    // Parse the decimal component.
+                    for (; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
+                    if (position == Index) {
+                      // Illegal trailing decimal.
+                      abort();
+                    }
+                    Index = position;
+                  }
+                  // Parse exponents. The `e` denoting the exponent is
+                  // case-insensitive.
+                  charCode = source.charCodeAt(Index);
+                  if (charCode == 101 || charCode == 69) {
+                    charCode = source.charCodeAt(++Index);
+                    // Skip past the sign following the exponent, if one is
+                    // specified.
+                    if (charCode == 43 || charCode == 45) {
+                      Index++;
+                    }
+                    // Parse the exponential component.
+                    for (position = Index; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
+                    if (position == Index) {
+                      // Illegal empty exponent.
+                      abort();
+                    }
+                    Index = position;
+                  }
+                  // Coerce the parsed value to a JavaScript number.
+                  return +source.slice(begin, Index);
+                }
+                // A negative sign may only precede numbers.
+                if (isSigned) {
+                  abort();
+                }
+                // `true`, `false`, and `null` literals.
+                if (source.slice(Index, Index + 4) == "true") {
+                  Index += 4;
+                  return true;
+                } else if (source.slice(Index, Index + 5) == "false") {
+                  Index += 5;
+                  return false;
+                } else if (source.slice(Index, Index + 4) == "null") {
+                  Index += 4;
+                  return null;
+                }
+                // Unrecognized token.
+                abort();
+            }
+          }
+          // Return the sentinel `$` character if the parser has reached the end
+          // of the source string.
+          return "$";
+        };
+
+        // Internal: Parses a JSON `value` token.
+        var get = function (value) {
+          var results, hasMembers;
+          if (value == "$") {
+            // Unexpected end of input.
+            abort();
+          }
+          if (typeof value == "string") {
+            if ((charIndexBuggy ? value.charAt(0) : value[0]) == "@") {
+              // Remove the sentinel `@` character.
+              return value.slice(1);
+            }
+            // Parse object and array literals.
+            if (value == "[") {
+              // Parses a JSON array, returning a new JavaScript array.
+              results = [];
+              for (;; hasMembers || (hasMembers = true)) {
+                value = lex();
+                // A closing square bracket marks the end of the array literal.
+                if (value == "]") {
+                  break;
+                }
+                // If the array literal contains elements, the current token
+                // should be a comma separating the previous element from the
+                // next.
+                if (hasMembers) {
+                  if (value == ",") {
+                    value = lex();
+                    if (value == "]") {
+                      // Unexpected trailing `,` in array literal.
+                      abort();
+                    }
+                  } else {
+                    // A `,` must separate each array element.
+                    abort();
+                  }
+                }
+                // Elisions and leading commas are not permitted.
+                if (value == ",") {
+                  abort();
+                }
+                results.push(get(value));
+              }
+              return results;
+            } else if (value == "{") {
+              // Parses a JSON object, returning a new JavaScript object.
+              results = {};
+              for (;; hasMembers || (hasMembers = true)) {
+                value = lex();
+                // A closing curly brace marks the end of the object literal.
+                if (value == "}") {
+                  break;
+                }
+                // If the object literal contains members, the current token
+                // should be a comma separator.
+                if (hasMembers) {
+                  if (value == ",") {
+                    value = lex();
+                    if (value == "}") {
+                      // Unexpected trailing `,` in object literal.
+                      abort();
+                    }
+                  } else {
+                    // A `,` must separate each object member.
+                    abort();
+                  }
+                }
+                // Leading commas are not permitted, object property names must be
+                // double-quoted strings, and a `:` must separate each property
+                // name and value.
+                if (value == "," || typeof value != "string" || (charIndexBuggy ? value.charAt(0) : value[0]) != "@" || lex() != ":") {
+                  abort();
+                }
+                results[value.slice(1)] = get(lex());
+              }
+              return results;
+            }
+            // Unexpected token encountered.
+            abort();
+          }
+          return value;
+        };
+
+        // Internal: Updates a traversed object member.
+        var update = function (source, property, callback) {
+          var element = walk(source, property, callback);
+          if (element === undef) {
+            delete source[property];
+          } else {
+            source[property] = element;
+          }
+        };
+
+        // Internal: Recursively traverses a parsed JSON object, invoking the
+        // `callback` function for each value. This is an implementation of the
+        // `Walk(holder, name)` operation defined in ES 5.1 section 15.12.2.
+        var walk = function (source, property, callback) {
+          var value = source[property], length;
+          if (typeof value == "object" && value) {
+            // `forEach` can't be used to traverse an array in Opera <= 8.54
+            // because its `Object#hasOwnProperty` implementation returns `false`
+            // for array indices (e.g., `![1, 2, 3].hasOwnProperty("0")`).
+            if (getClass.call(value) == arrayClass) {
+              for (length = value.length; length--;) {
+                update(value, length, callback);
+              }
+            } else {
+              forEach(value, function (property) {
+                update(value, property, callback);
+              });
+            }
+          }
+          return callback.call(source, property, value);
+        };
+
+        // Public: `JSON.parse`. See ES 5.1 section 15.12.2.
+        exports.parse = function (source, callback) {
+          var result, value;
+          Index = 0;
+          Source = "" + source;
+          result = get(lex());
+          // If a JSON string contains multiple tokens, it is invalid.
+          if (lex() != "$") {
+            abort();
+          }
+          // Reset the parser state.
+          Index = Source = null;
+          return callback && getClass.call(callback) == functionClass ? walk((value = {}, value[""] = result, value), "", callback) : result;
+        };
+      }
+    }
+
+    exports["runInContext"] = runInContext;
+    return exports;
+  }
+
+  if (freeExports && !isLoader) {
+    // Export for CommonJS environments.
+    runInContext(root, freeExports);
+  } else {
+    // Export for web browsers and JavaScript engines.
+    var nativeJSON = root.JSON,
+        previousJSON = root["JSON3"],
+        isRestored = false;
+
+    var JSON3 = runInContext(root, (root["JSON3"] = {
+      // Public: Restores the original value of the global `JSON` object and
+      // returns a reference to the `JSON3` object.
+      "noConflict": function () {
+        if (!isRestored) {
+          isRestored = true;
+          root.JSON = nativeJSON;
+          root["JSON3"] = previousJSON;
+          nativeJSON = previousJSON = null;
+        }
+        return JSON3;
+      }
+    }));
+
+    root.JSON = {
+      "parse": JSON3.parse,
+      "stringify": JSON3.stringify
+    };
+  }
+
+  // Export for asynchronous module loaders.
+  if (isLoader) {
+    define(function () {
+      return JSON3;
+    });
+  }
+}).call(this);
+}());
+
+;(function() {
+'use strict';
+
+angular.module('vlui')
+  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger) {
+    var counter = 0;
+    var MAX_CANVAS_SIZE = 32767/2, MAX_CANVAS_AREA = 268435456/4;
+
+    var renderQueue = [],
+      rendering = false;
+
+    function getRenderer(width, height) {
+      // use canvas by default but use svg if the visualization is too big
+      if (width > MAX_CANVAS_SIZE || height > MAX_CANVAS_SIZE || width*height > MAX_CANVAS_AREA) {
+        return 'svg';
+      }
+      return 'canvas';
+    }
+
+    return {
+      templateUrl: 'vlplot/vlplot.html',
+      restrict: 'E',
+      scope: {
+        vgSpec: '=',
+        vlSpec: '=',
+        disabled: '=',
+        isInList: '=',
+        fieldSetKey: '=',
+        shorthand: '=',
+        maxHeight:'=',
+        maxWidth: '=',
+        alwaysScrollable: '=',
+        overflow: '=',
+        tooltip: '=',
+        configSet: '@',
+        rescale: '=',
+        thumbnail: '='
+      },
+      replace: true,
+      link: function(scope, element) {
+        var HOVER_TIMEOUT = 500,
+          TOOLTIP_TIMEOUT = 250;
+
+        scope.visId = (counter++);
+        scope.hoverPromise = null;
+        scope.tooltipPromise = null;
+        scope.hoverFocus = false;
+        scope.tooltipActive = false;
+        scope.destroyed = false;
+
+        scope.mouseover = function() {
+          scope.hoverPromise = $timeout(function(){
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.vlSpec);
+            scope.hoverFocus = !scope.thumbnail;
+          }, HOVER_TIMEOUT);
+        };
+
+        scope.mouseout = function() {
+          if (scope.hoverFocus) {
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, scope.vlSpec);
+          }
+
+          $timeout.cancel(scope.hoverPromise);
+          scope.hoverFocus = scope.unlocked = false;
+        };
+
+        function viewOnMouseOver(event, item) {
+          if (!item.datum.data) { return; }
+
+          scope.tooltipPromise = $timeout(function activateTooltip(){
+            scope.tooltipActive = true;
+            Logger.logInteraction(Logger.actions.CHART_TOOLTIP, item.datum);
+
+            // convert data into a format that we can easily use with ng table and ng-repeat
+            // TODO: revise if this is actually a good idea
+            scope.data = _.pairs(item.datum.data).map(function(p) {
+              p.isNumber = vg.isNumber(p[1]);
+              return p;
+            });
+            scope.$digest();
+
+            var tooltip = element.find('.vis-tooltip'),
+              $body = angular.element($document),
+              width = tooltip.width(),
+              height= tooltip.height();
+
+            // put tooltip above if it's near the screen's bottom border
+            if (event.pageY+10+height < $body.height()) {
+              tooltip.css('top', (event.pageY+10));
+            } else {
+              tooltip.css('top', (event.pageY-10-height));
+            }
+
+            // put tooltip on left if it's near the screen's right border
+            if (event.pageX+10+ width < $body.width()) {
+              tooltip.css('left', (event.pageX+10));
+            } else {
+              tooltip.css('left', (event.pageX-10-width));
+            }
+          }, TOOLTIP_TIMEOUT);
+        }
+
+        function viewOnMouseOut() {
+          //clear positions
+          var tooltip = element.find('.vis-tooltip');
+          tooltip.css('top', null);
+          tooltip.css('left', null);
+          $timeout.cancel(scope.tooltipPromise);
+          scope.tooltipActive = false;
+          scope.data = [];
+          scope.$digest();
+        }
+
+        function getVgSpec() {
+          return consts.defaultConfigSet && scope.configSet && consts.defaultConfigSet !== scope.configSet ? null : scope.vgSpec;
+        }
+
+        function getCompiledSpec() {
+          var configSet = scope.configSet || consts.defaultConfigSet || {};
+
+          if (!scope.vlSpec) return;
+
+          var vlSpec = _.cloneDeep(scope.vlSpec);
+          vl.extend(vlSpec.config, Config[configSet]());
+
+          return vl.compile(vlSpec, Dataset.stats);
+        }
+
+        function rescaleIfEnable() {
+          if (scope.rescale) {
+            var xRatio = scope.maxWidth > 0 ?  scope.maxWidth / scope.width : 1;
+            var yRatio = scope.maxHeight > 0 ? scope.maxHeight / scope.height  : 1;
+            var ratio = Math.min(xRatio, yRatio);
+
+            var niceRatio = 1;
+            while (0.75 * niceRatio> ratio) {
+              niceRatio /= 2;
+            }
+
+            var t = niceRatio * 100 / 2 && 0;
+            element.find('.vega').css('transform', 'translate(-'+t+'%, -'+t+'%) scale('+niceRatio+')');
+          } else {
+            element.find('.vega').css('transform', null);
+          }
+        }
+
+        function renderQueueNext() {
+          // render next item in the queue
+          if (renderQueue.length > 0) {
+            renderQueue.shift()();
+          } else {
+            // or say that no one is rendering
+            rendering = false;
+          }
+        }
+
+        function render(spec) {
+          if (!spec) {
+            if (view) {
+              view.off('mouseover');
+              view.off('mouseout');
+            }
+            return;
+          }
+
+          scope.height = spec.height;
+          if (!element) {
+            console.error('can not find vis element');
+          }
+
+          var shorthand = scope.shorthand || (scope.vlSpec ? vl.Encoding.shorthand(scope.vlSpec) : '');
+
+          scope.renderer = getRenderer(spec);
+
+          function parseVega() {
+            // if no longer a part of the list, cancel!
+            if (scope.destroyed || scope.disabled || (scope.isInList && scope.fieldSetKey && !scope.isInList(scope.fieldSetKey))) {
+              console.log('cancel rendering', shorthand);
+              renderQueueNext();
+              return;
+            }
+
+            var start = new Date().getTime();
+            // render if still a part of the list
+            vg.parse.spec(spec, function(chart) {
+              var endParse = new Date().getTime();
+              view = null;
+              view = chart({el: element[0]});
+
+              if (!consts.useUrl) {
+                view.data({raw: Dataset.data});
+              }
+
+              scope.width =  view.width();
+              scope.height = view.height();
+              view.renderer(getRenderer(spec.width, scope.height));
+              view.update();
+
+              Logger.logInteraction(Logger.actions.CHART_RENDER, scope.vlSpec);
+                rescaleIfEnable();
+
+              var endChart = new Date().getTime();
+              console.log('parse spec', (endParse-start), 'charting', (endChart-endParse), shorthand);
+              if (scope.tooltip) {
+                view.on('mouseover', viewOnMouseOver);
+                view.on('mouseout', viewOnMouseOut);
+              }
+
+              renderQueueNext();
+            });
+          }
+
+          if (!rendering) { // if no instance is being render -- rendering now
+            rendering=true;
+            parseVega();
+          } else {
+            // otherwise queue it
+            renderQueue.push(parseVega);
+          }
+        }
+
+        var view;
+        scope.$watch('vgSpec',function() {
+          var spec = getVgSpec();
+          render(spec);
+        }, true);
+
+        scope.$watch('vlSpec', function() {
+          var vgSpec = getVgSpec();
+          if (vgSpec) { return; } //no need to update
+
+          var spec = getCompiledSpec();
+          render(spec);
+        }, true);
+
+        scope.$on('$destroy', function() {
+          console.log('vlplot destroyed');
+          if(view){
+            view.off('mouseover');
+            view.off('mouseout');
+            view = null;
+          }
+
+          scope.destroyed = true;
+          // FIXME another way that should eliminate things from memory faster should be removing
+          // maybe something like
+          // renderQueue.splice(renderQueue.indexOf(parseVega), 1));
+          // but without proper testing, this is riskier than setting scope.destroyed.
+        });
+      }
+    };
+  });
+}());
+
+;(function() {
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name vega-lite-ui.directive:visListItem
+ * @description
+ * # visListItem
+ */
+angular.module('vlui')
+  .directive('vlPlotGroup', function (Bookmarks, consts, vl, Dataset, Drop, Logger) {
+
+    var debugPopup;
+
+    return {
+      templateUrl: 'vlplotgroup/vlplotgroup.html',
+      restrict: 'E',
+      replace: true,
+      scope: {
+        chart: '=',
+
+        //optional
+        disabled: '=',
+        isInList: '=',
+
+        fieldSet: '=',
+
+        showBookmark: '@',
+        showDebug: '=',
+        showExpand: '=',
+        showFilterNull: '@',
+        showLog: '@',
+        showMarkType: '@',
+        showSort: '@',
+        showTranspose: '@',
+
+        showLabel: '@',
+
+        configSet: '@',
+        alwaysSelected: '=',
+        isSelected: '=',
+        highlighted: '=',
+        expandAction: '&',
+
+        maxHeight: '=',
+        maxWidth: '=',
+        overflow: '=',
+        alwaysScrollable: '=',
+        rescale: '=',
+        tooltip: '=',
+        thumbnail: '='
+      },
+      link: function postLink(scope, element) {
+        scope.Bookmarks = Bookmarks;
+        scope.consts = consts;
+        scope.Dataset = Dataset;
+
+
+        // TOGGLE LOG
+
+        scope.log = {};
+        scope.log.support = function(spec, encType) {
+          if (!spec) { return false; }
+          var enc = spec.enc,
+            field = enc[encType];
+
+          return field && field.type ==='Q' && !field.bin;
+        };
+
+        scope.log.toggle = function(spec, encType) {
+          if (!scope.log.support(spec, encType)) { return; }
+
+          var field = spec.enc[encType],
+            scale = field.scale = field.scale || {};
+
+          scale.type = scale.type === 'log' ? 'linear' : 'log';
+          Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand);
+        };
+        scope.log.active = function(spec, encType) {
+          if (!scope.log.support(spec, encType)) { return; }
+
+          var field = spec.enc[encType],
+            scale = field.scale = field.scale || {};
+
+          return scale.type === 'log';
+        };
+
+        // TOGGLE SORT
+
+        var toggleSort = scope.toggleSort = function(spec) {
+          Logger.logInteraction(Logger.actions.SORT_TOGGLE, scope.chart.shorthand);
+          vl.Encoding.toggleSort(spec);
+        };
+        //FIXME
+        toggleSort.support = vl.Encoding.toggleSort.support;
+
+        // TOGGLE FILTER
+
+        scope.toggleFilterNull = function(spec, stats) {
+          Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE, scope.chart.shorthand);
+
+          vl.Encoding.toggleFilterNullO(spec, stats);
+        };
+        scope.toggleFilterNull.support = vl.Encoding.toggleFilterNullO.support;
+        
+        debugPopup = new Drop({
+          content: element.find('.dev-tool')[0],
+          target: element.find('.fa-wrench')[0],
+          position: 'bottom right',
+          openOn: 'click',
+          constrainToWindow: true
+        });
+
+        console.log('bind', Function.prototype.bind);
+
+        scope.toggleSortClass = function(vlSpec) {
+          var direction = vlSpec && vl.Encoding.toggleSort.direction(vlSpec),
+            mode = vlSpec && vl.Encoding.toggleSort.mode(vlSpec);
+
+          if (direction === 'y') {
+            return mode === 'Q' ? 'fa-sort-amount-desc' :
+              'fa-sort-alpha-asc';
+          } else if (direction === 'x') {
+            return mode === 'Q' ? 'fa-sort-amount-desc sort-x' :
+              'fa-sort-alpha-asc sort-x';
+          } else {
+            return 'invisible';
+          }
+        };
+
+        scope.transpose = function() {
+          Logger.logInteraction(Logger.actions.TRANSPOSE_TOGGLE, scope.chart.shorthand);
+          vl.Encoding.transpose(scope.chart.vlSpec);
+        };
+      }
+    };
+  });
+}());
+
+;(function() {
+'use strict';
+
+angular.module('vlui')
+  .filter('compactJSON', function() {
+    return function(input) {
+      return JSON.stringify(input, null, '  ', 80);
+    };
+  });
+}());
+
+;(function() {
+'use strict';
+
+/**
+ * @ngdoc filter
+ * @name vega-lite-ui.filter:encodeUri
+ * @function
+ * @description
+ * # encodeUri
+ * Filter in the vega-lite-ui.
+ */
+angular.module('vlui')
+  .filter('encodeURI', function () {
+    return function (input) {
+      return window.encodeURI(input);
+    };
+  });
+}());
+
+;(function() {
+'use strict';
+
+/**
+ * @ngdoc filter
+ * @name facetedviz.filter:reportUrl
+ * @function
+ * @description
+ * # reportUrl
+ * Filter in the facetedviz.
+ */
+angular.module('vlui')
+  .filter('reportUrl', function (compactJSONFilter, _, consts) {
+    function voyagerReport(params) {
+      var url = 'https://docs.google.com/forms/d/1T9ZA14F3mmzrHR7JJVUKyPXzrMqF54CjLIOjv2E7ZEM/viewform?';
+
+      if (params.fields) {
+        var query = encodeURI(compactJSONFilter(_.values(params.fields)));
+        url += 'entry.1245199477=' + query + '&';
+      }
+
+      if (params.encoding) {
+        var encoding = _.omit(params.encoding, 'config');
+        encoding = encodeURI(compactJSONFilter(encoding));
+        url += 'entry.1323680136=' + encoding + '&';
+      }
+
+      if (params.encoding2) {
+        var encoding2 = _.omit(params.encoding2, 'config');
+        encoding2 = encodeURI(compactJSONFilter(encoding2));
+        url += 'entry.853137786=' + encoding2 + '&';
+      }
+
+      var typeProp = 'entry.1940292677=';
+      switch (params.type) {
+        case 'vl':
+          url += typeProp + 'Visualization+Rendering+(Vegalite)&';
+          break;
+        case 'vr':
+          url += typeProp + 'Recommender+Algorithm+(Visrec)&';
+          break;
+        case 'fv':
+          url += typeProp + 'Recommender+UI+(FacetedViz)&';
+          break;
+
+      }
+      return url;
+    }
+
+    function vluiReport(params) {
+      var url = 'https://docs.google.com/forms/d/1xKs-qGaLZEUfbTmhdmSoS13OKOEpuu_NNWE5TAAml_Y/viewform?';
+      if (params.encoding) {
+        var encoding = _.omit(params.encoding, 'config');
+        encoding = encodeURI(compactJSONFilter(encoding));
+        url += 'entry.1245199477=' + encoding + '&';
+      }
+      return url;
+    }
+
+    return consts.appId === 'voyager' ? voyagerReport : vluiReport;
+  });
+}());
+
+;(function() {
+'use strict';
+
+angular.module('vlui')
+  .filter('scaleType', function() {
+    return function(input) {
+      var scaleTypes = {
+        Q: 'Quantitative',
+        O: 'Ordinal',
+        T: 'Time'
+      };
+
+      return scaleTypes[input];
+    };
+  });
+}());
+
+;(function() {
+'use strict';
+
+/**
+ * @ngdoc filter
+ * @name vega-lite-ui.filter:underscore2space
+ * @function
+ * @description
+ * # underscore2space
+ * Filter in the vega-lite-ui.
+ */
+angular.module('vlui')
+  .filter('underscore2space', function () {
+    return function (input) {
+      return input ? input.replace(/_+/g, ' ') : '';
+    };
+  });
+}());
