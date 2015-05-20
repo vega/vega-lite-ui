@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name polestar.Bookmarks
+ * @name vlui.Bookmarks
  * @description
  * # Bookmarks
- * Service in the polestar.
+ * Service in the vlui.
  */
 angular.module('vlui')
   .service('Bookmarks', function(_, vl, localStorageService, Logger) {

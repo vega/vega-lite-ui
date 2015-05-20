@@ -11,7 +11,9 @@ var bowerDeps = wiredep({
 var src = 'src',
   tmp = '.tmp';
 
-var testFiles = bowerDeps.js.concat([
+var testFiles = [
+  './node_modules/phantomjs-polyfill/bind-polyfill.js',
+].concat(bowerDeps.js).concat([
   src + '/index.js',
   src + '/**/*.js',
   src + '/vendor/*.js',

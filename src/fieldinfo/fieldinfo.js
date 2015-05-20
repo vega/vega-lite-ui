@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc directive
- * @name polestar.directive:fieldInfo
+ * @name vlui.directive:fieldInfo
  * @description
  * # fieldInfo
  */

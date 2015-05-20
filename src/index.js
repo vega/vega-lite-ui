@@ -23,7 +23,7 @@ angular.module('vlui', [
     useUrl: true,
     logging: false,
     defaultConfigSet: 'large',
-    appId: 'polestar'
+    appId: 'vlui'
   });
   // .config(function(uiZeroclipConfigProvider) {
   //   // config ZeroClipboard
