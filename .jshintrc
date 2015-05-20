@@ -8,6 +8,9 @@
   "browser": true,
   "mocha": true,
   "globalstrict": true,
+  "indent": 2,
+  "quotmark": "single",
+  "undef": true,
   // to allow myvalue.should.be.true style
   "expr": true,
   "globals": {
