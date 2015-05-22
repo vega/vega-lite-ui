@@ -7,7 +7,7 @@ gulp build
 git checkout head
 
 # add the compiled files, commit and tag!
-git add vlui*.js -f
+git add vlui*.* -f
 git commit -m "release $version $gitsha"
 git tag -am "Release v$version." "v$version"
 
