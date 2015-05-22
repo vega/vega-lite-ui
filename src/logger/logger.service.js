@@ -20,6 +20,7 @@ angular.module('vlui')
     service.tableName = 'log_' + consts.appId;
 
     service.actions = {
+      INITIALIZE: 'INITIALIZE',
       UNDO: 'UNDO',
       REDO: 'REDO',
       DATASET_CHANGE: 'DATASET_CHANGE',
@@ -28,6 +29,7 @@ angular.module('vlui')
       CHART_RENDER: 'CHART_RENDER',
       CHART_EXPOSE: 'CHART_EXPOSE',
       CHART_TOOLTIP: 'CHART_TOOLTIP',
+      CHART_TOOLTIP_END: 'CHART_TOOLTIP_END',
       BOOKMARK_ADD: 'BOOKMARK_ADD',
       BOOKMARK_REMOVE: 'BOOKMARK_REMOVE',
       BOOKMARKS_CLEAR: 'BOOKMARKS_CLEAR',
@@ -130,6 +132,7 @@ angular.module('vlui')
     };
 
     service.createTableIfNotExists();
+    service.logInteraction(service.actions.INITIALIZE);
 
     return service;
   });
