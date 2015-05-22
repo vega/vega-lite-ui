@@ -1,6 +1,6 @@
 {
   "name": "vega-lite-ui",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "repository": "http://github.com/uwdata/vega-lite-ui",
   "author": {
     "name": "UW Interactive Data Lab",
@@ -14,10 +14,6 @@
   "scripts": {
     "test": "gulp test"
   },
-  "dependencies": {
-    "gulp-filter": "^2.0.2",
-    "wiredep": "^2.2.2"
-  },
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-jquery": "^1.2.3",
@@ -25,6 +21,7 @@
     "gulp-angular-templatecache": "^1.6.0",
     "gulp-bump": "^0.3.0",
     "gulp-concat": "^2.3.4",
+    "gulp-filter": "^2.0.2",
     "gulp-iife": "0.0.6",
     "gulp-jshint": "^1.8.4",
     "gulp-karma": "0.0.4",
