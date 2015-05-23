@@ -2,7 +2,7 @@
   <span class="hflex full-width" ng-click="clicked($event)">
 
     <span class="type-caret"
-      ng-class="{active: !disableCountOrOCaret || (field.type!=='O' && field.aggr!=='count')}">
+      ng-class="{active: !disableCountOrOCaret || (field.type!=='O' && field.aggregate!=='count')}">
       <i class="fa fa-caret-down" ng-show="showCaret"
       ></i>
       <span class="type icon-small icon-type-{{typeNames[field.type]}}"
@@ -12,7 +12,7 @@
       </span>
     </span>
 
-    <span ng-if="field.aggr!=='count'"
+    <span ng-if="field.aggregate!=='count'"
       class="field-info-text">
       <span ng-if="func(field)"
         class="field-func"
@@ -25,7 +25,7 @@
         >{{ field.name | underscore2space }}</span>
     </span>
 
-    <span ng-if="field.aggr==='count'"
+    <span ng-if="field.aggregate==='count'"
       class="field-count field-info-text">
       <span class="field-name">COUNT</span>
     </span>
@@ -37,7 +37,7 @@
     </span>
 
    <span class="no-shrink info" ng-show="showInfo">
-      <i ng-if="field.aggr !== 'count' && field.type === 'O'"
+      <i ng-if="field.aggregate !== 'count' && field.type === 'O'"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
         tooltip-content="
@@ -50,7 +50,7 @@
           <strong>Sample:</strong> <span class='sample'>{{stats.sample.join(', ')}}</span>
         </div>"
         tooltip-side="right"></i>
-      <i ng-if="field.aggr !== 'count' && field.type === 'T'"
+      <i ng-if="field.aggregate !== 'count' && field.type === 'T'"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
         tooltip-content="
@@ -62,7 +62,7 @@
           <strong>Sample:</strong> <span class='sample'>{{stats.sample.join(', ')}}</span>
         </div>"
         tooltip-side="right"></i>
-      <i ng-if="field.aggr !== 'count' && field.type === 'Q'"
+      <i ng-if="field.aggregate !== 'count' && field.type === 'Q'"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
         tooltip-content="
@@ -79,7 +79,7 @@
         </div>"
         tooltip-side="right"></i>
         <!--<strong>Skew:</strong> {{stats.skew | number:2}}<br>-->
-      <i ng-if="field.aggr === 'count'"
+      <i ng-if="field.aggregate === 'count'"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
         tooltip-content="

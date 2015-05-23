@@ -38,7 +38,7 @@ angular.module('vlui')
         };
 
         scope.func = function(field) {
-          return field.aggr || field.fn ||
+          return field.aggregate || field.fn ||
             (field.bin && 'bin') ||
             field._aggr || field._fn ||
             (field._bin && 'bin') || (field._any && 'auto');

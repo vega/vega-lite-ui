@@ -60,8 +60,8 @@ angular.module('vlui')
         scope.log = {};
         scope.log.support = function(spec, encType) {
           if (!spec) { return false; }
-          var enc = spec.enc,
-            field = enc[encType];
+          var encoding = spec.encoding,
+            field = encoding[encType];
 
           return field && field.type ==='Q' && !field.bin;
         };
@@ -69,7 +69,7 @@ angular.module('vlui')
         scope.log.toggle = function(spec, encType) {
           if (!scope.log.support(spec, encType)) { return; }
 
-          var field = spec.enc[encType],
+          var field = spec.encoding[encType],
             scale = field.scale = field.scale || {};
 
           scale.type = scale.type === 'log' ? 'linear' : 'log';
@@ -78,7 +78,7 @@ angular.module('vlui')
         scope.log.active = function(spec, encType) {
           if (!scope.log.support(spec, encType)) { return; }
 
-          var field = spec.enc[encType],
+          var field = spec.encoding[encType],
             scale = field.scale = field.scale || {};
 
           return scale.type === 'log';
@@ -101,7 +101,7 @@ angular.module('vlui')
           vl.Encoding.toggleFilterNullO(spec, stats);
         };
         scope.toggleFilterNull.support = vl.Encoding.toggleFilterNullO.support;
-        
+
         debugPopup = new Drop({
           content: element.find('.dev-tool')[0],
           target: element.find('.fa-wrench')[0],
