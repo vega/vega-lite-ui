@@ -88,7 +88,8 @@ angular.module('vlui')
 
     // TODO move these to constant to a universal vlui constant file
     Dataset.typeNames = {
-      O: 'text',
+      N: 'text',
+      O: 'text-ordinal',
       Q: 'number',
       T: 'time',
       G: 'geo'

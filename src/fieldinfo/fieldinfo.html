@@ -2,7 +2,7 @@
   <span class="hflex full-width" ng-click="clicked($event)">
 
     <span class="type-caret"
-      ng-class="{active: !disableCountOrOCaret || (field.type!=='O' && field.aggregate!=='count')}">
+      ng-class="{active: !disableCountOrOCaret || (!isTypes(field, ['N', 'O']) && field.aggregate!=='count')}">
       <i class="fa fa-caret-down" ng-show="showCaret"
       ></i>
       <span class="type icon-small icon-type-{{typeNames[field.type]}}"
@@ -37,7 +37,7 @@
     </span>
 
    <span class="no-shrink info" ng-show="showInfo">
-      <i ng-if="field.aggregate !== 'count' && field.type === 'O'"
+      <i ng-if="field.aggregate !== 'count' && isTypes(field, ['N', 'O'])"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
         tooltip-content="
