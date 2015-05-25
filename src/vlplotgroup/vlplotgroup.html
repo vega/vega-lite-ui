@@ -79,7 +79,7 @@
       <a ng-if="showBookmark"
         class="command"
         ng-click="Bookmarks.toggle(chart)"
-        ng-class="{disabled: !chart.vlSpec.enc, active: Bookmarks.isBookmarked(chart.shorthand)}">
+        ng-class="{disabled: !chart.vlSpec.encoding, active: Bookmarks.isBookmarked(chart.shorthand)}">
         <i class="fa fa-bookmark"></i>
         <small ng-if="showLabel">Bookmark</small>
       </a>

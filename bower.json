@@ -34,7 +34,7 @@
     "angular-resource": ">=1.2.0",
     "angular-cookies": ">=1.2.0",
     "angular-sanitize": ">=1.2.0",
-    "vega-lite": "~0.6.8",
+    "vega-lite": "~0.7.0",
     "angular-local-storage": "~0.2.1",
     "angular-websql": "~1.0.2",
     "drop": "~1.0.4"
