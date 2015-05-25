@@ -16,7 +16,7 @@ describe('Directive: vlPlot', function() {
       parse: {
         spec: function(spec, callback) {
           callback(function(opt) {
-            // jshint unused:false 
+            // jshint unused:false
             element.append('<div></div>');
             return {
               width: function() {},
@@ -37,10 +37,9 @@ describe('Directive: vlPlot', function() {
   }));
 
   it('should attach visualization', inject(function($compile) {
-    element = angular.element('<vl-plot vg-spec="{}"></vl-plot>');
+    element = angular.element('<vl-plot chart="{vlSpec:{marktype:\'point\', config:{}}}"></vl-plot>');
     element = $compile(element)(scope);
     scope.$digest();
-    console.log(element);
     expect(element.attr('class')).to.eql('vis ng-isolate-scope');
   }));
 });

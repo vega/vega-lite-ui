@@ -228,7 +228,7 @@ angular.module('vlui')
         }
 
         var view;
-        scope.$watch('vlSpec', function() {
+        scope.$watch('chart.vlSpec', function() {
           var spec = scope.chart.vgSpec = getVgSpec();
           render(spec);
         }, true);
