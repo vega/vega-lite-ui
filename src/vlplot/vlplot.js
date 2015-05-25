@@ -99,12 +99,15 @@ angular.module('vlui')
           }, TOOLTIP_TIMEOUT);
         }
 
-        function viewOnMouseOut() {
+        function viewOnMouseOut(event, item) {
           //clear positions
           var tooltip = element.find('.vis-tooltip');
           tooltip.css('top', null);
           tooltip.css('left', null);
           $timeout.cancel(scope.tooltipPromise);
+          if (scope.tooltipActive) {
+            Logger.logInteraction(Logger.actions.CHART_TOOLTIP_END, item.datum);
+          }
           scope.tooltipActive = false;
           scope.data = [];
           scope.$digest();
