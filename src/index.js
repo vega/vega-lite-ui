@@ -16,7 +16,7 @@ angular.module('vlui', [
   .constant('URL', window.URL)
   // Drop
   .constant('Drop', window.Drop)
-  .constant('PriorityQueue', window.PriorityQueue)
+  .constant('Heap', window.Heap)
   // constants
   .constant('consts', {
     addCount: true, // add count field to Dataset.dataschema
