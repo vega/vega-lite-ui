@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('fieldInfo', function (Dataset, Drop) {
+  .directive('fieldInfo', function (Dataset, Drop, vl) {
     return {
       templateUrl: 'fieldinfo/fieldinfo.html',
       restrict: 'E',
@@ -29,6 +29,7 @@ angular.module('vlui')
         scope.typeNames = Dataset.typeNames;
         scope.stats = Dataset.stats[scope.field.name];
         scope.count = Dataset.stats.count;
+        scope.isTypes = vl.field.isTypes;
 
         scope.clicked = function($event){
           if(scope.action && $event.target !== element.find('.fa-caret-down')[0] &&

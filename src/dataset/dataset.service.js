@@ -88,7 +88,8 @@ angular.module('vlui')
 
     // TODO move these to constant to a universal vlui constant file
     Dataset.typeNames = {
-      O: 'text',
+      N: 'text',
+      O: 'text-ordinal',
       Q: 'number',
       T: 'time',
       G: 'geo'
@@ -96,7 +97,7 @@ angular.module('vlui')
 
     Dataset.fieldOrder = vl.field.order.typeThenName;
     Dataset.getSchema = function(data, stats, order) {
-      var types = dl.read.types(data),
+      var types = dl.type.inferAll(data),
         schema = _.reduce(types, function(s, type, name){
           s.push({name: name, type: vl.data.types[type]});
           return s;
@@ -122,6 +123,7 @@ angular.module('vlui')
     Dataset.update = function(dataset) {
       if (dataset.values) {
         return $q(function(resolve, reject) {
+          // jshint unused:false
           Dataset.type = undefined;
           Dataset.updateFromData(dataset, dataset.values);
           resolve();

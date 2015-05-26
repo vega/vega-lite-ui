@@ -5,6 +5,7 @@ angular.module('vlui')
     return function(input) {
       var scaleTypes = {
         Q: 'Quantitative',
+        N: 'Nominal',
         O: 'Ordinal',
         T: 'Time'
       };
