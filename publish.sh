@@ -1,3 +1,5 @@
+set -e
+
 # read version
 gitsha=$(git rev-parse HEAD)
 version=$(cat package.json | jq .version | sed -e 's/^"//'  -e 's/"$//')
