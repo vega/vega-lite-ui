@@ -92,19 +92,20 @@
     </div>
   </div>
   <div class="vl-plot-wrapper full-width vis-{{fieldSet.key}} flex-grow-1">
-    <vl-plot vl-spec="chart.vlSpec"
+    <vl-plot chart="chart"
+
       disabled="disabled"
-      field-set-key="chart.fieldSetKey"
       is-in-list="isInList"
-      shorthand="chart.shorthand"
+
+      always-scrollable="alwaysScrollable"
       config-set="{{configSet||'small'}}"
       max-height="maxHeight"
       max-width="maxWidth"
       overflow="overflow"
-      tooltip="tooltip"
+      priority="priority"
       rescale="rescale"
       thumbnail="thumbnail"
-      always-scrollable="alwaysScrollable"
+      tooltip="tooltip"
     ></vl-plot>
   </div>
 </div>

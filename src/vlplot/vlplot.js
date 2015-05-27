@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger) {
+  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap) {
     var counter = 0;
     var MAX_CANVAS_SIZE = 32767/2, MAX_CANVAS_AREA = 268435456/4;
 
-    var renderQueue = [],
+    var renderQueue = new Heap(function(a, b){
+        return b.priority - a.priority;
+      }),
       rendering = false;
 
     function getRenderer(width, height) {
@@ -20,20 +22,21 @@ angular.module('vlui')
       templateUrl: 'vlplot/vlplot.html',
       restrict: 'E',
       scope: {
-        vgSpec: '=',
-        vlSpec: '=',
+        chart: '=',
+
+        //optional
         disabled: '=',
         isInList: '=',
-        fieldSetKey: '=',
-        shorthand: '=',
+
+        alwaysScrollable: '=',
+        configSet: '@',
         maxHeight:'=',
         maxWidth: '=',
-        alwaysScrollable: '=',
         overflow: '=',
-        tooltip: '=',
-        configSet: '@',
+        priority: '=',
         rescale: '=',
-        thumbnail: '='
+        thumbnail: '=',
+        tooltip: '=',
       },
       replace: true,
       link: function(scope, element) {
@@ -49,14 +52,14 @@ angular.module('vlui')
 
         scope.mouseover = function() {
           scope.hoverPromise = $timeout(function(){
-            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.vlSpec);
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.chart.vlSpec);
             scope.hoverFocus = !scope.thumbnail;
           }, HOVER_TIMEOUT);
         };
 
         scope.mouseout = function() {
           if (scope.hoverFocus) {
-            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, scope.vlSpec);
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, scope.chart.vlSpec);
           }
 
           $timeout.cancel(scope.hoverPromise);
@@ -113,16 +116,13 @@ angular.module('vlui')
           scope.$digest();
         }
 
-        function getVgSpec() {
-          return consts.defaultConfigSet && scope.configSet && consts.defaultConfigSet !== scope.configSet ? null : scope.vgSpec;
-        }
 
-        function getCompiledSpec() {
+        function getVgSpec() {
           var configSet = scope.configSet || consts.defaultConfigSet || {};
 
-          if (!scope.vlSpec) return;
+          if (!scope.chart.vlSpec) return;
 
-          var vlSpec = _.cloneDeep(scope.vlSpec);
+          var vlSpec = _.cloneDeep(scope.chart.vlSpec);
           vl.extend(vlSpec.config, Config[configSet]());
 
           return vl.compile(vlSpec, Dataset.stats);
@@ -148,8 +148,9 @@ angular.module('vlui')
 
         function renderQueueNext() {
           // render next item in the queue
-          if (renderQueue.length > 0) {
-            renderQueue.shift()();
+          if (renderQueue.size() > 0) {
+            var next = renderQueue.pop();
+            next.parse();
           } else {
             // or say that no one is rendering
             rendering = false;
@@ -170,13 +171,13 @@ angular.module('vlui')
             console.error('can not find vis element');
           }
 
-          var shorthand = scope.shorthand || (scope.vlSpec ? vl.Encoding.shorthand(scope.vlSpec) : '');
+          var shorthand = scope.chart.shorthand || (scope.chart.vlSpec ? vl.Encoding.shorthand(scope.chart.vlSpec) : '');
 
           scope.renderer = getRenderer(spec);
 
           function parseVega() {
             // if no longer a part of the list, cancel!
-            if (scope.destroyed || scope.disabled || (scope.isInList && scope.fieldSetKey && !scope.isInList(scope.fieldSetKey))) {
+            if (scope.destroyed || scope.disabled || (scope.isInList && scope.chart.fieldSetKey && !scope.isInList(scope.chart.fieldSetKey))) {
               console.log('cancel rendering', shorthand);
               renderQueueNext();
               return;
@@ -198,7 +199,7 @@ angular.module('vlui')
               view.renderer(getRenderer(spec.width, scope.height));
               view.update();
 
-              Logger.logInteraction(Logger.actions.CHART_RENDER, scope.vlSpec);
+              Logger.logInteraction(Logger.actions.CHART_RENDER, scope.chart.vlSpec);
                 rescaleIfEnable();
 
               var endChart = new Date().getTime();
@@ -217,21 +218,16 @@ angular.module('vlui')
             parseVega();
           } else {
             // otherwise queue it
-            renderQueue.push(parseVega);
+            renderQueue.push({
+              priority: scope.priority || 0,
+              parse: parseVega
+            });
           }
         }
 
         var view;
-        scope.$watch('vgSpec',function() {
-          var spec = getVgSpec();
-          render(spec);
-        }, true);
-
-        scope.$watch('vlSpec', function() {
-          var vgSpec = getVgSpec();
-          if (vgSpec) { return; } //no need to update
-
-          var spec = getCompiledSpec();
+        scope.$watch('chart.vlSpec', function() {
+          var spec = scope.chart.vgSpec = getVgSpec();
           render(spec);
         }, true);
 

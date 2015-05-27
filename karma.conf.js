@@ -6,7 +6,7 @@ var bowerDeps = wiredep({
   directory: 'bower_components',
   dependencies: true,
   devDependencies: true
-}); 
+});
 
 var src = 'src',
   tmp = '.tmp';
@@ -41,7 +41,7 @@ module.exports = function(config) {
       'karma-phantomjs-launcher',
       'karma-jquery',
       'karma-chai-jquery',
-      'karma-spec-reporter'
+      'karma-mocha-reporter'
     ],
 
     // list of files / patterns to load in the browser
@@ -57,7 +57,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['spec'],
+    reporters: ['mocha'],
 
     // web server port
     port: 9875,

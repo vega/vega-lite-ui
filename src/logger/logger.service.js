@@ -132,7 +132,8 @@ angular.module('vlui')
     };
 
     service.createTableIfNotExists();
-    service.logInteraction(service.actions.INITIALIZE);
+    console.log('app:', consts.appId, 'started');
+    service.logInteraction(service.actions.INITIALIZE, consts.appId);
 
     return service;
   });

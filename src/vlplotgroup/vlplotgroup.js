@@ -16,11 +16,24 @@ angular.module('vlui')
       restrict: 'E',
       replace: true,
       scope: {
+        /* pass to vlplot **/
         chart: '=',
 
         //optional
         disabled: '=',
         isInList: '=',
+
+        alwaysScrollable: '=',
+        configSet: '@',
+        maxHeight: '=',
+        maxWidth: '=',
+        overflow: '=',
+        priority: '=',
+        rescale: '=',
+        thumbnail: '=',
+        tooltip: '=',
+
+        /* vlplotgroup specific */
 
         fieldSet: '=',
 
@@ -28,26 +41,16 @@ angular.module('vlui')
         showDebug: '=',
         showExpand: '=',
         showFilterNull: '@',
+        showLabel: '@',
         showLog: '@',
         showMarkType: '@',
         showSort: '@',
         showTranspose: '@',
 
-        showLabel: '@',
-
-        configSet: '@',
         alwaysSelected: '=',
         isSelected: '=',
         highlighted: '=',
         expandAction: '&',
-
-        maxHeight: '=',
-        maxWidth: '=',
-        overflow: '=',
-        alwaysScrollable: '=',
-        rescale: '=',
-        tooltip: '=',
-        thumbnail: '='
       },
       link: function postLink(scope, element) {
         scope.Bookmarks = Bookmarks;
