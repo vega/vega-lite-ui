@@ -125,7 +125,7 @@ angular.module('vlui')
           var vlSpec = _.cloneDeep(scope.chart.vlSpec);
           vl.extend(vlSpec.config, Config[configSet]());
 
-          return vl.compile(vlSpec, Dataset.stats);
+          return vl.parse(vlSpec, Dataset.stats);
         }
 
         function rescaleIfEnable() {
