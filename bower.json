@@ -36,7 +36,7 @@
     "angular-websql": "~1.0.2",
     "drop": "~1.0.4",
     "heap": "~0.2.6",
-    "vega-lite": "^0.7.2",
+    "vega-lite": "^0.7.4",
     "datalib": "^1.1.12"
   },
   "resolutions": {
