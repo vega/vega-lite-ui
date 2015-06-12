@@ -236,7 +236,7 @@ angular.module('vlui')
 
         scope.$on('$destroy', function() {
           console.log('vlplot destroyed');
-          if(view){
+          if (view) {
             view.off('mouseover');
             view.off('mouseout');
             view = null;

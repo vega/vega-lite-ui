@@ -132,6 +132,11 @@ angular.module('vlui')
           Logger.logInteraction(Logger.actions.TRANSPOSE_TOGGLE, scope.chart.shorthand);
           vl.Encoding.transpose(scope.chart.vlSpec);
         };
+
+        scope.$on('$destroy', function() {
+          scope.chart = null;
+          debugPopup.destroy();
+        });
       }
     };
   });
