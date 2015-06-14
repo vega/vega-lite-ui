@@ -120,6 +120,8 @@ angular.module('vlui')
     };
 
     // update the schema and stats
+    Dataset.onUpdate = [];
+
     Dataset.update = function(dataset) {
       if (dataset.values) {
         return $q(function(resolve, reject) {
@@ -130,7 +132,7 @@ angular.module('vlui')
         });
       }
 
-      return $http.get(dataset.url, {cache: true}).then(function(response) {
+      var updatePromise = $http.get(dataset.url, {cache: true}).then(function(response) {
         var data;
 
         // first see whether the data is JSON, otherwise try to parse CSV
@@ -156,6 +158,12 @@ angular.module('vlui')
 
         Dataset.updateFromData(dataset, data);
       });
+
+      Dataset.onUpdate.forEach(function(listener) {
+        updatePromise = updatePromise.then(listener);
+      });
+
+      return updatePromise;
     };
 
     Dataset.updateFromData = function(dataset, data) {

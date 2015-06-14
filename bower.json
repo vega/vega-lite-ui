@@ -37,7 +37,9 @@
     "drop": "~1.0.4",
     "heap": "~0.2.6",
     "vega-lite": "^0.7.4",
-    "datalib": "^1.1.12"
+    "datalib": "^1.1.12",
+    "angular-ui-select": "~0.11.2",
+    "selectize": "~0.12.1"
   },
   "resolutions": {
     "angular": ">=1.3.15"
