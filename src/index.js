@@ -26,7 +26,9 @@ angular.module('vlui', [
     defaultConfigSet: 'large',
     appId: 'vlui',
     priority: {
-      bookmark: 1000
+      bookmark: 0,
+      popup: 0,
+      vislist: 1000
     }
   });
   // .config(function(uiZeroclipConfigProvider) {
