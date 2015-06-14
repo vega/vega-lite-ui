@@ -24,7 +24,12 @@ angular.module('vlui', [
     useUrl: true,
     logging: false,
     defaultConfigSet: 'large',
-    appId: 'vlui'
+    appId: 'vlui',
+    priority: {
+      bookmark: 0,
+      popup: 0,
+      vislist: 1000
+    }
   });
   // .config(function(uiZeroclipConfigProvider) {
   //   // config ZeroClipboard
