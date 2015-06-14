@@ -123,41 +123,43 @@ angular.module('vlui')
     Dataset.onUpdate = [];
 
     Dataset.update = function(dataset) {
+      var updatePromise;
+
       if (dataset.values) {
-        return $q(function(resolve, reject) {
+        updatePromise = $q(function(resolve, reject) {
           // jshint unused:false
           Dataset.type = undefined;
           Dataset.updateFromData(dataset, dataset.values);
           resolve();
         });
-      }
+      } else {
+        updatePromise = $http.get(dataset.url, {cache: true}).then(function(response) {
+          var data;
 
-      var updatePromise = $http.get(dataset.url, {cache: true}).then(function(response) {
-        var data;
-
-        // first see whether the data is JSON, otherwise try to parse CSV
-        if (_.isObject(response.data)) {
-           data = response.data;
-           Dataset.type = 'json';
-        } else {
-           var result = Papa.parse(response.data, {
-            dynamicTyping: true,
-            header: true
-          });
-
-          if (result.errors.length === 0) {
-            data = result.data;
-            Dataset.type = 'csv';
+          // first see whether the data is JSON, otherwise try to parse CSV
+          if (_.isObject(response.data)) {
+             data = response.data;
+             Dataset.type = 'json';
           } else {
-            _.each(result.errors, function(err) {
-              Alerts.add(err.message, 2000);
+             var result = Papa.parse(response.data, {
+              dynamicTyping: true,
+              header: true
             });
-            return;
-          }
-        }
 
-        Dataset.updateFromData(dataset, data);
-      });
+            if (result.errors.length === 0) {
+              data = result.data;
+              Dataset.type = 'csv';
+            } else {
+              _.each(result.errors, function(err) {
+                Alerts.add(err.message, 2000);
+              });
+              return;
+            }
+          }
+
+          Dataset.updateFromData(dataset, data);
+        });
+      }
 
       Dataset.onUpdate.forEach(function(listener) {
         updatePromise = updatePromise.then(listener);
