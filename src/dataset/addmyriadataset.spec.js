@@ -3,7 +3,7 @@
 describe('Directive: addMyriaDataset', function () {
 
   // load the directive's module
-  beforeEach(module('polestar'));
+  beforeEach(module('vlui'));
 
   var element,
     scope;
