@@ -3,6 +3,7 @@
 
 angular.module('vlui', [
   'LocalStorageModule',
+  'ui.select',
   'angular-websql'
   ])
   .constant('_', window._)
@@ -29,7 +30,8 @@ angular.module('vlui', [
       bookmark: 0,
       popup: 0,
       vislist: 1000
-    }
+    },
+    myriaRest: 'http://ec2-52-1-38-182.compute-1.amazonaws.com:8753'
   });
   // .config(function(uiZeroclipConfigProvider) {
   //   // config ZeroClipboard
