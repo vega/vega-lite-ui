@@ -21,7 +21,7 @@ angular.module('vlui')
         showRemove: '=',
         removeAction: '&',
         action: '&',
-        disableCountOrOCaret: '='
+        disableCountCaret: '='
       },
       link: function(scope, element) {
         var funcsPopup;
