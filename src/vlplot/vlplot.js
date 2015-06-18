@@ -186,30 +186,35 @@ angular.module('vlui')
             var start = new Date().getTime();
             // render if still a part of the list
             vg.parse.spec(spec, function(chart) {
-              var endParse = new Date().getTime();
-              view = null;
-              view = chart({el: element[0]});
+              try {
+                var endParse = new Date().getTime();
+                view = null;
+                view = chart({el: element[0]});
 
-              if (!consts.useUrl) {
-                view.data({raw: Dataset.data});
+                if (!consts.useUrl) {
+                  view.data({raw: Dataset.data});
+                }
+
+                scope.width =  view.width();
+                scope.height = view.height();
+                view.renderer(getRenderer(spec.width, scope.height));
+                view.update();
+
+                Logger.logInteraction(Logger.actions.CHART_RENDER, scope.chart.vlSpec);
+                  rescaleIfEnable();
+
+                var endChart = new Date().getTime();
+                console.log('parse spec', (endParse-start), 'charting', (endChart-endParse), shorthand);
+                if (scope.tooltip) {
+                  view.on('mouseover', viewOnMouseOver);
+                  view.on('mouseout', viewOnMouseOut);
+                }
+              } catch (e) {
+                console.error(e);
+              } finally {
+                renderQueueNext();
               }
 
-              scope.width =  view.width();
-              scope.height = view.height();
-              view.renderer(getRenderer(spec.width, scope.height));
-              view.update();
-
-              Logger.logInteraction(Logger.actions.CHART_RENDER, scope.chart.vlSpec);
-                rescaleIfEnable();
-
-              var endChart = new Date().getTime();
-              console.log('parse spec', (endParse-start), 'charting', (endChart-endParse), shorthand);
-              if (scope.tooltip) {
-                view.on('mouseover', viewOnMouseOver);
-                view.on('mouseout', viewOnMouseOut);
-              }
-
-              renderQueueNext();
             });
           }
 
