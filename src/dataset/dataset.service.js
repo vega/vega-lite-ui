@@ -106,7 +106,7 @@ angular.module('vlui')
           };
 
           if (field.type === 'Q' && stats[field.name].distinct <= 5) {
-            field.type = 'N';
+            field.type = 'O';
           }
 
           s.push(field);
