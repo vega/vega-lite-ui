@@ -98,8 +98,18 @@ angular.module('vlui')
     Dataset.fieldOrder = vl.field.order.typeThenName;
     Dataset.getSchema = function(data, stats, order) {
       var types = dl.type.inferAll(data),
-        schema = _.reduce(types, function(s, type, name){
-          s.push({name: name, type: vl.data.types[type]});
+        schema = _.reduce(types, function(s, type, name) {
+          var field = {
+            name: name,
+            type: vl.data.types[type],
+            primitiveType: type
+          };
+
+          if (field.type === 'Q' && stats[field.name].distinct <= 5) {
+            field.type = 'N';
+          }
+
+          s.push(field);
           return s;
         }, []);
 
