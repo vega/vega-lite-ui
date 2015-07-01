@@ -11,11 +11,10 @@ angular.module('vlui', [
   .constant('dl', window.dl)
   .constant('vl', window.vl)
   .constant('vg', window.vg)
-  // Papa
+  // other libraries
   .constant('Papa', window.Papa)
   .constant('Blob', window.Blob)
   .constant('URL', window.URL)
-  // Drop
   .constant('Drop', window.Drop)
   .constant('Heap', window.Heap)
   // constants
@@ -33,9 +32,3 @@ angular.module('vlui', [
     },
     myriaRest: 'http://ec2-52-1-38-182.compute-1.amazonaws.com:8753'
   });
-  // .config(function(uiZeroclipConfigProvider) {
-  //   // config ZeroClipboard
-  //   uiZeroclipConfigProvider.setZcConf({
-  //     swfPath: 'bower_components/zeroclipboard/dist/ZeroClipboard.swf'
-  //   });
-  // });
