@@ -37,7 +37,7 @@
     "angular-zeroclipboard": "~0.4.0",
     "drop": "~1.0.4",
     "heap": "~0.2.6",
-    "vega": "~1.5.4",
+    "vega": "^1.5.0",
     "vega-lite": "^0.7.7",
     "datalib": "^1.3.0",
     "angular-ui-select": "~0.11.2",
