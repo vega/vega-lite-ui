@@ -149,8 +149,6 @@ angular.module('vlui')
       // TODO add sampling back here, but that's less important for now
       var summary = dl.summary(data);
 
-      console.log('summary', summary);
-
       return summary.reduce(function(s, profile) {
         s[profile.field] = profile;
         return s;
