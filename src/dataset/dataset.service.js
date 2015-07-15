@@ -96,6 +96,14 @@ angular.module('vlui')
     };
 
 
+  var typeOrder = {
+    N: 0,
+    O: 0,
+    G: 2,
+    T: 3,
+    Q: 4
+  };
+
   Dataset.fieldOrderBy = {};
 
   Dataset.fieldOrderBy.type = function(field) {
