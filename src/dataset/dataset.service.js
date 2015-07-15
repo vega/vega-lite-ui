@@ -125,7 +125,7 @@ angular.module('vlui')
     return field.name;
   };
 
-  Dataset.fieldOrderBy.typeThenCardinality = function(field, stats){
+  Dataset.fieldOrderBy.cardinality = function(field, stats){
     return stats[field.name].distinct;
   };
 
