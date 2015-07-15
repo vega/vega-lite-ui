@@ -95,7 +95,33 @@ angular.module('vlui')
       G: 'geo'
     };
 
-    Dataset.fieldOrder = vl.field.order.typeThenName;
+
+  Dataset.fieldOrderBy = {};
+
+  Dataset.fieldOrderBy.type = function(field) {
+    if (field.aggregate==='count') return 4;
+    return typeOrder[field.type];
+  };
+
+  Dataset.fieldOrderBy.typeThenName = function(field) {
+    return Dataset.fieldOrderBy.type(field) + '_' +
+      (field.aggregate === 'count' ? '~' : field.name.toLowerCase());
+      // ~ is the last character in ASCII
+  };
+
+  Dataset.fieldOrderBy.original = function() {
+    return 0; // no swap will occur
+  };
+
+  Dataset.fieldOrderBy.name = function(field) {
+    return field.name;
+  };
+
+  Dataset.fieldOrderBy.typeThenCardinality = function(field, stats){
+    return stats[field.name].distinct;
+  };
+
+    Dataset.fieldOrder = Dataset.fieldOrderBy.typeThenName;
     Dataset.getSchema = function(data, stats, order) {
       var types = dl.type.inferAll(data),
         schema = _.reduce(types, function(s, type, name) {
@@ -113,7 +139,7 @@ angular.module('vlui')
           return s;
         }, []);
 
-      schema = dl.stablesort(schema, order || vl.field.order.typeThenName, vl.field.order.name);
+      schema = dl.stablesort(schema, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.name);
 
       schema.push(vl.field.count());
       return schema;
@@ -122,6 +148,8 @@ angular.module('vlui')
     Dataset.getStats = function(data) {
       // TODO add sampling back here, but that's less important for now
       var summary = dl.summary(data);
+
+      console.log('summary', summary);
 
       return summary.reduce(function(s, profile) {
         s[profile.field] = profile;
