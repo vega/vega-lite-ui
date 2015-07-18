@@ -365,7 +365,7 @@ h4 {
   background: url("../assets/images/field_geo.png") no-repeat;
 }
 
-.icon-type-text{
+.icon-type-text, .icon-type-text-ordinal{
   @extend .icon-type;
   background: url("../assets/images/field_text.png") no-repeat;
 }
