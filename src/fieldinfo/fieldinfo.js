@@ -28,7 +28,6 @@ angular.module('vlui')
 
         scope.typeNames = Dataset.typeNames;
         scope.stats = Dataset.stats[scope.field.name];
-        scope.count = Dataset.stats.count;
         scope.isTypes = vl.field.isTypes;
 
         scope.clicked = function($event){

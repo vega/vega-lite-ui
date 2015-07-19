@@ -153,16 +153,6 @@ angular.module('vlui')
       return schema;
     };
 
-    Dataset.getStats = function(data) {
-      // TODO add sampling back here, but that's less important for now
-      var summary = dl.summary(data);
-
-      return summary.reduce(function(s, profile) {
-        s[profile.field] = profile;
-        return s;
-      }, {count: data.length});
-    };
-
     // update the schema and stats
     Dataset.onUpdate = [];
 
@@ -216,7 +206,7 @@ angular.module('vlui')
       Dataset.data = data;
 
       Dataset.currentDataset = dataset;
-      Dataset.stats = Dataset.getStats(Dataset.data);
+      Dataset.stats = vl.data.stats(Dataset.data);
       Dataset.dataschema = Dataset.getSchema(Dataset.data, Dataset.stats);
       Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
     };
