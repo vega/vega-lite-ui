@@ -52,10 +52,10 @@ a {
 }
 
 
-a.command {
+a.command, div.command {
   margin-left: 10px;
 
-  &.debug {
+  &.debug, .debug {
     color: #72a386;
   }
 

@@ -54,6 +54,9 @@ angular.module('vlui')
         scope.consts = consts;
         scope.Dataset = Dataset;
 
+        scope.logCode = function(name, value) {
+          console.log(name+':\n\n', JSON.stringify(value));
+        };
 
         // TOGGLE LOG
 

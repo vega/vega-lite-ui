@@ -18,22 +18,31 @@
     <div class="toolbox">
       <a ng-show="consts.debug && showDebug"
         class="command debug">
-        <i class="fa fa-wrench" ng-click="shCopied=false; vlCopied=false; vgCopied=false;"></i>
+        <i class="fa fa-wrench" ng-click="shCopied=''; vlCopied=''; vgCopied='';"></i>
       </a>
       <div class="drop-container">
         <div class="popup-menu popup-command no-shrink dev-tool">
-          <a class="command debug" ui-zeroclip zeroclip-copied="shCopied=true" zeroclip-model="chart.shorthand">
-            Copy Vls
-            <span ng-show="shCopied">(Copied)</span>
-          </a>
-          <a class="command debug" ui-zeroclip zeroclip-copied="vlCopied=true" zeroclip-model="chart.cleanSpec | compactJSON">
-            Copy Vl
-            <span ng-show="vlCopied">(Copied)</span>
-          </a>
-          <a class="command debug" ui-zeroclip zeroclip-copied="vgCopied=true" zeroclip-model="chart.vgSpec | compactJSON">
-            Copy Vg
-            <span ng-show="vgCopied">(Copied)</span>
-          </a>
+          <div class="command debug">
+            <span class="debug">Vls</span>
+            <a class="debug" ui-zeroclip zeroclip-copied="shCopied='(Coplied)'" zeroclip-model="chart.shorthand">Copy</a>
+            /
+            <a class="debug" ng-click="logCode('VL shorthand', chart.shorthand); shCopied='(Logged)';">Log</a>
+            <span>{{shCopied}}</span>
+          </div>
+          <div class="command debug">
+            <span class="debug">Vl</span>
+            <a class="debug" ui-zeroclip zeroclip-copied="vlCopied='(Coplied)'" zeroclip-model="chart.cleanSpec | compactJSON">Copy</a>
+            /
+            <a class="debug" ng-click="logCode('Vega-lite', chart.cleanSpec); vlCopied='(Logged)';">Log</a>
+            <span>{{vlCopied}}</span>
+          </div>
+          <div class="command debug">
+            <span class="debug">Vg</span>
+            <a class="debug" ui-zeroclip zeroclip-copied="vgCopied='(Coplied)'" zeroclip-model="chart.vgSpec | compactJSON">Copy</a>
+            /
+            <a class="debug" ng-click="logCode('Vega', chart.vgSpec); vgCopied='(Logged)';">Log</a>
+            <span>{{vgCopied}}</span>
+          </div>
           <a class="command debug"
             ng-href="{{ {type:'vl', encoding: chart.cleanSpec} | reportUrl }}"
             target="_blank">Report Bad Render</a>
