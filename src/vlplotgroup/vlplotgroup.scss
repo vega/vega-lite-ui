@@ -93,7 +93,6 @@
   overflow: hidden;
   text-align: center;
   display: flex;
-  position: relative;
 
   .vis.fit {
     width:100%;
@@ -107,16 +106,10 @@
   .vis.overflow {
     //cursor: pointer;
     width: 100%;
-    @extend .persist-scroll;
-
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0);
-    }
-    overflow: scroll;
+    overflow: hidden;
     &.scroll {
-      &::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.5);
-      }
+      @extend .persist-scroll;
+      overflow: scroll;
     }
   }
 }
