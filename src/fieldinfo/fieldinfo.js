@@ -40,7 +40,7 @@ angular.module('vlui')
         scope.func = function(field) {
           return field.aggregate || field.timeUnit ||
             (field.bin && 'bin') ||
-            field._aggr || field._timeUnit ||
+            field._aggregate || field._timeUnit ||
             (field._bin && 'bin') || (field._any && 'auto');
         };
 
