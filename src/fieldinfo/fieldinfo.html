@@ -18,7 +18,8 @@
         class="field-func"
         ng-class="{any: field._any}"
         >
-        {{ func(field) }}
+        <!-- TODO: remove this hack -->
+        {{ func(field) === 'avg' ? 'mean' : func(field) }}
       </span><!--
       --><span class="field-name"
         ng-class="{hasfunc: func(field), any: field._any}"
