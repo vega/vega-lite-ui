@@ -49,6 +49,7 @@ angular.module('vlui')
         scope.hoverFocus = false;
         scope.tooltipActive = false;
         scope.destroyed = false;
+        var format = vl.format('');
 
         scope.mouseover = function() {
           scope.hoverPromise = $timeout(function(){
@@ -76,7 +77,7 @@ angular.module('vlui')
             // convert data into a format that we can easily use with ng table and ng-repeat
             // TODO: revise if this is actually a good idea
             scope.data = _.pairs(item.datum.data).map(function(p) {
-              p.isNumber = vg.isNumber(p[1]);
+              p[1] = vg.isNumber(p[1]) ? format(p[1]) : p[1];
               return p;
             });
             scope.$digest();
