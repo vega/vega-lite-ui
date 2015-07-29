@@ -12,13 +12,6 @@ angular.module('vlui')
 
     var service = {};
 
-    // get user id once in the beginning
-    var user = $location.search().user;
-
-    service.db = $webSql.openDatabase('logs', '1.0', 'Logs', 2 * 1024 * 1024);
-
-    service.tableName = 'log_' + consts.appId;
-
     service.actions = {
       INITIALIZE: 'INITIALIZE',
       UNDO: 'UNDO',
@@ -53,6 +46,20 @@ angular.module('vlui')
       CLUSTER_SELECT: 'CLUSTER_SELECT',
       LOAD_MORE: 'LOAD_MORE'
     };
+
+    // create noop service if websql is not supported
+    if (window.openDatabase === undefined) {
+      console.warn('No websql support and thus no logging.');
+      service.logInteraction = function() {};
+      return service;
+    }
+
+    // get user id once in the beginning
+    var user = $location.search().user;
+
+    service.db = $webSql.openDatabase('logs', '1.0', 'Logs', 2 * 1024 * 1024);
+
+    service.tableName = 'log_' + consts.appId;
 
     service.createTableIfNotExists = function() {
       service.db.createTable(service.tableName, {
