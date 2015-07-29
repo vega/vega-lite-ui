@@ -48,7 +48,7 @@ angular.module('vlui')
     };
 
     // create noop service if websql is not supported
-    if (window.openDatabase === undefined) {
+    if ($window.openDatabase === undefined) {
       console.warn('No websql support and thus no logging.');
       service.logInteraction = function() {};
       return service;
