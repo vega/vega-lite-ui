@@ -25,6 +25,8 @@ angular.module('vlui', [
     logging: false,
     defaultConfigSet: 'large',
     appId: 'vlui',
+    // embedded polestar and voyager with known data
+    embeddedData: window.vguiData || undefined,
     priority: {
       bookmark: 0,
       popup: 0,
