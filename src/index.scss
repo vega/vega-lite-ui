@@ -388,11 +388,19 @@ h4 {
 /**** Components ****/
 
 .controls {
-  margin-right: 150px;
+  margin-right: 40px;
   margin-top: 10px;
   a {
     margin: 10px;
   }
+}
+
+.logo {
+  padding: 0 20px;
+  background: url("../assets/images/idl-logo.png") center no-repeat;
+  display: block;
+  width: 48px;
+  height: 34px;
 }
 
 .modal {
