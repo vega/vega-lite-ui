@@ -186,7 +186,7 @@ angular.module('vlui')
             Dataset.type = 'csv';
           } else {
             _.each(result.errors, function(err) {
-              Alerts.add(err.message, 2000);
+              Alerts.add(err.message, 6000);
             });
             return;
           }
