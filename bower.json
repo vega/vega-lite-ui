@@ -25,7 +25,6 @@
     "tests"
   ],
   "dependencies": {
-    "papaparse": "~4.1.1",
     "lodash": "~3.10.0",
     "angular-mocks": "~1.4.1",
     "angular": "~1.4.1",
