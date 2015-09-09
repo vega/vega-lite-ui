@@ -4,7 +4,6 @@
 angular.module('vlui', [
   'LocalStorageModule',
   'ui.select',
-  'angular-websql'
   ])
   .constant('_', window._)
   // datalib, vegalite, vega

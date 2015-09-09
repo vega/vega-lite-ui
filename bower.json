@@ -33,7 +33,6 @@
     "angular-cookies": "~1.4.1",
     "angular-sanitize": "~1.4.1",
     "angular-local-storage": "~0.2.2",
-    "angular-websql": "~1.0.2",
     "angular-zeroclipboard": "~0.4.0",
     "drop": "~1.0.4",
     "heap": "~0.2.6",

@@ -8,7 +8,7 @@
  * Service in the vega-lite-ui.
  */
 angular.module('vlui')
-  .service('Logger', function ($location, $window, $webSql, consts, Papa, Blob, URL) {
+  .service('Logger', function ($location, $window, consts) {
 
     var service = {};
 
@@ -47,99 +47,14 @@ angular.module('vlui')
       LOAD_MORE: 'LOAD_MORE'
     };
 
-    // create noop service if websql is not supported
-    if ($window.openDatabase === undefined) {
-      console.warn('No websql support and thus no logging.');
-      service.logInteraction = function() {};
-      return service;
-    }
-
-    // get user id once in the beginning
-    var user = $location.search().user;
-
-    service.db = $webSql.openDatabase('logs', '1.0', 'Logs', 2 * 1024 * 1024);
-
-    service.tableName = 'log_' + consts.appId;
-
-    service.createTableIfNotExists = function() {
-      service.db.createTable(service.tableName, {
-        'userid':{
-          'type': 'INTEGER',
-          'null': 'NOT NULL'
-        },
-        'time':{
-          'type': 'TIMESTAMP',
-          'null': 'NOT NULL',
-          'default': 'CURRENT_TIMESTAMP'
-        },
-        'action':{
-          'type': 'TEXT',
-          'null': 'NOT NULL'
-        },
-        'data': {
-          'type': 'TEXT'
-        },
-        'diff': {
-          'type': 'TEXT'
-        }
-      });
-    };
-
-    service.clear = function() {
-      var r = $window.confirm('Really clear the logs?');
-      if (r === true) {
-        service.db.dropTable(service.tableName);
-        service.createTableIfNotExists();
-      }
-    };
-
-    service.export = function() {
-      service.db.selectAll(service.tableName).then(function(results) {
-        if (results.rows.length === 0) {
-          console.warn('No logs');
-          return;
-        }
-
-        var rows = [];
-
-        for(var i=0; i < results.rows.length; i++) {
-          rows.push(results.rows.item(i));
-        }
-        var csv = Papa.unparse(rows);
-
-        var csvData = new Blob([csv], { type: 'text/csv' });
-        var csvUrl = URL.createObjectURL(csvData);
-
-        var element = angular.element('<a/>');
-        element.attr({
-          href: csvUrl,
-          target: '_blank',
-          download: service.tableName + '.csv'
-        })[0].click();
-      });
-    };
-
     service.logInteraction = function(action, data, diff) {
       if (!consts.logging) {
         return;
       }
 
-      // console.log('[Logging] ', action, data);
-
-      var row = {userid: user, action: action};
-      if (data !== undefined) {
-        row.data = JSON.stringify(data);
-      }
-
-      if (diff !== undefined) {
-        row.diff = JSON.stringify(diff);
-      }
-
-      service.db.insert(service.tableName, row).then(function(/*results*/) {});
+      console.log('[Logging] ', action, data, diff);
     };
 
-    service.createTableIfNotExists();
-    console.log('app:', consts.appId, 'started');
     service.logInteraction(service.actions.INITIALIZE, consts.appId);
 
     return service;
