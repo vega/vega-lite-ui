@@ -7,7 +7,7 @@
  * # pasteDataset
  */
 angular.module('vlui')
-  .directive('pasteDataset', function (Dataset, Alerts, Logger, Config, _, Papa) {
+  .directive('pasteDataset', function (Dataset, Alerts, Logger, Config, _, dl) {
     return {
       templateUrl: 'dataset/pastedataset.html',
       restrict: 'E',
@@ -19,21 +19,7 @@ angular.module('vlui')
 
         // need to give this a unique name because we share the namespace
         scope.addPasted = function() {
-          var data;
-
-          var result = Papa.parse(scope.data, {
-            dynamicTyping: true,
-            header: true
-          });
-
-          if (result.errors.length === 0) {
-            data = result.data;
-          } else {
-            _.each(result.errors, function(err) {
-              Alerts.add(err.message, 2000);
-            });
-            return;
-          }
+          var data = dl.read(response.data, {type: 'csv'});
 
           var dataset = {
             id: Date.now(),  // time as id
