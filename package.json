@@ -1,7 +1,7 @@
 {
   "name": "vega-lite-ui",
   "version": "0.7.16",
-  "repository": "http://github.com/uwdata/vega-lite-ui",
+  "repository": "http://github.com/vega/vega-lite-ui",
   "author": {
     "name": "UW Interactive Data Lab",
     "url": "http://idl.cs.washington.edu"
