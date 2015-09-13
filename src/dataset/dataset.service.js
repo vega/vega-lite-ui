@@ -75,7 +75,7 @@ function getNameMap(dataschema) {
 }
 
 angular.module('vlui')
-  .factory('Dataset', function($http, $q, Alerts, _, Papa, dl, vl) {
+  .factory('Dataset', function($http, $q, Alerts, _, dl, vl) {
     var Dataset = {};
 
     Dataset.datasets = datasets;
@@ -176,20 +176,8 @@ angular.module('vlui')
            data = response.data;
            Dataset.type = 'json';
         } else {
-           var result = Papa.parse(response.data, {
-            dynamicTyping: true,
-            header: true
-          });
-
-          if (result.errors.length === 0) {
-            data = result.data;
-            Dataset.type = 'csv';
-          } else {
-            _.each(result.errors, function(err) {
-              Alerts.add(err.message, 6000);
-            });
-            return;
-          }
+          data = dl.read(response.data, {type: 'csv'});
+          Dataset.type = 'csv';
         }
 
         Dataset.updateFromData(dataset, data);

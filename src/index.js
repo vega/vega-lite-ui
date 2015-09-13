@@ -11,7 +11,6 @@ angular.module('vlui', [
   .constant('vl', window.vl)
   .constant('vg', window.vg)
   // other libraries
-  .constant('Papa', window.Papa)
   .constant('Blob', window.Blob)
   .constant('URL', window.URL)
   .constant('Drop', window.Drop)
