@@ -10,6 +10,7 @@
     "Dominik Moritz <domoritz@cs.washington.edu> (http://domoritz.de)",
     "Kanit Wongsuphasawat <kanitw@gmail.com> (http://kanitw.yellowpigz.com)"
   ],
+  "license": "BSD-3-Clause",
   "main": "vlui.js",
   "scripts": {
     "deploy": "npm run lint && npm run test && scripts/deploy.sh",
