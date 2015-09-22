@@ -10,13 +10,17 @@
     "Dominik Moritz <domoritz@cs.washington.edu> (http://domoritz.de)",
     "Kanit Wongsuphasawat <kanitw@gmail.com> (http://kanitw.yellowpigz.com)"
   ],
+  "license": "BSD-3-Clause",
   "main": "vlui.js",
   "scripts": {
+    "postinstall": "bower install",
     "deploy": "npm run lint && npm run test && scripts/deploy.sh",
+    "build": "gulp build",
     "lint": "gulp jshint",
     "test": "gulp test"
   },
   "devDependencies": {
+    "bower": "^1.5.2",
     "chai": "^3.2.0",
     "chai-jquery": "^2.0.0",
     "gulp": "^3.9.0",
@@ -34,6 +38,7 @@
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.4.0",
     "gulp-wrapper": "^1.0.0",
+    "jasmine-core": "^2.3.4",
     "jshint-stylish": "^2.0.1",
     "karma": "^0.13.9",
     "karma-chai": "^0.1.0",
@@ -47,6 +52,7 @@
     "karma-sinon-chai": "^1.0.0",
     "lodash": "^3.10.1",
     "mocha": "^2.3.0",
+    "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
     "request": "^2.61.0",
     "require-dir": "^0.3.0",
