@@ -1,5 +1,5 @@
 <div class="vl-plot-group card vflex">
-  <div ng-show="showExpand || fieldSet || showBookmark || showToggle"
+  <div ng-show="showExpand || fieldSet || showTranspose || showBookmark && Bookmarks.isSupported || showToggle"
     class="vl-plot-group-header full-width no-shrink">
     <div class="field-set-info" >
       <field-info ng-repeat="field in fieldSet"
@@ -94,7 +94,7 @@
         <i class="fa fa-refresh transpose"></i>
         <small ng-if="showLabel">Transpose</small>
       </a>
-      <a ng-if="showBookmark"
+      <a ng-if="showBookmark && Bookmarks.isSupported"
         class="command"
         ng-click="Bookmarks.toggle(chart)"
         ng-class="{disabled: !chart.vlSpec.encoding, active: Bookmarks.isBookmarked(chart.shorthand)}">

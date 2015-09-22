@@ -12,6 +12,7 @@ angular.module('vlui')
     var Bookmarks = function() {
       this.dict = {};
       this.length = 0;
+      this.isSupported = localStorageService.isSupported;
     };
 
     var proto = Bookmarks.prototype;
