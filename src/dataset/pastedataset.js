@@ -19,7 +19,7 @@ angular.module('vlui')
 
         // need to give this a unique name because we share the namespace
         scope.addPasted = function() {
-          var data = dl.read(response.data, {type: 'csv'});
+          var data = dl.read(scope.data, {type: 'csv'});
 
           var dataset = {
             id: Date.now(),  // time as id
