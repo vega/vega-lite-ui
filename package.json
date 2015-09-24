@@ -15,6 +15,7 @@
   "scripts": {
     "postinstall": "bower install",
     "deploy": "npm run lint && npm run test && scripts/deploy.sh",
+    "watch": "gulp watch",
     "build": "gulp build",
     "lint": "gulp jshint",
     "test": "gulp test"
