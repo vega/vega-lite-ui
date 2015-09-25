@@ -1,0 +1,18 @@
+
+<div class="dropzone-data">
+  <div class="dropzone" file-dropzone="[text/csv, text/json, text/tsv]"
+    file="datasetFile" file-name="datasetFileName" data-max-file-size="3">
+    <span>Drop CSV Here</span>
+  </div>
+
+    <form>
+      <div class="form-group">
+        <label for="dropzoneDataset.name">Name</label>
+        <input ng-model="dropzoneDataset.name" id="dataset-name" type="name"></input>
+      </div>
+      <div class="form-group">
+        <textarea ng-model="dropzoneDataset.data"></textarea>
+      </div>
+      <button type="submit" ng-click="addDropped()">Add data</button>
+    </form>
+</div>
