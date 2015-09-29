@@ -86,16 +86,6 @@ angular.module('vlui')
     Dataset.stats = {};
     Dataset.type = undefined;
 
-    // TODO move these to constant to a universal vlui constant file
-    Dataset.typeNames = {
-      N: 'text',
-      O: 'text-ordinal',
-      Q: 'number',
-      T: 'time',
-      G: 'geo'
-    };
-
-
   var typeOrder = {
     N: 0,
     O: 0,

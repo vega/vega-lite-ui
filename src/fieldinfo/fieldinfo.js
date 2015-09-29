@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('fieldInfo', function (Dataset, Drop, vl) {
+  .directive('fieldInfo', function (Dataset, Drop, vl, consts) {
     return {
       templateUrl: 'fieldinfo/fieldinfo.html',
       restrict: 'E',
@@ -26,7 +26,7 @@ angular.module('vlui')
       link: function(scope, element) {
         var funcsPopup;
 
-        scope.typeNames = Dataset.typeNames;
+        scope.typeNames = consts.typeNames;
         scope.stats = Dataset.stats[scope.field.name];
         scope.isTypes = vl.field.isTypes;
 

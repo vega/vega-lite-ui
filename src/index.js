@@ -30,5 +30,12 @@ angular.module('vlui', [
       popup: 0,
       vislist: 1000
     },
-    myriaRest: 'http://ec2-52-1-38-182.compute-1.amazonaws.com:8753'
+    myriaRest: 'http://ec2-52-1-38-182.compute-1.amazonaws.com:8753',
+    typeNames: {
+      N: 'text',
+      O: 'text-ordinal',
+      Q: 'number',
+      T: 'time',
+      G: 'geo'
+    }
   });
