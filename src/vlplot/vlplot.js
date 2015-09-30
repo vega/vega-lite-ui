@@ -117,7 +117,6 @@ angular.module('vlui')
           scope.$digest();
         }
 
-
         function getVgSpec() {
           var configSet = scope.configSet || consts.defaultConfigSet || {};
 
@@ -126,7 +125,10 @@ angular.module('vlui')
           var vlSpec = _.cloneDeep(scope.chart.vlSpec);
           vl.extend(vlSpec.config, Config[configSet]());
 
-          return vl.compile(vlSpec, Dataset.stats);
+          // use chart stats if available (for example from bookmarks)
+          var stats = scope.chart.stats || Dataset.stats;
+
+          return vl.compile(vlSpec, stats);
         }
 
         function rescaleIfEnable() {
