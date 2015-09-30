@@ -4,6 +4,7 @@
 angular.module('vlui', [
   'LocalStorageModule',
   'ui.select',
+  'angular-google-analytics'
   ])
   .constant('_', window._)
   // datalib, vegalite, vega
@@ -20,7 +21,7 @@ angular.module('vlui', [
     addCount: true, // add count field to Dataset.dataschema
     debug: true,
     useUrl: true,
-    logging: false,
+    logging: true,
     defaultConfigSet: 'large',
     appId: 'vlui',
     // embedded polestar and voyager with known data
@@ -38,4 +39,8 @@ angular.module('vlui', [
       T: 'time',
       G: 'geo'
     }
+  })
+  .config(function (AnalyticsProvider) {
+    AnalyticsProvider
+      .setAccount({ tracker: 'UA-44428446-4', name: 'voyager', trackEvent: true });
   });

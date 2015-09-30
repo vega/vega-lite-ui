@@ -14,6 +14,7 @@ angular.module('vlui')
           if (!Dataset.dataset) {
             // reset if no dataset has been set
             Dataset.dataset = Dataset.currentDataset;
+            Logger.logInteraction(Logger.actions.DATASET_OPEN);
             funcsPopup.open();
             return;
           }

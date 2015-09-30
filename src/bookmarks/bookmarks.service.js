@@ -35,7 +35,7 @@ angular.module('vlui')
       this.updateLength();
       this.save();
 
-      Logger.logInteraction(Logger.actions.BOOKMARKS_CLEAR);
+      Logger.logInteraction(Logger.actions.BOOKMARK_CLEAR);
     };
 
     proto.toggle = function(chart) {

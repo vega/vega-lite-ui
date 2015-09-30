@@ -34,6 +34,8 @@ angular.module('vlui')
           scope.datasetName = '';
           scope.data = '';
 
+          Logger.logInteraction(Logger.actions.DATASET_NEW_PASTE, dataset.name);
+
           scope.doneAdd();
         };
       }
