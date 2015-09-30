@@ -7,7 +7,7 @@
  * # addUrlDataset
  */
 angular.module('vlui')
-  .directive('addUrlDataset', function (Dataset) {
+  .directive('addUrlDataset', function (Dataset, Logger) {
     return {
       templateUrl: 'dataset/addurldataset.html',
       restrict: 'E',
@@ -26,6 +26,8 @@ angular.module('vlui')
 
           scope.addedDataset.name = '';
           scope.addedDataset.url = '';
+
+          Logger.logInteraction(Logger.actions.DATASET_NEW_URL, dataset.url);
           scope.doneAdd();
         };
       }

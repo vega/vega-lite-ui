@@ -53,14 +53,14 @@ angular.module('vlui')
 
         scope.mouseover = function() {
           scope.hoverPromise = $timeout(function(){
-            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.chart.vlSpec);
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, '', scope.chart.vlSpec);
             scope.hoverFocus = !scope.thumbnail;
           }, HOVER_TIMEOUT);
         };
 
         scope.mouseout = function() {
           if (scope.hoverFocus) {
-            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, scope.chart.vlSpec);
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, '', scope.chart.vlSpec);
           }
 
           $timeout.cancel(scope.hoverPromise);
@@ -201,7 +201,7 @@ angular.module('vlui')
                 view.renderer(getRenderer(spec.width, scope.height));
                 view.update();
 
-                Logger.logInteraction(Logger.actions.CHART_RENDER, scope.chart.vlSpec);
+                Logger.logInteraction(Logger.actions.CHART_RENDER, '', scope.chart.vlSpec);
                   rescaleIfEnable();
 
                 var endChart = new Date().getTime();
