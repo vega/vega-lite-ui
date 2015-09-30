@@ -8,7 +8,7 @@
  * Service in the vlui.
  */
 angular.module('vlui')
-  .service('Bookmarks', function(_, vl, localStorageService, Logger) {
+  .service('Bookmarks', function(_, vl, localStorageService, Logger, Dataset) {
     var Bookmarks = function() {
       this.dict = {};
       this.length = 0;
@@ -54,6 +54,8 @@ angular.module('vlui')
       console.log('adding', chart.vlSpec, shorthand);
 
       chart.timeAdded = (new Date().getTime());
+
+      chart.stats = Dataset.stats;
 
       this.dict[shorthand] = _.cloneDeep(chart);
       this.updateLength();
