@@ -74,10 +74,6 @@ angular.module('vlui')
       var value = data ? data.value : undefined;
       if(action.level.rank >= service.levels.INFO.rank) {
         Analytics.trackEvent(action.cat, action.id, label, value);
-        //ga.trackEvent(action.cat, action.id, label, value);
-      }
-
-      if(action.level.rank >= service.levels.INFO.rank) {
         console.log('[Logging] ', action.id, label, data);
       }
     };
