@@ -35,6 +35,5 @@ angular.module('vlui', [
   })
   .config(function (AnalyticsProvider) {
     AnalyticsProvider
-      .setAccount(//{ tracker: 'UA-44428446-4', name: 'voyager', trackEvent: true },
-                  { tracker: 'UA-38453955-1', name: 'test', trackEvent: true });
+      .setAccount({ tracker: 'UA-44428446-4', name: 'voyager', trackEvent: true });
   });
