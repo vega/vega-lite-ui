@@ -11,17 +11,17 @@ var $ = require('gulp-load-plugins')({
 
 gulp.task('partials', function () {
   return gulp.src([
-	    paths.src + '/**/*.html'
-	  ])
-	  .pipe($.minifyHtml({
-	    empty: true,
-	    spare: true,
-	    quotes: true
-	  }))
-	  .pipe($.angularTemplatecache('templateCacheHtml.js', {
-	    module: 'vlui'
-	  }))
-	  .pipe(gulp.dest(paths.tmp + '/partials/'));
+      paths.src + '/**/*.html'
+    ])
+    .pipe($.minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true
+    }))
+    .pipe($.angularTemplatecache('templateCacheHtml.js', {
+      module: 'vlui'
+    }))
+    .pipe(gulp.dest(paths.tmp + '/partials/'));
 });
 
 // Root directory
@@ -45,6 +45,10 @@ gulp.task('build', ['partials', 'css'], function() {
     // .pipe(filter('-'+path.join(sourceDirectory, '/**/*.spec.js')))
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
+      .pipe($.ngAnnotate({
+        add: true, // Add dependency annotations
+        single_quotes: true
+      }))
       .pipe($.iife({
         useStrict: false
       }))
