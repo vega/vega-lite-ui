@@ -24,21 +24,21 @@
         <div class="popup-menu popup-command no-shrink dev-tool">
           <div class="command debug">
             <span class="debug">Vls</span>
-            <a class="debug" ui-zeroclip zeroclip-copied="shCopied='(Coplied)'" zeroclip-model="chart.shorthand">Copy</a>
+            <a class="debug" ui-zeroclip zeroclip-copied="shCopied='(Copied)'" zeroclip-model="chart.shorthand">Copy</a>
             /
             <a class="debug" ng-click="logCode('VL shorthand', chart.shorthand); shCopied='(Logged)';">Log</a>
             <span>{{shCopied}}</span>
           </div>
           <div class="command debug">
             <span class="debug">Vl</span>
-            <a class="debug" ui-zeroclip zeroclip-copied="vlCopied='(Coplied)'" zeroclip-model="chart.cleanSpec | compactJSON">Copy</a>
+            <a class="debug" ui-zeroclip zeroclip-copied="vlCopied='(Copied)'" zeroclip-model="chart.cleanSpec | compactJSON">Copy</a>
             /
             <a class="debug" ng-click="logCode('Vega-lite', chart.cleanSpec); vlCopied='(Logged)';">Log</a>
             <span>{{vlCopied}}</span>
           </div>
           <div class="command debug">
             <span class="debug">Vg</span>
-            <a class="debug" ui-zeroclip zeroclip-copied="vgCopied='(Coplied)'" zeroclip-model="chart.vgSpec | compactJSON">Copy</a>
+            <a class="debug" ui-zeroclip zeroclip-copied="vgCopied='(Copied)'" zeroclip-model="chart.vgSpec | compactJSON">Copy</a>
             /
             <a class="debug" ng-click="logCode('Vega', chart.vgSpec); vgCopied='(Logged)';">Log</a>
             <span>{{vgCopied}}</span>
