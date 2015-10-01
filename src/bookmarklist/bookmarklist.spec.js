@@ -40,6 +40,6 @@ describe('Directive: bookmarkList', function () {
     element = angular.element('<bookmark-list></bookmark-list>');
     element = $compile(element)(scope);
     scope.$digest();
-    expect(element.find('.wrapper').length).to.eql(1);
+    expect(element.find('.modal-wrapper').length).to.eql(1);
   }));
 });

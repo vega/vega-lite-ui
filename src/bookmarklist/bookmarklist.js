@@ -12,13 +12,14 @@ angular.module('vlui')
       templateUrl: 'bookmarklist/bookmarklist.html',
       restrict: 'E',
       replace: true,
+      require: '^vlModal',
       scope: {
-        active:'=',
-        deactivate: '&',
         highlighted: '='
       },
-      link: function postLink(scope, element, attrs) {
-        // jshint unused:false
+      link: function postLink(scope, element, attrs, modalController) {
+        scope.deactivate = function() {
+          modalController.close();
+        }
         scope.Bookmarks = Bookmarks;
         scope.consts = consts;
       }

@@ -405,21 +405,30 @@ h4 {
 
 .modal {
   position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0,0,0,0.5);
 
-  .wrapper {
+  .modal-wrapper {
     position: fixed;
     top: 50px;
     left: 50px;
     right: 50px;
     bottom: 50px;
-    background-color: #eee;
     z-index: 1;
-    border: 5px solid #aaa;
+    overflow: scroll;
+    padding: 8px;
+    background-color: white;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+  }
+
+  .modal-close {
+    position: fixed;
+    top: 58px;
+    right: 58px;
   }
 }
 
