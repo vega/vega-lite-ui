@@ -7,7 +7,7 @@
  * # bookmarkList
  */
 angular.module('vlui')
-  .directive('bookmarkList', function (Bookmarks, consts) {
+  .directive('bookmarkList', function (Bookmarks, consts, Logger) {
     return {
       templateUrl: 'bookmarklist/bookmarklist.html',
       restrict: 'E',
@@ -18,6 +18,7 @@ angular.module('vlui')
       },
       link: function postLink(scope, element, attrs, modalController) {
         scope.deactivate = function() {
+          Logger.logInteraction(Logger.actions.BOOKMARK_CLOSE);
           modalController.close();
         }
         scope.Bookmarks = Bookmarks;
