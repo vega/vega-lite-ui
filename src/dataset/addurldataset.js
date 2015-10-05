@@ -11,24 +11,33 @@ angular.module('vlui')
     return {
       templateUrl: 'dataset/addurldataset.html',
       restrict: 'E',
+      require: '?^^modal',
       replace: true,
-      scope: false,  // use scope from datasetSelector
-      link: function postLink(scope/*, element, attrs*/) {
+      scope: true,
+      link: function postLink(scope, element, attrs, modalController) {
+        // If this directive occurs within a a modal, give ourselves a way to close
+        // that modal once the add button has been clicked
+        function closeModal() {
+          if (modalController) {
+            modalController.close();
+          }
+        }
+
         // the dataset to add
         scope.addedDataset = {
           group: 'user'
         };
 
-        // need to give this a unique name because we share the namespace
         scope.addFromUrl = function(dataset) {
-          Dataset.dataset = Dataset.add(angular.copy(dataset));
-          scope.datasetChanged();
-
-          scope.addedDataset.name = '';
-          scope.addedDataset.url = '';
-
           Logger.logInteraction(Logger.actions.DATASET_NEW_URL, dataset.url);
-          scope.doneAdd();
+
+          // Register the new dataset
+          Dataset.dataset = Dataset.add(dataset);
+
+          // Fetch & activate the newly-registered dataset
+          Dataset.update(Dataset.dataset);
+
+          closeModal();
         };
       }
     };
