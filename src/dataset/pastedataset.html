@@ -1,17 +1,33 @@
+<div class="vflex full-width full-height" id="evs">
+  <div class="modal-header no-shrink card no-top-margin no-right-margin">
+    <modal-close-button></modal-close-button>
+    <h2 class="no-bottom-margin">Add Dataset</h2>
+  </div>
+  <div class="flex-grow-1 scroll-y">
+
 <div class="paste-data">
   <h3>Paste raw data</h3>
   <p>
     Paste data in <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> format. Please include a header with field names.
   </p>
 
-  <form>
-  	<div class="form-group">
+  <form ng-submit="addDataset()">
+    <div class="form-group">
       <label for="dataset-name">Name</label>
-      <input ng-model="datasetName" id="dataset-name" type="name"></input>
+      <input type="name"
+        ng-model="datasetName"
+        id="dataset-name"
+        required></input>
     </div>
     <div class="form-group">
-    	<textarea ng-model="data"></textarea>
+      <textarea ng-model="data"
+        ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 17, 'blur': 0 }}"
+        required>
+      </textarea>
     </div>
-  	<button type="submit" ng-click="addPasted()">Add data</button>
+    <button type="submit">Add data</button>
   </form>
+</div>
+
+  </div><!--.flex-grow-1-->
 </div>

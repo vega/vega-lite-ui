@@ -8,7 +8,7 @@ function getNameMap(dataschema) {
 }
 
 angular.module('vlui')
-  .factory('Dataset', function($http, $q, Alerts, _, dl, vl, SampleData) {
+  .factory('Dataset', function($http, $q, Alerts, _, dl, vl, SampleData, Config, Logger) {
     var Dataset = {};
 
     // Start with the list of sample datasets
@@ -86,6 +86,8 @@ angular.module('vlui')
     Dataset.update = function(dataset) {
       var updatePromise;
 
+      Logger.logInteraction(Logger.actions.DATASET_CHANGE, dataset.name);
+
       if (dataset.values) {
         updatePromise = $q(function(resolve, reject) {
           // jshint unused:false
@@ -112,6 +114,11 @@ angular.module('vlui')
 
       Dataset.onUpdate.forEach(function(listener) {
         updatePromise = updatePromise.then(listener);
+      });
+
+      // Copy the dataset into the config service once it is ready
+      updatePromise.then(function() {
+        Config.updateDataset(dataset, Dataset.type);
       });
 
       return updatePromise;

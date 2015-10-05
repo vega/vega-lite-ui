@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('datasetSelector', function(Drop, Dataset, Config, Logger) {
+  .directive('datasetSelector', function(Drop, Dataset, Logger) {
     return {
       templateUrl: 'dataset/datasetselector.html',
       restrict: 'E',
@@ -19,11 +19,7 @@ angular.module('vlui')
             return;
           }
 
-          Logger.logInteraction(Logger.actions.DATASET_CHANGE, Dataset.dataset.name);
-
-          Dataset.update(Dataset.dataset).then(function() {
-            Config.updateDataset(Dataset.dataset, Dataset.type);
-          });
+          Dataset.update(Dataset.dataset);
         };
 
         scope.doneAdd = function() {
