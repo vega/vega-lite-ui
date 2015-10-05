@@ -22,12 +22,8 @@ $any-color: #aaa;
   .type {
     font-size: 0.8rem;
     margin-right: 3px;
-    margin-left: 1px;
+    margin-right: 6px;
     flex-shrink: 0;
-    background-position-y: -2px;
-    &.icon-type-time {
-      background-position-y: 0px;
-    }
   }
 
   .field-info-text {
