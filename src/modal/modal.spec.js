@@ -46,9 +46,9 @@ describe('Directive: modal', function () {
         scope.$digest();
       }));
 
-      it('shows its contents', inject(function(Modals) {
+      it('shows its contents', function() {
         expect(element.find('h1').length).to.equal(1);
-      }));
+      });
 
       it('hides its contents when closed', inject(function(Modals) {
         expect(element.find('h1').length).to.equal(1);

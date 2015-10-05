@@ -22,6 +22,7 @@ describe('Directive: bookmarkList', function () {
   }));
 
   it('requires a parent modal directive', inject(function ($compile) {
+    // This is a side-effect of the modalCloseButton directive inside bookmarkList
     element = angular.element('<bookmark-list></bookmark-list>');
     expect(function() {
       $compile(element)(scope);
