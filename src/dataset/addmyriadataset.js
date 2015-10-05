@@ -11,13 +11,21 @@ angular.module('vlui')
     return {
       templateUrl: 'dataset/addmyriadataset.html',
       restrict: 'E',
+      require: '?^^modal',
       replace: true,
-      scope: false,  // use scope from datasetSelector
-      link: function postLink(scope/*, element, attrs*/) {
+      scope: true,
+      link: function postLink(scope, element, attrs, modalController) {
+        // If this directive occurs within a a modal, give ourselves a way to close
+        // that modal once the add button has been clicked
+        function closeModal() {
+          if (modalController) {
+            modalController.close();
+          }
+        }
+
+        // Initialize scope variables
         scope.myriaRestUrl = consts.myriaRest;
-
         scope.myriaDatasets = [];
-
         scope.myriaDataset = null;
 
         scope.loadDatasets = function(query) {
@@ -27,8 +35,7 @@ angular.module('vlui')
             });
         };
 
-        // need to give this a unique name because we share the namespace
-        scope.addFromMyria = function(myriaDataset) {
+        scope.addDataset = function(myriaDataset) {
           var dataset = {
             group: 'myria',
             name: myriaDataset.relationName,
@@ -38,11 +45,10 @@ angular.module('vlui')
           };
 
           Dataset.type = 'json';
-          Dataset.dataset = Dataset.add(angular.copy(dataset));
-          scope.datasetChanged();
+          Dataset.dataset = Dataset.add(dataset);
+          Dataset.update(Dataset.dataset);
 
-          scope.myriaDataset = null;
-          scope.doneAdd();
+          closeModal();
         };
       }
     };
