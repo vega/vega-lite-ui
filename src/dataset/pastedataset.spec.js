@@ -12,7 +12,7 @@ describe('Directive: pasteDataset', function () {
     scope = $rootScope.$new();
   }));
 
-  it.skip('should show correct form', inject(function ($compile) {
+  it('should show correct form', inject(function ($compile) {
     element = angular.element('<paste-dataset></paste-dataset>');
     element = $compile(element)(scope);
 
