@@ -12,7 +12,7 @@ angular.module('vlui')
       templateUrl: 'bookmarklist/bookmarklist.html',
       restrict: 'E',
       replace: true,
-      require: '^vlModal',
+      require: '^modal',
       scope: {
         highlighted: '='
       },

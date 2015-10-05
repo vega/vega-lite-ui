@@ -2,18 +2,18 @@
 
 /**
  * @ngdoc service
- * @name vlui.VlModals
+ * @name vlui.Modals
  * @description
- * # VlModals
+ * # Modals
  * Service used to control modal visibility from anywhere in the application
  */
 angular.module('vlui')
-  .factory('VlModals', function ($cacheFactory) {
+  .factory('Modals', function ($cacheFactory) {
 
     // TODO: The use of scope here as the method by which a modal directive
     // is registered and controlled may need to change to support retrieving
     // data from a modal as may be needed in #77
-    var modalsCache = $cacheFactory('vl-modals');
+    var modalsCache = $cacheFactory('modals');
 
     // Public API
     return {

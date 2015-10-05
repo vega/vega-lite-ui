@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc directive
- * @name vlui.directive:vlModal
+ * @name vlui.directive:modal
  * @description
- * # vlModal
+ * # modal
  */
 angular.module('vlui')
-  .directive('vlModal', function (VlModals) {
+  .directive('modal', function (Modals) {
     return {
-      templateUrl: 'modal/vlmodal.html',
+      templateUrl: 'modal/modal.html',
       restrict: 'E',
       transclude: true,
       scope: true,
@@ -26,9 +26,9 @@ angular.module('vlui')
         scope.isOpen = false;
 
         // Register this modal with the service
-        VlModals.register(modalId, scope);
+        Modals.register(modalId, scope);
         scope.$on('$destroy', function() {
-          VlModals.deregister(modalId);
+          Modals.deregister(modalId);
         });
       }
     };

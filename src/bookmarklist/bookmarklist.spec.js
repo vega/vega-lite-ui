@@ -6,9 +6,9 @@ describe('Directive: bookmarkList', function () {
   var element,
     scope;
 
-  afterEach(inject(function(VlModals) {
+  afterEach(inject(function(Modals) {
     // Remove any modals registered during the tests
-    VlModals.empty();
+    Modals.empty();
   }));
 
   beforeEach(module('vlui', function($provide) {
@@ -21,22 +21,22 @@ describe('Directive: bookmarkList', function () {
     scope.active = true;
   }));
 
-  it('requires a parent vlModal directive', inject(function ($compile) {
+  it('requires a parent modal directive', inject(function ($compile) {
     element = angular.element('<bookmark-list></bookmark-list>');
     expect(function() {
       $compile(element)(scope);
     }).to.throw;
-    element = angular.element('<vl-modal><bookmark-list></bookmark-list></vl-modal>');
+    element = angular.element('<modal><bookmark-list></bookmark-list></modal>');
     expect(function() {
       $compile(element)(scope);
     }).not.to.throw;
   }));
 
   describe('when opened', function() {
-    beforeEach(inject(function(VlModals, $compile) {
-      var template = '<vl-modal id="test-bookmarks"><bookmark-list></bookmark-list></vl-modal>';
+    beforeEach(inject(function(Modals, $compile) {
+      var template = '<modal id="test-bookmarks"><bookmark-list></bookmark-list></modal>';
       element = $compile(angular.element(template))(scope);
-      VlModals.open('test-bookmarks');
+      Modals.open('test-bookmarks');
       scope.$digest();
     }));
 
