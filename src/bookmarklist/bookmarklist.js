@@ -15,7 +15,7 @@ angular.module('vlui')
       scope: {
         highlighted: '='
       },
-      link: function postLink(scope, element, attrs, modalController) {
+      link: function postLink(scope /*, element, attrs*/) {
         // The bookmark list is designed to render within a modal overlay.
         // Because modal contents are hidden via ng-if, if this link function is
         // executing it is because the directive is being shown. Log the event:
