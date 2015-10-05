@@ -3,43 +3,43 @@
 /* global vl:true */
 
 describe('Directive: bookmarkList', function () {
-
-  // load the directive's module
-  beforeEach(module('vlui'));
-
-  beforeEach(module('vlui', function($provide) {
-    // mock vega
-    $provide.constant('vg', {
-      parse: {
-        spec: function(spec, callback) {
-          callback(function() {
-            element.append('<div></div>');
-            return {
-              width: function() {},
-              height: function() {},
-              update: function() {},
-              renderer: function() {},
-              on: function() {}
-            };
-          });
-        }
-      }
-    });
-    $provide.constant('vl', vl);
-  }));
-
   var element,
     scope;
+
+  afterEach(inject(function(VlModals) {
+    // Remove any modals registered during the tests
+    VlModals.empty();
+  }));
+
+  beforeEach(module('vlui', function($provide) {
+    // mock vega lite
+    $provide.constant('vl', vl);
+  }));
 
   beforeEach(inject(function ($rootScope) {
     scope = $rootScope.$new();
     scope.active = true;
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
+  it('requires a parent vlModal directive', inject(function ($compile) {
     element = angular.element('<bookmark-list></bookmark-list>');
-    element = $compile(element)(scope);
-    scope.$digest();
-    expect(element.find('.modal-wrapper').length).to.eql(1);
+    expect(function() {
+      $compile(element)(scope);
+    }).to.throw;
+    element = angular.element('<vl-modal><bookmark-list></bookmark-list></vl-modal>');
+    expect(function() {
+      $compile(element)(scope);
+    }).not.to.throw;
   }));
+
+  describe('when opened', function() {
+    beforeEach(inject(function(VlModals, $compile) {
+      var template = '<vl-modal id="test-bookmarks"><bookmark-list></bookmark-list></vl-modal>';
+      element = $compile(angular.element(template))(scope);
+      VlModals.open('test-bookmarks');
+      scope.$digest();
+    }));
+
+    // TODO: Tests that validate the directive works properly
+  });
 });

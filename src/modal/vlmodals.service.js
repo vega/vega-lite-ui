@@ -33,7 +33,7 @@ angular.module('vlui')
       open: function(id) {
         var modalScope = modalsCache.get(id);
         if (!modalScope) {
-          console.error('Unknown modal id ' + id);
+          console.error('Unregistered modal id ' + id);
           return;
         }
         modalScope.isOpen = true;
@@ -43,10 +43,14 @@ angular.module('vlui')
       close: function(id) {
         var modalScope = modalsCache.get(id);
         if (!modalScope) {
-          console.error('Unknown modal id ' + id);
+          console.error('Unregistered modal id ' + id);
           return;
         }
         modalScope.isOpen = false;
+      },
+
+      empty: function() {
+        modalsCache.removeAll();
       },
 
       count: function() {

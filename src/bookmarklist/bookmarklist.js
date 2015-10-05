@@ -20,7 +20,7 @@ angular.module('vlui')
         scope.deactivate = function() {
           Logger.logInteraction(Logger.actions.BOOKMARK_CLOSE);
           modalController.close();
-        }
+        };
         scope.Bookmarks = Bookmarks;
         scope.consts = consts;
       }
