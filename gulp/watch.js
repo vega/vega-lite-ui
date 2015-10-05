@@ -4,7 +4,7 @@ var gulp = require('gulp');
 
 var paths = gulp.paths;
 
-gulp.task('watch', function () {
+gulp.task('watch', ['build'], function () {
   gulp.watch([
     paths.src + '/**/*.html',
     paths.src + '/**/*.scss',
