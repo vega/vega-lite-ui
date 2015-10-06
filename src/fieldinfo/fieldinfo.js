@@ -32,16 +32,16 @@ angular.module('vlui')
 
         switch(scope.field.type){
           case 'O':
-            scope.icon = 'font';
+            scope.icon = 'fa-font';
             break;
           case 'N':
-            scope.icon = 'font';
+            scope.icon = 'fa-font';
             break;
           case 'Q':
-            scope.icon = 'tachometer';
+            scope.icon = 'fa-slack fa-rotate-16';
             break;
           case 'T':
-            scope.icon = 'calendar';
+            scope.icon = 'fa-calendar';
             break;
         }
 

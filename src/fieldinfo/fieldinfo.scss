@@ -26,6 +26,10 @@ $any-color: #aaa;
     flex-shrink: 0;
   }
 
+  .fa-rotate-16 {
+    transform: rotate(16deg);
+  }
+
   .field-info-text {
     display: flex;
     flex-grow: 1;

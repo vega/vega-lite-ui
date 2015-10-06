@@ -5,7 +5,7 @@
       ng-class="{active: !disableCountCaret || field.aggregate!=='count'}">
       <i class="fa fa-caret-down" ng-show="showCaret"
       ></i>
-      <span class="type fa fa-{{icon}}"
+      <span class="type fa {{icon}}"
         ng-show="showType"
         title="{{typeNames[field.type]}}">
       </span>
