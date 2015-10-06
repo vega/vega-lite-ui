@@ -38,7 +38,7 @@ angular.module('vlui')
             scope.icon = 'fa-font';
             break;
           case 'Q':
-            scope.icon = 'fa-slack fa-rotate-16';
+            scope.icon = 'fa-signal';
             break;
           case 'T':
             scope.icon = 'fa-calendar';
