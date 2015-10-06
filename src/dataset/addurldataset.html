@@ -5,7 +5,7 @@
     Make sure that the formatting is correct and clean the data before adding it to Voyager.
     The added dataset is only visible to you.
   </p>
-  <form>
+  <form ng-submit="addFromUrl(addedDataset)">
     <div class="form-group">
       <label for="dataset-name">Name</label>
       <input ng-model="addedDataset.name" id="dataset-name" type="text"></input>
@@ -17,6 +17,6 @@
         Make sure that you host the file on a server that has <code>Access-Control-Allow-Origin: *</code> set.
       </p>
     </div>
-    <button type="submit" ng-click="addFromUrl(addedDataset)">Add dataset</button>
+    <button type="submit">Add dataset</button>
   </form>
 </div>

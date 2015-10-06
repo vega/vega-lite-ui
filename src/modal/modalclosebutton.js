@@ -11,7 +11,7 @@ angular.module('vlui')
     return {
       templateUrl: 'modal/modalclosebutton.html',
       restrict: 'E',
-      require: '^modal',
+      require: '^^modal',
       scope: {
         'closeCallback': '&onClose'
       },

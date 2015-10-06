@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('datasetSelector', function(Drop, Dataset, Config, Logger) {
+  .directive('datasetSelector', function(Dataset, Modals, Logger) {
     return {
       templateUrl: 'dataset/datasetselector.html',
       restrict: 'E',
       replace: true,
       scope: {},
-      link: function postLink(scope , element/*, attrs*/) {
+      link: function postLink(scope/*, element, attrs*/) {
         scope.Dataset = Dataset;
 
         scope.datasetChanged = function() {
@@ -15,32 +15,12 @@ angular.module('vlui')
             // reset if no dataset has been set
             Dataset.dataset = Dataset.currentDataset;
             Logger.logInteraction(Logger.actions.DATASET_OPEN);
-            funcsPopup.open();
+            Modals.open('dataset-modal');
             return;
           }
 
-          Logger.logInteraction(Logger.actions.DATASET_CHANGE, Dataset.dataset.name);
-
-          Dataset.update(Dataset.dataset).then(function() {
-            Config.updateDataset(Dataset.dataset, Dataset.type);
-          });
+          Dataset.update(Dataset.dataset);
         };
-
-        scope.doneAdd = function() {
-          funcsPopup.close();
-        };
-
-        var funcsPopup = new Drop({
-          content: element.find('.popup-new-dataset')[0],
-          target: element.find('.open-dataset-popup')[0],
-          position: 'right top',
-          openOn: false
-        });
-
-        scope.$on('$destroy', function() {
-          funcsPopup.destroy();
-          funcsPopup = null;
-        });
       }
     };
   });

@@ -11,32 +11,45 @@ angular.module('vlui')
     return {
       templateUrl: 'dataset/pastedataset.html',
       restrict: 'E',
+      require: '?^^modal',
       replace: true,
-      scope: false,  // use scope from datasetSelector
-      link: function postLink(scope/*, element, attrs*/) {
+      scope: true,
+      link: function postLink(scope, element, attrs, modalController) {
+        // If this directive occurs within a a modal, give ourselves a way to close
+        // that modal once the add button has been clicked
+        function closeModal() {
+          if (modalController) {
+            modalController.close();
+          }
+        }
+
+        // Initialize scope variables
         scope.datasetName = '';
         scope.data = '';
 
-        // need to give this a unique name because we share the namespace
-        scope.addPasted = function() {
-          var data = dl.read(scope.data, {type: 'csv'});
+        scope.addDataset = function() {
+          var data = dl.read(scope.data, {
+            type: 'csv'
+          });
 
-          var dataset = {
+          var pastedDataset = {
             id: Date.now(),  // time as id
             name: scope.datasetName,
             values: data,
             group: 'pasted'
           };
 
-          Dataset.dataset = Dataset.add(angular.copy(dataset));
-          scope.datasetChanged();
+          // Log that we have pasted data
+          Logger.logInteraction(Logger.actions.DATASET_NEW_PASTE, pastedDataset.name);
 
-          scope.datasetName = '';
-          scope.data = '';
+          // Register the pasted data as a new dataset
+          Dataset.dataset = Dataset.add(pastedDataset);
 
-          Logger.logInteraction(Logger.actions.DATASET_NEW_PASTE, dataset.name);
+          // Activate the newly-registered dataset
+          Dataset.update(Dataset.dataset);
 
-          scope.doneAdd();
+          // Close this directive's containing modal
+          closeModal();
         };
       }
     };

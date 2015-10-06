@@ -3,7 +3,7 @@
   <p>
     Select a dataset from the Myria instance at <code>{{myriaRestUrl}}</code>.
   </p>
-  <form>
+  <form ng-submit="addDataset(myriaDataset)">
 		<ui-select ng-model="$parent.myriaDataset" style="width: 300px" theme="selectize" ng-disabled="disabled" reset-search-input="false">
 	    <ui-select-match placeholder="Select dataset...">{{$select.selected.relationName}}</ui-select-match>
 	    <ui-select-choices id="dataset-name" repeat="dataset in myriaDatasets"
@@ -12,6 +12,6 @@
 	       {{ dataset.userName}}:{{dataset.programName}}:{{dataset.relationName }}
 			</ui-select-choices>
 	  </ui-select>
-    <button type="submit" ng-click="addFromMyria(myriaDataset)">Add dataset</button>
+    <button type="submit">Add dataset</button>
   </form>
 </div>
