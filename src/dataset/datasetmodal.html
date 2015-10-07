@@ -1,13 +1,19 @@
 <modal id="dataset-modal">
   <div class="modal-header">
     <modal-close-button></modal-close-button>
-    <h2 class="no-bottom-margin">Add Dataset</h2>
+    <h2>Add Dataset</h2>
   </div>
-  <div class="hflex">
 
-    <add-url-dataset></add-url-dataset>
-    <paste-dataset></paste-dataset>
-    <add-myria-dataset></add-myria-dataset>
+  <tabset>
+    <tab heading="From URL">
+      <add-url-dataset></add-url-dataset>
+    </tab>
+    <tab heading="Paste Raw Data">
+      <paste-dataset></paste-dataset>
+    </tab>
+    <tab heading="From Myria">
+      <add-myria-dataset></add-myria-dataset>
+    </tab>
+  </tabset>
 
-  </div>
 </modal>
