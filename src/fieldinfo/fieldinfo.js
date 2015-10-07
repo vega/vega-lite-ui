@@ -30,6 +30,21 @@ angular.module('vlui')
         scope.stats = Dataset.stats[scope.field.name];
         scope.isTypes = vl.field.isTypes;
 
+        switch(scope.field.type){
+          case 'O':
+            scope.icon = 'fa-font';
+            break;
+          case 'N':
+            scope.icon = 'fa-font';
+            break;
+          case 'Q':
+            scope.icon = 'icon-hash';
+            break;
+          case 'T':
+            scope.icon = 'fa-calendar';
+            break;
+        }
+
         scope.clicked = function($event){
           if(scope.action && $event.target !== element.find('.fa-caret-down')[0] &&
             $event.target !== element.find('span.type')[0]) {
