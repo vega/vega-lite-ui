@@ -26,6 +26,17 @@ $any-color: #aaa;
     flex-shrink: 0;
   }
 
+  .icon-hash {
+    margin-top: 1px;
+    &:before {
+      content: "#";
+      padding-left: 2px;
+      padding-right: 2px;
+      font-family: sans-serif;
+      font-size: 1rem;
+    }
+  }
+
   .field-info-text {
     display: flex;
     flex-grow: 1;
