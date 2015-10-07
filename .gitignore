@@ -18,3 +18,4 @@ libpeerconnection.log
 # Bower components
 bower_components
 vlui*.*
+!src/**/vlui*.*

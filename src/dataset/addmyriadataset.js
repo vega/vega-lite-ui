@@ -7,14 +7,14 @@
  * # addMyriaDataset
  */
 angular.module('vlui')
-  .directive('addMyriaDataset', function ($http, Dataset, consts) {
+  .directive('addMyriaDataset', function ($http, Dataset, vluiConfig) {
     return {
       templateUrl: 'dataset/addmyriadataset.html',
       restrict: 'E',
       replace: true,
       scope: false,  // use scope from datasetSelector
       link: function postLink(scope/*, element, attrs*/) {
-        scope.myriaRestUrl = consts.myriaRest;
+        scope.myriaRestUrl = vluiConfig.myriaURL;
 
         scope.myriaDatasets = [];
 

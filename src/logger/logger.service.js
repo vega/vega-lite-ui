@@ -8,7 +8,12 @@
  * Service in the vega-lite-ui.
  */
 angular.module('vlui')
-  .service('Logger', function ($location, $window, consts, Analytics) {
+  .service('Logger', function ($location, $window, consts, Analytics, vluiConfig) {
+
+    console.log("---- logger -----")
+
+    console.log(vluiConfig)
+
 
     var service = {};
 
@@ -68,7 +73,7 @@ angular.module('vlui')
     };
 
     service.logInteraction = function(action, label, data) {
-      if (!consts.logging) {
+      if (!vluiConfig.logging) {
         return;
       }
       var value = data ? data.value : undefined;
@@ -81,4 +86,14 @@ angular.module('vlui')
     service.logInteraction(service.actions.INITIALIZE, consts.appId);
 
     return service;
+  })
+  .provider('logger', function () {
+    var logging = false ;
+    this.setLogging = function(newValue) {
+      logging = ++newValue;
+    };
+
+    this.$get =  function() {
+      return new Logger(logging);
+    };
   });

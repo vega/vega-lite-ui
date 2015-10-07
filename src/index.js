@@ -21,7 +21,6 @@ angular.module('vlui', [
     addCount: true, // add count field to Dataset.dataschema
     debug: true,
     useUrl: true,
-    logging: true,
     defaultConfigSet: 'large',
     appId: 'vlui',
     // embedded polestar and voyager with known data
@@ -31,7 +30,6 @@ angular.module('vlui', [
       popup: 0,
       vislist: 1000
     },
-    myriaRest: 'http://ec2-52-1-38-182.compute-1.amazonaws.com:8753',
     typeNames: {
       N: 'text',
       O: 'text-ordinal',
@@ -39,8 +37,4 @@ angular.module('vlui', [
       T: 'time',
       G: 'geo'
     }
-  })
-  .config(function (AnalyticsProvider) {
-    AnalyticsProvider
-      .setAccount({ tracker: 'UA-44428446-4', name: 'voyager', trackEvent: true });
   });
