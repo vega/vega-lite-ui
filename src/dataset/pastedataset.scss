@@ -1,16 +1,13 @@
 .paste-data {
+  .form-group {
+    margin-top: 1em;
+  }
   form {
     display: inline-block;
     vertical-align: top;
-
     width: 100%;
-    @media( min-width: 800px ) {
-      width: 50%;
-      max-width: 500px;
-    }
-
-    .form-group {
-      margin-top: 1em;
+    @media( min-width: 640px ) {
+      width: 55%;
     }
 
     input {
@@ -19,7 +16,7 @@
     textarea {
       width: 100%;
       min-height: 200px;
-      @media( min-width: 800px ) {
+      @media( min-width: 640px ) {
         min-height: 250px;
       }
     }
@@ -38,7 +35,7 @@
   .upload-data {
     margin-right: 20px;
     width: 100%;
-    @media( min-width: 800px ) {
+    @media( min-width: 640px ) {
       width: 40%;
       display: inline-block;
       vertical-align: top;
