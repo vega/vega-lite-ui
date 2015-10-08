@@ -9,7 +9,7 @@
 angular.module('vlui')
   // Add the file reader as a named dependency
   .constant('FileReader', window.FileReader)
-  .directive('fileDropzone', function (Modals, Alerts, FileReader) {
+  .directive('fileDropzone', function (Modals, Alerts, FileReader, _) {
 
     // Helper methods
 
@@ -56,33 +56,22 @@ angular.module('vlui')
             event.preventDefault();
           }
           event.originalEvent.dataTransfer.effectAllowed = 'copy';
-          // element.addClass('hover');
         });
 
-        element.on('drop dragleave dragout', function onDragExit(event) {
-          // element.removeClass('hover');
-        });
-
-        element.on('drop', function onDrop(event) {
-          var file, reader;
-          if (event) {
-            event.preventDefault();
-          }
-          file = event.originalEvent.dataTransfer.files[0];
-
+        function readFile(file) {
           if (!isTypeValid(file.type, scope.validMimeTypes)) {
             return;
           }
           if (!isSizeValid(file.size, scope.maxFileSize)) {
             return;
           }
-
-          reader = new FileReader();
+          var reader = new FileReader();
 
           reader.onload = function(evt) {
             return scope.$apply(function(scope) {
               scope.dataset.data = evt.target.result;
-              scope.dataset.name = file.name;
+              // Strip file name extensions from the uploaded data
+              scope.dataset.name = file.name.replace(/\.\w+$/, '');
             });
           };
 
@@ -91,6 +80,19 @@ angular.module('vlui')
           };
 
           reader.readAsText(file);
+        }
+
+        element.on('drop', function onDrop(event) {
+          if (event) {
+            event.preventDefault();
+          }
+
+          readFile(event.originalEvent.dataTransfer.files[0]);
+        });
+
+        element.find('input[type="file"]').on('change', function onUpload(event) {
+          // "this" is the input element
+          readFile(this.files[0]);
         });
       }
 

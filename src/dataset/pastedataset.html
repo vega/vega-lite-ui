@@ -5,9 +5,15 @@
   max-file-size="3"
   valid-mime-types="[text/csv, text/json, text/tsv]">
 
-  <p>
-    Drag a CSV file into this space, or else paste data in <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> format into the fields below. Please include a header with field names.
-  </p>
+  <div class="upload-data">
+    <div class="form-group">
+      <label for="dataset-file">File</label>
+      <input type="file" id="dataset-file" accept="text/csv,text/tsv" />
+    </div>
+    <p>
+      Drag and drop a CSV file into this space, use the form above to upload a CSV, or paste data in <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> format into the fields. Please include a header with field names.
+    </p>
+  </div>
 
   <form ng-submit="addDataset()">
     <div class="form-group">

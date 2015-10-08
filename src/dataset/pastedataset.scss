@@ -1,27 +1,60 @@
 .paste-data {
-  p {
-    width: 300px;
-  }
-  .form-group {
-    margin-top: 1em;
-    label {
-      width: 50px;
-      display: block;
-      float: left;
-      text-align: right;
-      font-weight: bold;
-      margin-right: 10px;
+  form {
+    display: inline-block;
+    vertical-align: top;
+
+    width: 100%;
+    @media( min-width: 800px ) {
+      width: 50%;
+      max-width: 500px;
     }
+
+    .form-group {
+      margin-top: 1em;
+    }
+
     input {
       width: 230px;
     }
     textarea {
-      width: 290px;
-      min-height: 300px;
+      width: 100%;
+      min-height: 200px;
+      @media( min-width: 800px ) {
+        min-height: 250px;
+      }
     }
+  }
+  label {
+    width: 50px;
+    display: block;
+    float: left;
+    font-weight: bold;
+    margin-right: 10px;
   }
   button {
     margin-top: 1.5em;
     line-height: 15px;
   }
+  .upload-data {
+    margin-right: 20px;
+    width: 100%;
+    @media( min-width: 800px ) {
+      width: 40%;
+      display: inline-block;
+      vertical-align: top;
+    }
+  }
 }
+.dropzone {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  padding: 20px;
+
+  border-radius: 4px;
+  border: 1px dashed #aaa;
+  &:hover {
+    border: 1px dashed #888;
+  }
+}
+
