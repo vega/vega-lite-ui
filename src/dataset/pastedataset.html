@@ -11,8 +11,11 @@
       <input type="file" id="dataset-file" accept="text/csv,text/tsv" />
     </div>
     <p>
-      Drag and drop a CSV file into this space, use the form above to upload a CSV, or paste data in <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> format into the fields. Please include a header with field names.
+      Upload a CSV, or paste data in <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> format into the fields.
     </p>
+    <div class="dropzone-target">
+      <p>Drop CSV file here</p>
+    </div>
   </div>
 
   <form ng-submit="addDataset()">
