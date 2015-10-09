@@ -12,7 +12,9 @@ angular.module('vlui')
       templateUrl: 'modal/modal.html',
       restrict: 'E',
       transclude: true,
-      scope: true,
+      scope: {
+        maxWidth: '@'
+      },
       // Provide an interface for child directives to close this modal
       controller: function($scope) {
         this.close = function() {
@@ -21,6 +23,8 @@ angular.module('vlui')
       },
       link: function(scope, element, attrs) {
         var modalId = attrs.id;
+
+        scope.wrapperStyle = 'max-width:' + scope.maxWidth;
 
         // Default to closed
         scope.isOpen = false;

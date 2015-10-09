@@ -24,17 +24,19 @@ angular.module('vlui')
         }
 
         // Initialize scope variables
-        scope.datasetName = '';
-        scope.data = '';
+        scope.dataset = {
+          name: '',
+          data: ''
+        };
 
         scope.addDataset = function() {
-          var data = dl.read(scope.data, {
+          var data = dl.read(scope.dataset.data, {
             type: 'csv'
           });
 
           var pastedDataset = {
             id: Date.now(),  // time as id
-            name: scope.datasetName,
+            name: scope.dataset.name,
             values: data,
             group: 'pasted'
           };

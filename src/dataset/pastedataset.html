@@ -1,22 +1,40 @@
 <div class="paste-data">
-  <p>
-    Paste data in <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> format. Please include a header with field names.
-  </p>
+
+<file-dropzone
+  dataset="dataset"
+  max-file-size="3"
+  valid-mime-types="[text/csv, text/json, text/tsv]">
+
+  <div class="upload-data">
+    <div class="form-group">
+      <label for="dataset-file">File</label>
+      <input type="file" id="dataset-file" accept="text/csv,text/tsv" />
+    </div>
+    <p>
+      Upload a CSV, or paste data in <a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> format into the fields.
+    </p>
+    <div class="dropzone-target">
+      <p>Drop CSV file here</p>
+    </div>
+  </div>
 
   <form ng-submit="addDataset()">
     <div class="form-group">
       <label for="dataset-name">Name</label>
       <input type="name"
-        ng-model="datasetName"
+        ng-model="dataset.name"
         id="dataset-name"
         required></input>
     </div>
     <div class="form-group">
-      <textarea ng-model="data"
+      <textarea ng-model="dataset.data"
         ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 17, 'blur': 0 }}"
         required>
       </textarea>
     </div>
     <button type="submit">Add data</button>
   </form>
+
+</file-dropzone>
+
 </div>
