@@ -9,7 +9,7 @@
 angular.module('vlui')
   // Add the file reader as a named dependency
   .constant('FileReader', window.FileReader)
-  .directive('fileDropzone', function (Modals, Alerts, FileReader, _) {
+  .directive('fileDropzone', function (Modals, Alerts, FileReader) {
 
     // Helper methods
 
@@ -90,7 +90,7 @@ angular.module('vlui')
           readFile(event.originalEvent.dataTransfer.files[0]);
         });
 
-        element.find('input[type="file"]').on('change', function onUpload(event) {
+        element.find('input[type="file"]').on('change', function onUpload(/*event*/) {
           // "this" is the input element
           readFile(this.files[0]);
         });
