@@ -234,7 +234,10 @@ angular.module('vlui')
         }
 
         var view;
-        scope.$watch('chart.vlSpec', function() {
+        scope.$watch(function() {
+          // Omit data property to speed up deep watch
+          return _.omit(scope.chart.vlSpec, 'data');
+        }, function() {
           var spec = scope.chart.vgSpec = getVgSpec();
           if (!scope.chart.cleanSpec) {
             scope.chart.cleanSpec = vl.Encoding.fromSpec(scope.chart.vlSpec).toSpec(true);
