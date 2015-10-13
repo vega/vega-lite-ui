@@ -16,42 +16,13 @@
       ></field-info>
     </div>
     <div class="toolbox">
-      <a ng-show="consts.debug && showDebug"
+      <a ng-if="consts.debug && showDebug"
         class="command debug">
-        <i class="fa fa-wrench" ng-click="shCopied=''; vlCopied=''; vgCopied='';"></i>
+        <!-- Mouseover on wrench icon is the trigger to lazy-render the popup -->
+        <i class="fa fa-wrench" ng-click="shCopied=''; vlCopied=''; vgCopied='';"
+          ng-mouseover="initializePopup();"></i>
       </a>
-      <div class="drop-container">
-        <div class="popup-menu popup-command no-shrink dev-tool">
-          <div class="command debug">
-            <span class="debug">Vls</span>
-            <a class="debug" ui-zeroclip zeroclip-copied="shCopied='(Copied)'" zeroclip-model="chart.shorthand">Copy</a>
-            /
-            <a class="debug" ng-click="logCode('VL shorthand', chart.shorthand); shCopied='(Logged)';">Log</a>
-            <span>{{shCopied}}</span>
-          </div>
-          <div class="command debug">
-            <span class="debug">Vl</span>
-            <a class="debug" ui-zeroclip zeroclip-copied="vlCopied='(Copied)'" zeroclip-model="chart.cleanSpec | compactJSON">Copy</a>
-            /
-            <a class="debug" ng-click="logCode('Vega-lite', chart.cleanSpec); vlCopied='(Logged)';">Log</a>
-            <span>{{vlCopied}}</span>
-          </div>
-          <div class="command debug">
-            <span class="debug">Vg</span>
-            <a class="debug" ui-zeroclip zeroclip-copied="vgCopied='(Copied)'" zeroclip-model="chart.vgSpec | compactJSON">Copy</a>
-            /
-            <a class="debug" ng-click="logCode('Vega', chart.vgSpec); vgCopied='(Logged)';">Log</a>
-            <span>{{vgCopied}}</span>
-          </div>
-          <a class="command debug"
-            ng-href="{{ {type:'vl', encoding: chart.cleanSpec} | reportUrl }}"
-            target="_blank">Report Bad Render</a>
-          <a ng-click="showFeature=!showFeature" class="command debug">{{chart.score}}</a>
-          <div ng-repeat="f in chart.scoreFeatures track by f.reason">
-            [{{f.score}}] {{f.reason}}
-          </div>
-        </div>
-      </div>
+      <vl-plot-group-popup ng-if="consts.debug && showDebug && renderPopup"></vl-plot-group-popup>
       <a ng-if="showMarkType"
         class="command disabled">
         <i class="fa fa-font"></i>
@@ -74,7 +45,7 @@
         <small>LOG Y</small>
       </a>
 
-      <a ng-show="showSort && chart.vlSpec && toggleSort.support(chart.vlSpec, Dataset.stats)"
+      <a ng-if="showSort && chart.vlSpec && toggleSort.support(chart.vlSpec, Dataset.stats)"
         class="command" ng-click="toggleSort(chart.vlSpec)"
         >
         <i class="fa sort"

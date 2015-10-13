@@ -7,11 +7,16 @@
  * # visListItem
  */
 angular.module('vlui')
-  .directive('vlPlotGroup', function (Bookmarks, consts, vl, Dataset, Drop, Logger) {
+  .directive('vlPlotGroup', function (Bookmarks, consts, vl, Dataset, Logger, _) {
     return {
       templateUrl: 'vlplotgroup/vlplotgroup.html',
       restrict: 'E',
       replace: true,
+      controller: function($scope, $element) {
+        this.getDropTarget = function() {
+          return $element.find('.fa-wrench')[0];
+        };
+      },
       scope: {
         /* pass to vlplot **/
         chart: '=',
@@ -49,10 +54,17 @@ angular.module('vlui')
         highlighted: '=',
         expandAction: '&',
       },
-      link: function postLink(scope, element) {
+      link: function postLink(scope) {
         scope.Bookmarks = Bookmarks;
         scope.consts = consts;
         scope.Dataset = Dataset;
+
+        // Defer rendering the debug Drop popup until it is requested
+        scope.renderPopup = false;
+        // Use _.once because the popup only needs to be initialized once
+        scope.initializePopup = _.once(function() {
+          scope.renderPopup = true;
+        });
 
         scope.logCode = function(name, value) {
           console.log(name+':\n\n', JSON.stringify(value));
@@ -105,14 +117,6 @@ angular.module('vlui')
         };
         scope.toggleFilterNull.support = vl.Encoding.toggleFilterNullO.support;
 
-        var debugPopup = new Drop({
-          content: element.find('.dev-tool')[0],
-          target: element.find('.fa-wrench')[0],
-          position: 'bottom right',
-          openOn: 'click',
-          constrainToWindow: true
-        });
-
         scope.toggleSortClass = function(vlSpec) {
           var direction = vlSpec && vl.Encoding.toggleSort.direction(vlSpec),
             mode = vlSpec && vl.Encoding.toggleSort.mode(vlSpec);
@@ -135,7 +139,6 @@ angular.module('vlui')
 
         scope.$on('$destroy', function() {
           scope.chart = null;
-          debugPopup.destroy();
         });
       }
     };
