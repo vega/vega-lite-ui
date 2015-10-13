@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('vlui')
-  .filter('compactJSON', function() {
+  .filter('compactJSON', function(JSON3) {
     return function(input) {
-      return JSON.stringify(input, null, '  ', 80);
+      return JSON3.stringify(input, null, '  ', 80);
     };
   });

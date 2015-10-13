@@ -30,6 +30,8 @@ var rootDirectory = path.resolve('./');
 var sourceDirectory = path.join(rootDirectory, './src');
 
 var sourceFiles = [
+  // Start with 3rd-party dependencies
+  path.join(sourceDirectory, '/vendor/**/*.js'),
   // Make sure the module is handled first
   path.join(sourceDirectory, '/index.js'),
   // template cache file
