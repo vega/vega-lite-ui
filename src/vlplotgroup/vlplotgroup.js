@@ -54,7 +54,7 @@ angular.module('vlui')
         highlighted: '=',
         expandAction: '&',
       },
-      link: function postLink(scope, element) {
+      link: function postLink(scope) {
         scope.Bookmarks = Bookmarks;
         scope.consts = consts;
         scope.Dataset = Dataset;
