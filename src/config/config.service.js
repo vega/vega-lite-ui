@@ -17,7 +17,7 @@ angular.module('vlui')
     };
 
     Config.getData = function() {
-      return _.cloneDeep(Config.data);
+      return Config.data;
     };
 
     Config.large = function() {
