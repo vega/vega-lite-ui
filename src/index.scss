@@ -99,6 +99,33 @@ textarea {
   margin-bottom:0;
 }
 
+/* prevent element from being selected http://stackoverflow.com/questions/826782 */
+.noselect {
+  user-select: none;
+  cursor: default;
+}
+
+h1 {
+  @extend .noselect;
+  font-size: 24px;
+  line-height:36px;
+  font-weight: 700;
+  margin: 0;
+}
+
+h3 {
+  @extend .noselect;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+h4 {
+  @extend .noselect;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0 0;
+}
 
 .flex-root{
   overflow: scroll;
