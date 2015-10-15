@@ -30,18 +30,24 @@ describe('Directive: modal', function () {
   }));
 
   describe('when compiled', function() {
+    var compileTemplate;
+
     beforeEach(inject(function($compile) {
-      var $el = angular.element('<modal id="test-modal"><h1>Modal Contents</h1></modal>');
-      element = $compile($el)(scope);
-      scope.$digest();
+      compileTemplate = function(template, scope) {
+        element = $compile(angular.element(template))(scope);
+        scope.$digest();
+        return element;
+      };
     }));
 
     it('does not initially show its contents', function() {
+      element = compileTemplate('<modal><h1>Modal Contents</h1></modal>', scope);
       expect(element.find('h1').length).to.equal(0);
     });
 
     describe('when opened', function() {
       beforeEach(inject(function(Modals) {
+        element = compileTemplate('<modal id="test-modal"><h1>Modal Contents</h1></modal>', scope);
         Modals.open('test-modal');
         scope.$digest();
       }));
@@ -56,6 +62,36 @@ describe('Directive: modal', function () {
         scope.$digest();
         expect(element.find('h1').length).to.equal(0);
       }));
+    });
+
+    describe('auto-open attribute', function() {
+      it('opens modal by default if value is truthy', function() {
+        element = compileTemplate('<modal auto-open="true"><h1>Contents</h1></modal>', scope);
+        expect(element.find('h1').length).to.equal(1);
+      });
+
+      it('does not open modal by default if value is falsy', function() {
+        element = compileTemplate('<modal auto-open="false"><h1>Contents</h1></modal>', scope);
+        expect(element.find('h1').length).to.equal(0);
+      });
+
+      it('has no effect if no value is provided', function() {
+        element = compileTemplate('<modal auto-open=""><h1>Contents</h1></modal>', scope);
+        expect(element.find('h1').length).to.equal(0);
+      });
+
+      it('can be data-bound to a truthy scope property', function() {
+        scope.scopeProp = true;
+        element = compileTemplate('<modal auto-open="scopeProp"><h1>Contents</h1></modal>', scope);
+        expect(element.find('h1').length).to.equal(1);
+      });
+
+      it('can be data-bound to a falsy scope property', function() {
+        scope.scopeProp = false;
+        element = compileTemplate('<modal auto-open="scopeProp"><h1>Contents</h1></modal>', scope);
+        console.log( element );
+        expect(element.find('h1').length).to.equal(0);
+      });
     });
   });
 

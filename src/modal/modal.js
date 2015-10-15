@@ -13,6 +13,7 @@ angular.module('vlui')
       restrict: 'E',
       transclude: true,
       scope: {
+        autoOpen: '=',
         maxWidth: '@'
       },
       // Provide an interface for child directives to close this modal
@@ -26,8 +27,8 @@ angular.module('vlui')
 
         scope.wrapperStyle = 'max-width:' + scope.maxWidth;
 
-        // Default to closed
-        scope.isOpen = false;
+        // Default to closed unless autoOpen is set
+        scope.isOpen = scope.autoOpen;
 
         // Register this modal with the service
         Modals.register(modalId, scope);
