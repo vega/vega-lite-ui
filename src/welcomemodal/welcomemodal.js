@@ -14,10 +14,6 @@ angular.module('vlui')
       transclude: true,
       scope: true,
       link: function(scope/*, element, attrs*/) {
-        if ( ! localStorageService.isSupported ) {
-          // How do we handle cases where localStorage is not supported?
-          return;
-        }
         // Determine whether the modal has been shown before
         var modalHasBeenShown = localStorageService.get('welcomeModalShown');
         if ( ! modalHasBeenShown ) {
