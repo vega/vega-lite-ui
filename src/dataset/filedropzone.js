@@ -15,24 +15,16 @@ angular.module('vlui')
 
     function isSizeValid(size, maxSize) {
       // Size is provided in bytes; maxSize is provided in megabytes
-      // Coerce maxSize to a number in case it comes in as a string
-      if (!maxSize || size / 1024 / 1024 < +maxSize) {
-        // max file size was not specified, is empty, or is sufficiently large
-        return true;
-      }
-
-      Alerts.add('File must be smaller than ' + maxSize + ' MB');
-      return false;
+      // Coerce maxSize to a number in case it comes in as a string,
+      // & return true when max file size was not specified, is empty,
+      // or is sufficiently large
+      return !maxSize || ( size / 1024 / 1024 < +maxSize );
     }
 
     function isTypeValid(type, validMimeTypes) {
-      if (!validMimeTypes || validMimeTypes.indexOf(type) > -1) {
         // If no mime type restrictions were provided, or the provided file's
         // type is whitelisted, type is valid
-        return true;
-      }
-      Alerts.add('Invalid file type. File must be one of following types: ' + validMimeTypes);
-      return false;
+      return !validMimeTypes || ( validMimeTypes.indexOf(type) > -1 );
     }
 
     return {
@@ -60,9 +52,15 @@ angular.module('vlui')
 
         function readFile(file) {
           if (!isTypeValid(file.type, scope.validMimeTypes)) {
+            scope.$apply(function() {
+              Alerts.add('Invalid file type. File must be one of following types: ' + scope.validMimeTypes);
+            });
             return;
           }
           if (!isSizeValid(file.size, scope.maxFileSize)) {
+            scope.$apply(function() {
+              Alerts.add('File must be smaller than ' + scope.maxFileSize + ' MB');
+            });
             return;
           }
           var reader = new FileReader();
