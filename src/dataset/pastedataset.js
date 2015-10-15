@@ -7,7 +7,7 @@
  * # pasteDataset
  */
 angular.module('vlui')
-  .directive('pasteDataset', function (Dataset, Alerts, Logger, Config, _, dl) {
+  .directive('pasteDataset', function (Dataset, Logger, Config, _, dl) {
     return {
       templateUrl: 'dataset/pastedataset.html',
       restrict: 'E',
