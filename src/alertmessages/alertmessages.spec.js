@@ -2,31 +2,32 @@
 
 describe('Directive: alertMessages', function() {
 
-  // load the directive's module
-  beforeEach(module('polestar'));
-
   var element,
     scope;
 
-  beforeEach(module('polestar', function($provide) {
-    var mock = {
+  // load the directive's module
+  beforeEach(module('vlui', function($provide) {
+    // Mock the alerts service
+    $provide.value('Alerts', {
       alerts: [
-        {name: 'foo'},
-        {name: 'bar'}
+        {msg: 'foo'},
+        {msg: 'bar'}
       ]
-    };
-    $provide.value('Alerts', mock);
+    });
   }));
 
-  beforeEach(inject(function($rootScope) {
+  beforeEach(inject(function($rootScope, $compile) {
     scope = $rootScope.$new();
-  }));
-
-  it('should show alert messages', inject(function($compile) {
-    element = angular.element('<alert-messages></alert-messages>');
-    element = $compile(element)(scope);
+    var $el = angular.element('<alert-messages></alert-messages>');
+    element = $compile($el)(scope);
     scope.$digest();
-
-    expect(element.find('.alert-item').length).to.eql(2);
   }));
+
+  it('should show alert messages', function() {
+    expect(element.find('.alert-item').length).to.equal(2);
+    // Ignore the close buttons, which use an HTML entity for the close icon
+    element.find('a').remove();
+    expect(element.find('.alert-item').eq(0).text().trim()).to.equal('foo');
+    expect(element.find('.alert-item').eq(1).text().trim()).to.equal('bar');
+  });
 });
