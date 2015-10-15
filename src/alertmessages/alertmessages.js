@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('polestar')
+angular.module('vlui')
   .directive('alertMessages', function(Alerts) {
     return {
-      templateUrl: 'components/alertmessages/alertmessages.html',
+      templateUrl: 'alertmessages/alertmessages.html',
       restrict: 'E',
       scope: {},
       link: function(scope /*, element, attrs*/) {
