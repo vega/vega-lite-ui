@@ -1,0 +1,22 @@
+<div class="change-loaded-dataset">
+  <div ng-if="userData.length">
+    <p>Switch dataset</p>
+    <ul>
+      <li ng-repeat="dataset in userData track by dataset.id"
+        ng-class="{selected: Dataset.currentDataset.id === dataset.id}">
+        <button ng-click="selectDataset(dataset)">{{dataset.name}}</button>
+        <span ng-if="dataset.description">{{dataset.description}}</span>
+        <strong ng-if="Dataset.currentDataset === dataset">(selected)</strong>
+      </li>
+    </ul>
+  </div>
+  <p>Select a sample dataset to explore</p>
+  <ul>
+    <li ng-repeat="dataset in sampleData track by dataset.id"
+      ng-class="{selected: Dataset.currentDataset.id === dataset.id}">
+      <button ng-click="selectDataset(dataset)">{{dataset.name}}</button>
+      <span ng-if="dataset.description">{{dataset.description}}</span>
+      <strong ng-if="Dataset.currentDataset === dataset">(selected)</strong>
+    </li>
+  </ul>
+</div>
