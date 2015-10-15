@@ -28,7 +28,7 @@ angular.module('vlui')
 
         scope.typeNames = consts.typeNames;
         scope.stats = Dataset.stats[scope.field.name];
-        scope.isTypes = vl.field.isTypes;
+        scope.isTypes = vl.encDef.isTypes;
 
         switch(scope.field.type){
           case 'O':
