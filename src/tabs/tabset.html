@@ -1,7 +1,7 @@
 <div class="tab-container">
   <div>
-      <a href=""
-        class="tab" ng-repeat="tab in tabset.tabs"
+      <a class="tab"
+        ng-repeat="tab in tabset.tabs"
         ng-class="{'active': tab.active}"
         ng-click="tabset.showTab(tab)">
         {{tab.heading}}

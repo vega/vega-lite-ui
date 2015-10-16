@@ -1,10 +1,22 @@
 .change-loaded-dataset {
+  padding-top: 10px;
+
   ul {
-    padding: none;
+    padding: 0;
     list-style-type: none;
+    margin-bottom: 20px;
   }
 
   li {
     margin-bottom: 10px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 20px 0 10px;
+    @media (min-width:640px) {
+      padding-right: 10px;
+      width: 49%;
+    }
   }
 }

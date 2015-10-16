@@ -1,10 +1,12 @@
 angular.module('vlui').constant('SampleData', [{
   name: 'Barley',
+  description: 'Barley yield by variety across the upper midwest in 1931 and 1932',
   url: 'data/barley.json',
   id: 'barley',
   group: 'sample'
 },{
   name: 'Cars',
+  description: 'Automotive statistics for a variety of car models between 1970 & 1982',
   url: 'data/cars.json',
   id: 'cars',
   group: 'sample'
