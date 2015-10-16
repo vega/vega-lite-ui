@@ -1,0 +1,28 @@
+.change-loaded-dataset {
+  padding-top: 10px;
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+    margin-bottom: 20px;
+  }
+
+  li {
+    margin-bottom: 5px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px 20px 5px 10px;
+    @media (min-width:640px) {
+      padding-right: 10px;
+      width: 49%;
+    }
+
+    &.selected {
+      background-color: #eef0f7;
+      border: 1px solid #aeb8d4;
+      border-radius: 3px;
+    }
+  }
+}

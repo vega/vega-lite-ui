@@ -1,7 +1,7 @@
 'use strict';
 /* global vl:true */
 
-describe('Directive: datasetSelector', function() {
+describe.skip('Directive: datasetSelector', function() {
 
   // load the directive's module
   beforeEach(module('vlui', function($provide) {
