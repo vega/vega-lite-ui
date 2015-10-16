@@ -89,7 +89,6 @@ describe('Directive: modal', function () {
       it('can be data-bound to a falsy scope property', function() {
         scope.scopeProp = false;
         element = compileTemplate('<modal auto-open="scopeProp"><h1>Contents</h1></modal>', scope);
-        console.log( element );
         expect(element.find('h1').length).to.equal(0);
       });
     });
