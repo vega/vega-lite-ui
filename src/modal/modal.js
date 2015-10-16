@@ -25,7 +25,9 @@ angular.module('vlui')
       link: function(scope, element, attrs) {
         var modalId = attrs.id;
 
-        scope.wrapperStyle = 'max-width:' + scope.maxWidth;
+        if (scope.maxWidth) {
+          scope.wrapperStyle = 'max-width:' + scope.maxWidth;
+        }
 
         // Default to closed unless autoOpen is set
         scope.isOpen = scope.autoOpen;
