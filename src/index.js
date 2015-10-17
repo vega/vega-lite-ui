@@ -3,7 +3,6 @@
 
 angular.module('vlui', [
   'LocalStorageModule',
-  'ui.select',
   'angular-google-analytics'
   ])
   .constant('_', window._)
