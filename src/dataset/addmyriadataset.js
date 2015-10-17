@@ -35,6 +35,13 @@ angular.module('vlui')
             });
         };
 
+        // Load the available datasets from Myria
+        scope.loadDatasets('');
+
+        scope.optionName = function(dataset) {
+          return dataset.userName + ':' + dataset.programName + ':' + dataset.relationName;
+        };
+
         scope.addDataset = function(myriaDataset) {
           var dataset = {
             group: 'myria',
