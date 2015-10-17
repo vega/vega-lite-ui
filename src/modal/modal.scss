@@ -5,13 +5,13 @@
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.5);
+  z-index: 1;
 
   .modal-wrapper {
     margin: 50px auto;
     width: calc( 100% - 100px );
     max-height: calc( 100% - 100px );
-    z-index: 1;
-    overflow: scroll;
+    overflow: auto;
     padding: 8px;
     background-color: white;
     border: 1px solid #aaa;
