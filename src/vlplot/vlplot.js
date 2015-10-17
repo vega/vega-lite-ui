@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap) {
+  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap, $window) {
     var counter = 0;
     var MAX_CANVAS_SIZE = 32767/2, MAX_CANVAS_AREA = 268435456/4;
 
@@ -149,6 +149,10 @@ angular.module('vlui')
           }
         }
 
+        function getShorthand() {
+          return scope.chart.shorthand || (scope.chart.vlSpec ? vl.Encoding.shorthand(scope.chart.vlSpec) : '');
+        }
+
         function renderQueueNext() {
           // render next item in the queue
           if (renderQueue.size() > 0) {
@@ -174,7 +178,7 @@ angular.module('vlui')
             console.error('can not find vis element');
           }
 
-          var shorthand = scope.chart.shorthand || (scope.chart.vlSpec ? vl.Encoding.shorthand(scope.chart.vlSpec) : '');
+          var shorthand = getShorthand();
 
           scope.renderer = getRenderer(spec);
 
@@ -202,6 +206,11 @@ angular.module('vlui')
                 scope.height = view.height();
                 view.renderer(getRenderer(spec.width, scope.height));
                 view.update();
+
+                if (consts.debug) {
+                  $window.views = $window.views || {};
+                  $window.views[shorthand] = view;
+                }
 
                 Logger.logInteraction(Logger.actions.CHART_RENDER, '', scope.chart.vlSpec);
                   rescaleIfEnable();
@@ -251,6 +260,10 @@ angular.module('vlui')
             view.off('mouseover');
             view.off('mouseout');
             view = null;
+          }
+          var shorthand = getShorthand();
+          if (consts.debug && $window.views) {
+            delete $window.views[shorthand];
           }
 
           scope.destroyed = true;
