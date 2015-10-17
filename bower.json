@@ -36,8 +36,6 @@
     "vega": "^1.5.0",
     "vega-lite": "^0.7.9",
     "datalib": "^1.3.0",
-    "angular-ui-select": "~0.11.2",
-    "selectize": "~0.12.1",
     "angular-google-analytics": "~1.1.1"
   },
   "resolutions": {
