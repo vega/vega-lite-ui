@@ -46,7 +46,7 @@
       </a>
 
       <a ng-if="showSort && chart.vlSpec && toggleSort.support(chart.vlSpec, Dataset.stats)"
-        class="command" ng-click="toggleSort(chart.vlSpec)"
+        class="command" ng-click="toggleSort.toggle(chart.vlSpec)"
         >
         <i class="fa sort"
           ng-class="toggleSortClass(chart.vlSpec)"
