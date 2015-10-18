@@ -103,9 +103,16 @@ $any-hover-color: #666;
     }
   }
 
-  .type-caret.active:hover .fa.fa-caret-down, .fa.fa-times:hover {
+  .type-caret.active:hover .fa.fa-caret-down, .fa.fa-times:hover,
+  &:hover .type-caret.active:hover .fa.fa-caret-down,
+  &.highlighted .type-caret.active:hover .fa.fa-caret-down {
     color: white;
     background-color: #999;
+  }
+
+  .type-caret.drop-enabled .fa.fa-caret-down {
+    background-color: #bbb;
+    color: black;
   }
 }
 
