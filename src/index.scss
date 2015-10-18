@@ -26,6 +26,36 @@ a:hover {
   cursor: pointer;
 }
 
+#logo {
+  height: 34px;
+  flex-shrink: 0;
+  margin-right: 40px; /* This margin further pushes the menu to the right */
+}
+
+.top-card a {
+  color: #38425D;
+}
+
+.top-card a:hover {
+  color: #72757B;
+}
+
+.controls {
+  margin-left: 33px;
+  margin-top: 7px;
+  & > a.command {
+    font-size: 14px;
+    margin-right: 40px;
+  }
+}
+
+.idl-logo {
+  background: url("../assets/images/idl-logo.png") center no-repeat;
+  display: block;
+  width: 48px;
+  height: 34px;
+}
+
 .clickable, .clickable.draggable {
   cursor: pointer;
 }
@@ -115,6 +145,14 @@ h1 {
   line-height:36px;
   font-weight: 700;
   margin: 0;
+}
+
+h2 {
+  @extend .noselect;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  margin: 0 0 15px;
 }
 
 h3 {
@@ -208,12 +246,17 @@ h4 {
   }
 }
 
+
+
 /* UTILITIES */
 
 .mb5{
   margin-bottom: 5px;
 }
 
+.relative{
+  position: relative;
+}
 
 .full-width {
   width: 100%;
@@ -287,6 +330,12 @@ h4 {
   right: 0;
   top: 0;
   bottom: 0;
+}
+
+.absolute-top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .persist-scroll{
@@ -388,5 +437,45 @@ h4 {
   display: none;
   &.drop-open {
     display: block;
+  }
+}
+
+
+.data-card {
+  background-color: #38425D;
+  h2 {
+    color: white;
+  }
+  a {
+    color: white;
+  }
+  a:hover, a:focus {
+    color: #ddd;
+  }
+}
+
+.data-load {
+  background-color: #30374A;
+  padding:0;
+  margin:0;
+}
+
+.pane.data-pane {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+#footer {
+  position:absolute;
+  bottom: 5px;
+  left: 10px;
+
+  ul.menu {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    li {
+      margin-bottom: 4px;
+    }
   }
 }

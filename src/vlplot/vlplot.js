@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap) {
+  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap, $window) {
     var counter = 0;
     var MAX_CANVAS_SIZE = 32767/2, MAX_CANVAS_AREA = 268435456/4;
 
@@ -208,8 +208,8 @@ angular.module('vlui')
                 view.update();
 
                 if (consts.debug) {
-                  window.views = window.views || {};
-                  window.views[shorthand] = view;
+                  $window.views = $window.views || {};
+                  $window.views[shorthand] = view;
                 }
 
                 Logger.logInteraction(Logger.actions.CHART_RENDER, '', scope.chart.vlSpec);
@@ -262,8 +262,8 @@ angular.module('vlui')
             view = null;
           }
           var shorthand = getShorthand();
-          if (consts.debug && window.views) {
-            delete window.views[shorthand];
+          if (consts.debug && $window.views) {
+            delete $window.views[shorthand];
           }
 
           scope.destroyed = true;
