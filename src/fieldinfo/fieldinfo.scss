@@ -122,7 +122,7 @@ $any-hover-color: #666;
 }
 
 .field-info.selected {
-  border: 1px solid #bbb;
+  border: 1px solid #eee;
   background-color: #eee;
   font-weight: 500;
 }
@@ -138,8 +138,8 @@ $any-hover-color: #666;
 
 .field-info.highlighted,
 .field-list-item:hover .field-info {
-  border: 1px solid #FDE59A;
-  background-color: #FCEF00;
+  border: 1px solid #FFE14A;
+  background-color: #FFE14A;
   font-weight: 500;
 
   .field-func, .field-count{
