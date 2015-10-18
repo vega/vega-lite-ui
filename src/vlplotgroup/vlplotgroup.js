@@ -110,12 +110,35 @@ angular.module('vlui')
 
         // TOGGLE FILTER
 
-        scope.toggleFilterNull = function(spec, stats) {
+        scope.toggleFilterNull = function(spec) {
           Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE, scope.chart.shorthand);
 
-          vl.Encoding.toggleFilterNullO(spec, stats);
+          spec.config = spec.config || {};
+          spec.config.filterNull = spec.config.filterNull || {
+            // TODO: initiate this from filterNull's schema instead
+            N: false,
+            O: false,
+            T: true,
+            Q: true
+          };
+          spec.config.filterNull.O = !spec.config.filterNull.O;
+          spec.config.filterNull.N = !spec.config.filterNull.N;
         };
-        scope.toggleFilterNull.support = vl.Encoding.toggleFilterNullO.support;
+
+        scope.toggleFilterNull.support = function(spec, stats) {
+          var fields = vl.enc.fields(spec.encoding);
+          for (var fieldName in fields) {
+            var fieldList = fields[fieldName];
+            if (
+                (fieldList.containsType.O || fieldList.containsType.N) &&
+                (fieldName in stats) &&
+                stats[fieldName].missing > 0
+              ) {
+              return true;
+            }
+          }
+          return false;
+        };
 
         scope.toggleSortClass = function(vlSpec) {
           var direction = vlSpec && vl.Encoding.toggleSort.direction(vlSpec),
