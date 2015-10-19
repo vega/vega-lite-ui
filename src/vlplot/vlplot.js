@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap, $window) {
+  .directive('vlPlot', function(dl, vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap, $window) {
     var counter = 0;
     var MAX_CANVAS_SIZE = 32767/2, MAX_CANVAS_AREA = 268435456/4;
 
@@ -68,7 +68,7 @@ angular.module('vlui')
         };
 
         function viewOnMouseOver(event, item) {
-          if (!item.datum.data) { return; }
+          if (!item || !item.datum) { return; }
 
           scope.tooltipPromise = $timeout(function activateTooltip(){
             scope.tooltipActive = true;
@@ -76,10 +76,12 @@ angular.module('vlui')
 
             // convert data into a format that we can easily use with ng table and ng-repeat
             // TODO: revise if this is actually a good idea
-            scope.data = _.pairs(item.datum.data).map(function(p) {
-              p[1] = vg.isNumber(p[1]) ? format(p[1]) : p[1];
-              return p;
-            });
+            scope.data = _(item.datum).omit('_prev', '_id') // omit vega internals
+              .pairs().value()
+              .map(function(p) {
+                p[1] = dl.isNumber(p[1]) ? format(p[1]) : p[1];
+                return p;
+              });
             scope.$digest();
 
             var tooltip = element.find('.vis-tooltip'),

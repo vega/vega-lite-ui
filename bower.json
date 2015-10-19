@@ -1,6 +1,6 @@
 {
   "name": "vega-lite-ui",
-  "version": "0.7.18",
+  "version": "0.8.0",
   "homepage": "https://github.com/vega/vega-lite-ui",
   "authors": [
     "Interactive Data Lab (http://idl.cs.washington.edu)"
@@ -33,9 +33,10 @@
     "angular-zeroclipboard": "~0.4.0",
     "drop": "~1.0.4",
     "heap": "~0.2.6",
-    "vega": "^1.5.0",
-    "vega-lite": "^0.7.9",
-    "datalib": "^1.3.0",
+    "vega": "^2.2.6",
+    "vega-lite": "^0.8.0",
+    "datalib": "^1.4.6",
+    "selectize": "~0.12.1",
     "angular-google-analytics": "~1.1.1"
   },
   "resolutions": {
