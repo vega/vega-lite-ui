@@ -7,7 +7,7 @@
  * # visListItem
  */
 angular.module('vlui')
-  .directive('vlPlotGroup', function (Bookmarks, consts, vl, Dataset, Logger, _) {
+  .directive('vlPlotGroup', function (Bookmarks, consts, dl, vl, Dataset, Logger, _) {
     return {
       templateUrl: 'vlplotgroup/vlplotgroup.html',
       restrict: 'E',
@@ -99,16 +99,8 @@ angular.module('vlui')
           return scale.type === 'log';
         };
 
-        // TOGGLE SORT
-
-        var toggleSort = scope.toggleSort = function(spec) {
-          Logger.logInteraction(Logger.actions.SORT_TOGGLE, scope.chart.shorthand);
-          vl.Encoding.toggleSort(spec);
-        };
-        //FIXME
-        toggleSort.support = vl.Encoding.toggleSort.support;
-
         // TOGGLE FILTER
+        // TODO: extract toggleFilterNull to be its own class
 
         scope.toggleFilterNull = function(spec) {
           Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE, scope.chart.shorthand);
@@ -140,18 +132,125 @@ angular.module('vlui')
           return false;
         };
 
-        scope.toggleSortClass = function(vlSpec) {
-          var direction = vlSpec && vl.Encoding.toggleSort.direction(vlSpec),
-            mode = vlSpec && vl.Encoding.toggleSort.mode(vlSpec);
+        // TOGGLE SORT
+        // TODO: extract toggleSort to be its own class
 
-          if (direction === 'y') {
-            return mode === 'Q' ? 'fa-sort-amount-desc' :
-              'fa-sort-alpha-asc';
-          } else if (direction === 'x') {
-            return mode === 'Q' ? 'fa-sort-amount-desc sort-x' :
-              'fa-sort-alpha-asc sort-x';
-          } else {
+        var toggleSort = scope.toggleSort = {};
+
+        toggleSort.modes = ['none', 'ordinal-ascending', 'ordinal-descending',
+          'quantitative-ascending', 'quantitative-descending', 'custom'];
+
+        toggleSort.toggle = function(spec) {
+          Logger.logInteraction(Logger.actions.SORT_TOGGLE, scope.chart.shorthand);
+          var currentMode = toggleSort.mode(spec);
+          var currentModeIndex = toggleSort.modes.indexOf(currentMode);
+
+          var newModeIndex = (currentModeIndex + 1) % (toggleSort.modes.length - 1);
+          var newMode = toggleSort.modes[newModeIndex];
+
+          console.log('toggleSort', currentMode, newMode);
+
+          var channels = toggleSort.channels(spec);
+          spec.encoding[channels.ordinal].sort = toggleSort.getSort(newMode, spec);
+        };
+
+        /** Get sort property definition that matches each mode. */
+        toggleSort.getSort = function(mode, spec) {
+          if (mode === 'ordinal-ascending') {
+            return 'ascending';
+          }
+
+          if (mode === 'ordinal-descending') {
+            return 'descending';
+          }
+
+          var channels = toggleSort.channels(spec);
+          var qEncDef = spec.encoding[channels.quantitative];
+
+          if (mode === 'quantitative-ascending') {
+            return {
+              op: qEncDef.aggregate,
+              field: qEncDef.name,
+              order: 'ascending'
+            };
+          }
+
+          if (mode === 'quantitative-descending') {
+            return {
+              op: qEncDef.aggregate,
+              field: qEncDef.name,
+              order: 'descending'
+            };
+          }
+
+          return null;
+        };
+
+        toggleSort.mode = function(spec) {
+          var channels = toggleSort.channels(spec);
+          var sort = spec.encoding[channels.ordinal].sort;
+
+          if (sort === undefined) {
+            return 'none';
+          }
+
+          for (var i = 0; i < toggleSort.modes.length - 1 ; i++) {
+            // check if sort matches any of the sort for each mode except 'custom'.
+            var mode = toggleSort.modes[i];
+            var sortOfMode = toggleSort.getSort(mode, spec);
+
+            if (_.isEqual(sort, sortOfMode)) {
+              return mode;
+            }
+          }
+
+          if (dl.isObject(sort) && sort.op && sort.field) {
+            return 'custom';
+          }
+          console.error('invalid mode');
+          return null;
+        };
+
+        toggleSort.channels = function(spec) {
+          return spec.encoding.x.type === 'N' || spec.encoding.x.type === 'O' ?
+                  {ordinal: 'x', quantitative: 'y'} :
+                  {ordinal: 'y', quantitative: 'x'};
+        };
+
+        toggleSort.support = function(spec, stats) {
+          var enc = spec.encoding;
+
+          if (vl.enc.has(enc, 'row') || vl.enc.has(enc, 'col') ||
+            !vl.enc.has(enc, 'x') || !vl.enc.has(enc, 'y') ||
+            !vl.Encoding.alwaysNoOcclusion(spec, stats)) {
+            return false;
+          }
+
+          return ( vl.encDef.isTypes(enc.x, ['N', 'O']) && vl.encDef.isMeasure(enc.y)) ? 'x' :
+            ( vl.encDef.isTypes(enc.y, ['N','O']) && vl.encDef.isMeasure(enc.x)) ? 'y' : false;
+        };
+
+        scope.toggleSortClass = function(vlSpec) {
+          if (!vlSpec || !toggleSort.support(vlSpec, Dataset.stats)) {
             return 'invisible';
+          }
+
+          var ordinalChannel = vlSpec && toggleSort.channels(vlSpec).ordinal,
+            mode = vlSpec && toggleSort.mode(vlSpec);
+
+          var directionClass = ordinalChannel === 'x' ? 'sort-x ' : '';
+
+          switch (mode) {
+            case 'ordinal-ascending':
+              return directionClass + 'fa-sort-alpha-asc';
+            case 'ordinal-descending':
+              return directionClass + 'fa-sort-alpha-desc';
+            case 'quantitative-ascending':
+              return directionClass + 'fa-sort-amount-asc';
+            case 'quantitative-descending':
+              return directionClass + 'fa-sort-amount-desc';
+            default: // custom, none
+              return directionClass + 'fa-sort';
           }
         };
 

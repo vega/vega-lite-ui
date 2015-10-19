@@ -1,4 +1,5 @@
-$any-color: #aaa;
+$any-color: #bbb;
+$any-hover-color: #666;
 
 .field-info {
   display: inline-block;
@@ -102,9 +103,16 @@ $any-color: #aaa;
     }
   }
 
-  .type-caret.active:hover .fa.fa-caret-down, .fa.fa-times:hover {
+  .type-caret.active:hover .fa.fa-caret-down, .fa.fa-times:hover,
+  &:hover .type-caret.active:hover .fa.fa-caret-down,
+  &.highlighted .type-caret.active:hover .fa.fa-caret-down {
     color: white;
     background-color: #999;
+  }
+
+  .type-caret.drop-enabled .fa.fa-caret-down {
+    background-color: #bbb;
+    color: black;
   }
 }
 
@@ -116,12 +124,12 @@ $any-color: #aaa;
 }
 
 .field-info.unselected {
-  border: 1px dashed #ccc;
+  border: 1px dashed #ddd;
   background-color: #fafafa;
 }
 
 .field-info.selected {
-  border: 1px solid #bbb;
+  border: 1px solid #ddd;
   background-color: #eee;
   font-weight: 500;
 }
@@ -137,9 +145,21 @@ $any-color: #aaa;
 
 .field-info.highlighted,
 .field-list-item:hover .field-info {
-  border: 1px solid #FDE59A;
-  background-color: #FCEF00;
+  border: 1px solid #FFE14A;
+  background-color: #FFE14A;
   font-weight: 500;
+
+  .field-func, .field-count{
+    &.any {
+      color: $any-hover-color;
+    }
+  }
+
+  .field-info .field-name.hasfunc {
+    &.any::before, &.any::after {
+      color: $any-hover-color;
+    }
+  }
 }
 
 .field-info.ui-draggable-dragging {
