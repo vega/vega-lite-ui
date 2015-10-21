@@ -4,6 +4,7 @@ $pill-min-width: 150px;
 $text-color: #212121;
 $link-color: #008CBA;
 $link-hover-color: #125369;
+$background-color: #E2E9F3;
 
 html {
   height: 100%;
@@ -14,7 +15,7 @@ body{
   height:100%;
   overflow: hidden;
   margin: 0;
-  background-color: #eee;
+  background-color: #E2E9F3;
   font-size: 12px;
   line-height: 18px;
 }
