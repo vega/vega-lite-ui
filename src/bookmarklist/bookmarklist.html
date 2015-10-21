@@ -1,38 +1,36 @@
 <modal id="bookmark-list" ng-if="Bookmarks.isSupported">
-  <div class="vflex full-width full-height" id="evs">
-    <div class="modal-header no-shrink card no-top-margin no-right-margin">
-      <modal-close-button on-close="logBookmarksClosed()"></modal-close-button>
-      <h2 class="no-bottom-margin">Bookmarks ({{ Bookmarks.length }})</h2>
-      <a ng-click="Bookmarks.clear()"><i class="fa fa-trash-o"></i> Clear all</a>
-    </div>
-    <div class="flex-grow-1 scroll-y">
-      <div ng-if="Bookmarks.length > 0"
-          class="vis-list hflex flex-wrap">
-        <vl-plot-group
-          ng-repeat="chart in Bookmarks.dict | orderObjectBy : 'timeAdded' : false"
+  <div class="modal-header card no-top-margin no-right-margin">
+    <modal-close-button on-close="logBookmarksClosed()"></modal-close-button>
+    <h2 class="no-bottom-margin">Bookmarks ({{ Bookmarks.length }})</h2>
+    <a ng-click="Bookmarks.clear()"><i class="fa fa-trash-o"></i> Clear all</a>
+  </div>
+  <div class="flex-grow-1 scroll-y">
+    <div ng-if="Bookmarks.length > 0"
+        class="hflex flex-wrap">
+      <vl-plot-group
+        ng-repeat="chart in Bookmarks.dict | orderObjectBy : 'timeAdded' : false"
         class="wrapped-vl-plot-group card"
 
-          chart="chart"
-          field-set="chart.fieldSet"
+        chart="chart"
+        field-set="chart.fieldSet"
 
-          show-bookmark="true"
-          show-debug="consts.debug"
-          show-expand="false"
+        show-bookmark="true"
+        show-debug="consts.debug"
+        show-expand="false"
 
-          always-selected="true"
-          highlighted="highlighted"
-          ng-mouseover="(highlighted||{})[field.name] = true"
-          ng-mouseout="(highlighted||{})[field.name] = false"
+        always-selected="true"
+        highlighted="highlighted"
+        ng-mouseover="(highlighted||{})[field.name] = true"
+        ng-mouseout="(highlighted||{})[field.name] = false"
 
-          overflow="true"
-          tooltip="true"
+        overflow="true"
+        tooltip="true"
 
-          priority="consts.priority.bookmark"
-        ></vl-plot-group>
-      </div>
-      <div class="vis-list-empty" ng-if="Bookmarks.length === 0">
-        You have no bookmarks
-      </div>
+        priority="consts.priority.bookmark"
+      ></vl-plot-group>
+    </div>
+    <div class="vis-list-empty" ng-if="Bookmarks.length === 0">
+      You have no bookmarks
     </div>
   </div>
 </modal>
