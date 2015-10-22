@@ -80,6 +80,9 @@
     flex-grow: 0;
     flex-shrink: 0;
   }
+  .toolbox .command {
+    text-transform: uppercase;
+  }
   .field-set-info {
     flex-grow: 1;
   }
