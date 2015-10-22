@@ -137,7 +137,7 @@ angular.module('vlui')
 
         var toggleSort = scope.toggleSort = {};
 
-        toggleSort.modes = ['none', 'ordinal-ascending', 'ordinal-descending',
+        toggleSort.modes = ['ordinal-ascending', 'ordinal-descending',
           'quantitative-ascending', 'quantitative-descending', 'custom'];
 
         toggleSort.toggle = function(spec) {
@@ -191,7 +191,7 @@ angular.module('vlui')
           var sort = spec.encoding[channels.ordinal].sort;
 
           if (sort === undefined) {
-            return 'none';
+            return 'ordinal-ascending';
           }
 
           for (var i = 0; i < toggleSort.modes.length - 1 ; i++) {
@@ -249,7 +249,7 @@ angular.module('vlui')
               return directionClass + 'fa-sort-amount-asc';
             case 'quantitative-descending':
               return directionClass + 'fa-sort-amount-desc';
-            default: // custom, none
+            default: // custom
               return directionClass + 'fa-sort';
           }
         };
