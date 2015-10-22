@@ -1,4 +1,9 @@
-# vega-lite-ui [![Build Status](https://travis-ci.org/vega/vega-lite-ui.svg)](https://travis-ci.org/vega/vega-lite-ui)
+# vega-lite-ui
+
+[![Build Status](https://travis-ci.org/vega/vega-lite-ui.svg)](https://travis-ci.org/vega/vega-lite-ui)
+[![npm dependencies](https://david-dm.org/vega/vega-lite-ui.svg)](https://www.npmjs.com/package/vega-lite-ui)
+[![npm version](https://img.shields.io/npm/v/vega-lite-ui.svg)](https://www.npmjs.com/package/vega-lite-ui)
+
 Common UI Library for [Polestar](https://github.com/vega/polestar) and [Voyager](https://github.com/vega/voyager).
 
 ## Build Process
