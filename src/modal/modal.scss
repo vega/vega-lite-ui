@@ -7,17 +7,28 @@
   background: rgba(0,0,0,0.5);
   z-index: 1;
 
+  .modal-header {
+    background-color: #F1F4F9;
+    flex-shrink: 0;
+  }
+
   .modal-wrapper {
     margin: 50px auto;
     width: calc( 100% - 100px );
     max-height: calc( 100% - 100px );
-    overflow: auto;
-    padding: 8px;
-    background-color: white;
+    overflow: hidden;
+    padding: 6px;
+    background-color: $background-color;
     border: 1px solid #aaa;
     border-radius: 3px;
     box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column; //vertical
+    align-items: stretch;
   }
+
+
 
   .modal-close {
     position: absolute;

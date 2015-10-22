@@ -28,7 +28,7 @@
 }
 
 .vl-plot-group.full-vl-plot-group {
-  max-width: 100%;
+  width: 100%;
   .vl-plot-wrapper {
     max-height: none;
     .vis.fit .vega{
@@ -79,6 +79,9 @@
   .toolbox {
     flex-grow: 0;
     flex-shrink: 0;
+  }
+  .toolbox .command {
+    text-transform: uppercase;
   }
   .field-set-info {
     flex-grow: 1;
