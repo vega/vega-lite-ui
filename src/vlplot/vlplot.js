@@ -145,13 +145,15 @@ angular.module('vlui')
         function rescaleIfEnable() {
           var visElement = getVisElement();
           if (scope.rescale) {
+            // have to digest the scope to ensure that
+            // element.width() is bound by parent element!
+            scope.$digest();
 
             var xRatio = Math.max(
                 0.2,
                 element.width() /  /* width of vlplot bounding box */
                 scope.width /* width of the vis */
               );
-            console.log('rescale', getShorthand(), xRatio, 'visWidth', scope.width, scope.width);
 
             if (xRatio < 1) {
               visElement.width(scope.width * xRatio)
@@ -230,7 +232,7 @@ angular.module('vlui')
                 }
 
                 Logger.logInteraction(Logger.actions.CHART_RENDER, '', scope.chart.vlSpec);
-                  rescaleIfEnable();
+                rescaleIfEnable();
 
                 var endChart = new Date().getTime();
                 console.log('parse spec', (endParse-start), 'charting', (endChart-endParse), shorthand);
