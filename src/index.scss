@@ -119,19 +119,19 @@ textarea {
 }
 
 .no-right-margin {
-  margin-right: 0;
+  margin-right: 0 !important;
 }
 
 .no-top-margin {
-  margin-top:0;
+  margin-top: 0 !important;
 }
 
 .no-left-margin {
-  margin-left: 0;
+  margin-left: 0 !important;
 }
 
 .no-bottom-margin {
-  margin-bottom:0;
+  margin-bottom: 0 !important;
 }
 
 /* prevent element from being selected http://stackoverflow.com/questions/826782 */
@@ -170,7 +170,7 @@ h4 {
   margin: 0 0;
 }
 
-.flex-root {
+.flex-root{
   overflow: auto;
 }
 
@@ -284,7 +284,7 @@ h4 {
   display: block;
 }
 
-.grow-1 {
+.grow-1{
   flex-grow:1;
 }
 
