@@ -223,6 +223,7 @@ angular.module('vlui')
                 view.update();
 
                 var visElement = element.find('.vega > :first-child');
+                // read  <canvas>/<svg>’s width and height, which is vega's outer width and height that includes axes and legends
                 scope.width =  visElement.width();
                 scope.height = visElement.height();
 
