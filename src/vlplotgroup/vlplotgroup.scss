@@ -10,14 +10,14 @@
 
 .vl-plot-group.wrapped-vl-plot-group {
   max-width: 520px;
+  max-height: 330px;
   flex-grow: 1;
 }
 
 .vl-plot-group.row-vl-plot-group {
   max-width: 100%;
+  max-height: 330px;
 
-
-  box-sizing: border-box;
   &.selected {
     border: 3px solid #aaa;
     background: #ccc;
@@ -28,8 +28,7 @@
 }
 
 .vl-plot-group.full-vl-plot-group {
-    .vl-plot-wrapper {
-    max-height: none;
+  .vl-plot-wrapper {
     .vis.fit .vega{
       margin-bottom: auto;
       margin-top: auto;
@@ -89,7 +88,6 @@
 
 .vl-plot-wrapper {
   min-height: 150px;
-  max-height: 330px;
   min-width: 250px;
   overflow: hidden;
   text-align: center;

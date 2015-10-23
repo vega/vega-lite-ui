@@ -138,20 +138,24 @@ angular.module('vlui')
           return vl.compile(vlSpec, stats);
         }
 
+        function getVisElement() {
+          return element.find('.vega > :first-child');
+        }
+
         function rescaleIfEnable() {
-          var visElement = element.find('.vega > :first-child');
+          var visElement = getVisElement();
           if (scope.rescale) {
 
             var xRatio = Math.max(
                 0.2,
                 element.width() /  /* width of vlplot bounding box */
-                visElement.width() /* width of the vis */
+                scope.width /* width of the vis */
               );
-            console.log('rescale', getShorthand(), xRatio);
+            console.log('rescale', getShorthand(), xRatio, 'visWidth', scope.width, scope.width);
 
             if (xRatio < 1) {
-              visElement.css('transform', 'scale('+xRatio +')')
-                        .css('transform-origin', 'left center');
+              visElement.width(scope.width * xRatio)
+                        .height(scope.height * xRatio);
             }
 
           } else {
@@ -213,10 +217,12 @@ angular.module('vlui')
                   view.data({raw: Dataset.data});
                 }
 
-                scope.width =  view.width();
-                scope.height = view.height();
                 view.renderer(getRenderer(spec.width, scope.height));
                 view.update();
+
+                var visElement = element.find('.vega > :first-child');
+                scope.width =  visElement.width();
+                scope.height = visElement.height();
 
                 if (consts.debug) {
                   $window.views = $window.views || {};
