@@ -139,20 +139,24 @@ angular.module('vlui')
         }
 
         function rescaleIfEnable() {
+          var visElement = element.find('.vega > :first-child');
           if (scope.rescale) {
-            var xRatio = scope.maxWidth > 0 ?  scope.maxWidth / scope.width : 1;
-            var yRatio = scope.maxHeight > 0 ? scope.maxHeight / scope.height  : 1;
-            var ratio = Math.min(xRatio, yRatio);
 
-            var niceRatio = 1;
-            while (0.75 * niceRatio> ratio) {
-              niceRatio /= 2;
+            var xRatio = Math.max(
+                0.2,
+                element.width() /  /* width of vlplot bounding box */
+                visElement.width() /* width of the vis */
+              );
+            console.log('rescale', getShorthand(), xRatio);
+
+            if (xRatio < 1) {
+              visElement.css('transform', 'scale('+xRatio +')')
+                        .css('transform-origin', 'left center');
             }
 
-            var t = niceRatio * 100 / 2 && 0;
-            element.find('.vega').css('transform', 'translate(-'+t+'%, -'+t+'%) scale('+niceRatio+')');
           } else {
-            element.find('.vega').css('transform', null);
+            visElement.css('transform', null)
+                      .css('transform-origin', null);
           }
         }
 
