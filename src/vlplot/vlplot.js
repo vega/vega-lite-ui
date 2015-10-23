@@ -138,21 +138,31 @@ angular.module('vlui')
           return vl.compile(vlSpec, stats);
         }
 
-        function rescaleIfEnable() {
-          if (scope.rescale) {
-            var xRatio = scope.maxWidth > 0 ?  scope.maxWidth / scope.width : 1;
-            var yRatio = scope.maxHeight > 0 ? scope.maxHeight / scope.height  : 1;
-            var ratio = Math.min(xRatio, yRatio);
+        function getVisElement() {
+          return element.find('.vega > :first-child');
+        }
 
-            var niceRatio = 1;
-            while (0.75 * niceRatio> ratio) {
-              niceRatio /= 2;
+        function rescaleIfEnable() {
+          var visElement = getVisElement();
+          if (scope.rescale) {
+            // have to digest the scope to ensure that
+            // element.width() is bound by parent element!
+            scope.$digest();
+
+            var xRatio = Math.max(
+                0.2,
+                element.width() /  /* width of vlplot bounding box */
+                scope.width /* width of the vis */
+              );
+
+            if (xRatio < 1) {
+              visElement.width(scope.width * xRatio)
+                        .height(scope.height * xRatio);
             }
 
-            var t = niceRatio * 100 / 2 && 0;
-            element.find('.vega').css('transform', 'translate(-'+t+'%, -'+t+'%) scale('+niceRatio+')');
           } else {
-            element.find('.vega').css('transform', null);
+            visElement.css('transform', null)
+                      .css('transform-origin', null);
           }
         }
 
@@ -209,10 +219,13 @@ angular.module('vlui')
                   view.data({raw: Dataset.data});
                 }
 
-                scope.width =  view.width();
-                scope.height = view.height();
                 view.renderer(getRenderer(spec.width, scope.height));
                 view.update();
+
+                var visElement = element.find('.vega > :first-child');
+                // read  <canvas>/<svg>’s width and height, which is vega's outer width and height that includes axes and legends
+                scope.width =  visElement.width();
+                scope.height = visElement.height();
 
                 if (consts.debug) {
                   $window.views = $window.views || {};
@@ -220,7 +233,7 @@ angular.module('vlui')
                 }
 
                 Logger.logInteraction(Logger.actions.CHART_RENDER, '', scope.chart.vlSpec);
-                  rescaleIfEnable();
+                rescaleIfEnable();
 
                 var endChart = new Date().getTime();
                 console.log('parse spec', (endParse-start), 'charting', (endChart-endParse), shorthand);
