@@ -8,6 +8,8 @@
   margin-bottom: 20px;
 }
 
+/** vl-plot-group in vis-list */
+// TODO consider if this can just be moved to .vis-list
 .vl-plot-group.wrapped-vl-plot-group {
   max-width: 520px;
   max-height: 330px;
@@ -15,8 +17,14 @@
   .vl-plot-wrapper {
     min-height: 150px;
   }
+  .vis.overflow.scroll {
+    /* when-scroll add negative margin equal to the scrollbar size (in index.scss) */
+    margin-right: -11px;
+    margin-bottom: -11px;
+  }
 }
 
+/** used for vertical scroll thumbnails */
 .vl-plot-group.row-vl-plot-group {
   max-width: 100%;
 
@@ -113,9 +121,6 @@
     &.scroll {
       @extend .persist-scroll;
       overflow: scroll;
-      /* when-scroll add negative margin equal to the scrollbar size (in index.scss) */
-      margin-right: -11px;
-      margin-bottom: -11px;
     }
   }
 }
