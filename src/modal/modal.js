@@ -7,7 +7,7 @@
  * # modal
  */
 angular.module('vlui')
-  .directive('modal', function (Modals) {
+  .directive('modal', function ($document, Modals) {
     return {
       templateUrl: 'modal/modal.html',
       restrict: 'E',
@@ -31,6 +31,16 @@ angular.module('vlui')
 
         // Default to closed unless autoOpen is set
         scope.isOpen = scope.autoOpen;
+
+        // close on esc
+        function escape(e) {
+          if (e.keyCode === 27 && scope.isOpen) {
+            scope.isOpen = false;
+            scope.$digest();
+          }
+        }
+
+        angular.element($document).on('keydown', escape);
 
         // Register this modal with the service
         Modals.register(modalId, scope);
