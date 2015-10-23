@@ -71,8 +71,13 @@ angular.module('vlui')
           if (!item || !item.datum) { return; }
 
           scope.tooltipPromise = $timeout(function activateTooltip(){
+
+            // avoid showing tooltip for facet's background
+            if (item.datum._facetID) return;
+
             scope.tooltipActive = true;
             Logger.logInteraction(Logger.actions.CHART_TOOLTIP, item.datum);
+
 
             // convert data into a format that we can easily use with ng table and ng-repeat
             // TODO: revise if this is actually a good idea
