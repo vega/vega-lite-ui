@@ -12,11 +12,16 @@
   max-width: 520px;
   max-height: 330px;
   flex-grow: 1;
+  .vl-plot-wrapper {
+    min-height: 150px;
+  }
 }
 
 .vl-plot-group.row-vl-plot-group {
   max-width: 100%;
+
   max-height: 330px;
+  box-sizing: border-box;
 
   &.selected {
     border: 3px solid #aaa;
@@ -87,7 +92,6 @@
 }
 
 .vl-plot-wrapper {
-  min-height: 150px;
   min-width: 250px;
   overflow: hidden;
   text-align: center;
