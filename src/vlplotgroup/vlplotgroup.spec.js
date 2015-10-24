@@ -42,6 +42,5 @@ describe('Directive: vlPlotGroup', function () {
     element = angular.element('<vl-plot-group chart="{vlSpec:{marktype:\'point\', config:{}}}"></vl-plot-group>');
     element = $compile(element)(scope);
     scope.$digest();
-    expect(element.find('.vl-plot-wrapper').length).to.eql(1);
   }));
 });

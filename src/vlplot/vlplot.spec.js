@@ -40,6 +40,6 @@ describe('Directive: vlPlot', function() {
     element = angular.element('<vl-plot chart="{vlSpec:{marktype:\'point\', config:{}}}"></vl-plot>');
     element = $compile(element)(scope);
     scope.$digest();
-    expect(element.attr('class')).to.eql('vis ng-isolate-scope');
+    expect(element.attr('class')).to.eql('vl-plot ng-isolate-scope');
   }));
 });
