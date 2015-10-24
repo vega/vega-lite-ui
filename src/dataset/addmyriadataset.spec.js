@@ -6,10 +6,16 @@ describe('Directive: addMyriaDataset', function () {
   beforeEach(module('vlui'));
 
   var element,
-    scope;
+    scope, $httpBackend, searchRequestHandler;
 
-  beforeEach(inject(function ($rootScope) {
+  beforeEach(inject(function ($rootScope, $injector, consts) {
     scope = $rootScope.$new();
+
+    $httpBackend = $injector.get('$httpBackend');
+    // backend definition common for all tests
+    searchRequestHandler = $httpBackend
+      .when('GET', consts.myriaRest + '/dataset/search/?q=')
+      .respond(200, []);
   }));
 
   it('should show correct form', inject(function ($compile) {
@@ -17,6 +23,8 @@ describe('Directive: addMyriaDataset', function () {
     element = $compile(element)(scope);
 
     scope.$digest();
+
+    $httpBackend.flush();
     expect(element.find('button').length).to.eql(1);
   }));
 });
