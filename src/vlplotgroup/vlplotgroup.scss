@@ -14,13 +14,10 @@
   max-width: 520px;
   max-height: 310px;
   flex-grow: 1;
-  .vl-plot-wrapper {
+  padding-right: 11px;
+  padding-bottom: 11px;
+  .vl-plot {
     min-height: 150px;
-  }
-  .vis.overflow.scroll {
-    /* when-scroll add negative margin equal to the scrollbar size (in index.scss) */
-    margin-right: -11px;
-    margin-bottom: -11px;
   }
 }
 
@@ -33,17 +30,8 @@
   &.selected {
     border: 3px solid #aaa;
     background: #ccc;
-    .vis canvas{
+    .vl-plot canvas{
       opacity: 0.85;
-    }
-  }
-}
-
-.vl-plot-group.full-vl-plot-group {
-  .vl-plot-wrapper {
-    .vis.fit .vega{
-      margin-bottom: auto;
-      margin-top: auto;
     }
   }
 }
@@ -98,28 +86,25 @@
   }
 }
 
-.vl-plot-wrapper {
+.vl-plot {
   min-width: 250px;
   overflow: hidden;
   text-align: center;
-  display: flex;
-
-  .vis.fit {
+  .vega canvas {
+    margin: auto;
+  }
+  &.fit {
     width:100%;
-    display: flex;
-    justify-content: center;
     .vega {
       align-self: flex-end;
     }
   }
 
-  .vis.overflow {
+  &.overflow {
     //cursor: pointer;
-    width: 100%;
-    overflow: hidden;
     &.scroll {
       @extend .persist-scroll;
-      overflow: scroll;
+      overflow: auto;
     }
   }
 }

@@ -1,6 +1,6 @@
 <div class="vl-plot-group vflex">
   <div ng-show="showExpand || fieldSet || showTranspose || showBookmark && Bookmarks.isSupported || showToggle"
-    class="vl-plot-group-header full-width no-shrink">
+    class="vl-plot-group-header no-shrink">
     <div class="field-set-info" >
       <field-info ng-repeat="field in fieldSet"
         ng-if="fieldSet"
@@ -80,21 +80,23 @@
       </a>
     </div>
   </div>
-  <div class="vl-plot-wrapper full-width vis-{{fieldSet.key}} flex-grow-1">
-    <vl-plot chart="chart"
 
-      disabled="disabled"
-      is-in-list="isInList"
+  <vl-plot class="flex-grow-1"
+    data-fieldset="{fieldSet.key}}"
+    chart="chart"
 
-      always-scrollable="alwaysScrollable"
-      config-set="{{configSet||'small'}}"
-      max-height="maxHeight"
-      max-width="maxWidth"
-      overflow="overflow"
-      priority="priority"
-      rescale="rescale"
-      thumbnail="thumbnail"
-      tooltip="tooltip"
-    ></vl-plot>
-  </div>
+    disabled="disabled"
+    is-in-list="isInList"
+
+    always-scrollable="alwaysScrollable"
+    config-set="{{configSet||'small'}}"
+    max-height="maxHeight"
+    max-width="maxWidth"
+    overflow="overflow"
+    priority="priority"
+    rescale="rescale"
+    thumbnail="thumbnail"
+    tooltip="tooltip"
+  ></vl-plot>
+
 </div>
