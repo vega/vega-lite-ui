@@ -2,8 +2,8 @@ $pill-radius: 3px;
 $pill-height: 20px;
 $pill-min-width: 150px;
 $text-color: #212121;
-$link-color: #008CBA;
-$link-hover-color: #125369;
+$link-color: #38425D;
+$link-hover-color: #72757B;
 $background-color: #E2E9F3;
 
 html {
@@ -192,10 +192,6 @@ h4 {
 .pane {
   padding: 0px;
   position: relative;
-}
-
-.pane.vis-pane{
-  flex-grow: 1;
 }
 
 .pane .subpane {
@@ -444,7 +440,12 @@ h4 {
 
 
 .data-card {
-  color: white;
+  h2 {
+    color: white;
+  }
+  .current-dataset {
+    color: white;
+  }
   background-color: #38425D;
 
   a {
@@ -459,7 +460,7 @@ h4 {
   .current-dataset {
     display: inline-block;
     white-space: nowrap;
-    width: 70%;
+    width: 65%; // FIXME this is a bad hack
     overflow: hidden;
     text-overflow: ellipsis;
 
