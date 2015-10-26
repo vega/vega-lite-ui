@@ -460,7 +460,7 @@ h4 {
   .current-dataset {
     display: inline-block;
     white-space: nowrap;
-    width: 70%;
+    width: 65%; // FIXME this is a bad hack
     overflow: hidden;
     text-overflow: ellipsis;
 
