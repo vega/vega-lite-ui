@@ -2,8 +2,8 @@ $pill-radius: 3px;
 $pill-height: 20px;
 $pill-min-width: 150px;
 $text-color: #212121;
-$link-color: #008CBA;
-$link-hover-color: #125369;
+$link-color: #38425D;
+$link-hover-color: #72757B;
 $background-color: #E2E9F3;
 
 html {
@@ -444,7 +444,12 @@ h4 {
 
 
 .data-card {
-  color: white;
+  h2 {
+    color: white;
+  }
+  .current-dataset {
+    color: white;
+  }
   background-color: #38425D;
 
   a {
