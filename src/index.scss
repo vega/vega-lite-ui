@@ -51,10 +51,11 @@ a:hover {
 }
 
 .idl-logo {
-  background: url("../assets/images/idl-logo.png") center no-repeat;
+  background: url("../assets/images/idl-h56.png") center no-repeat;
   display: block;
-  width: 48px;
-  height: 34px;
+  background-size: 40px 28px;
+  width: 40px;
+  height: 28px;
 }
 
 .clickable, .clickable.draggable {
@@ -329,9 +330,10 @@ h4 {
   bottom: 0;
 }
 
+// FIXME remove this!
 .absolute-top-right {
   position: absolute;
-  top: 0;
+  top: 3px;
   right: 0;
 }
 
@@ -446,12 +448,6 @@ h4 {
       color: #eee;
     }
   }
-}
-
-.absolute-top-right {
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 
 .data-load {
