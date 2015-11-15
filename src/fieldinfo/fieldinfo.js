@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('fieldInfo', function (Dataset, Drop, vl, consts) {
+  .directive('fieldInfo', function (Dataset, Drop, vl, consts, _) {
     return {
       templateUrl: 'fieldinfo/fieldinfo.html',
       restrict: 'E',
@@ -28,7 +28,9 @@ angular.module('vlui')
 
         scope.typeNames = consts.typeNames;
         scope.stats = Dataset.stats[scope.field.name];
-        scope.isTypes = vl.encDef.isTypes;
+        scope.containsType = function(types, type) {
+          return _.contains(types, type);
+        };
 
         switch(scope.field.type){
           case 'O':
