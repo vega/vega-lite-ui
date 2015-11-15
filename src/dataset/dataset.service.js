@@ -62,7 +62,7 @@ angular.module('vlui')
         schema = _.reduce(types, function(s, type, name) {
           var field = {
             name: name,
-            type: vl.Type[vl.data.TYPES[type]],  // from dl type to vl type to string representation
+            type: vl.data.types[type],
             primitiveType: type
           };
 
