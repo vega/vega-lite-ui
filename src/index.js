@@ -1,10 +1,7 @@
 'use strict';
 /* globals window, angular */
 
-angular.module('vlui', [
-  'LocalStorageModule',
-  'angular-google-analytics'
-  ])
+angular.module('vlui', [])
   .constant('_', window._)
   // datalib, vegalite, vega
   .constant('dl', window.dl)
@@ -40,8 +37,4 @@ angular.module('vlui', [
       T: 'time',
       G: 'geo'
     }
-  })
-  .config(function (AnalyticsProvider) {
-    AnalyticsProvider
-      .setAccount({ tracker: 'UA-44428446-4', name: 'voyager', trackEvent: true });
   });

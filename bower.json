@@ -35,8 +35,7 @@
     "vega": "^2.3.0",
     "vega-lite": "^0.8.2",
     "datalib": "^1.4.6",
-    "selectize": "~0.12.1",
-    "angular-google-analytics": "~1.1.1"
+    "selectize": "~0.12.1"
   },
   "resolutions": {
     "angular": ">=1.4.5"
