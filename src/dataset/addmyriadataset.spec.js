@@ -25,6 +25,7 @@ describe('Directive: addMyriaDataset', function () {
     scope.$digest();
 
     $httpBackend.flush();
-    expect(element.find('button').length).to.eql(1);
+    expect(element.find('input').length).to.eql(1);
+    expect(element.find('button').length).to.eql(2);
   }));
 });
