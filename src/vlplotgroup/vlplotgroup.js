@@ -226,8 +226,14 @@ angular.module('vlui')
             return false;
           }
 
-          return ( vl.encDef.isTypes(enc.x, ['N', 'O']) && vl.encDef.isMeasure(enc.y)) ? 'x' :
-            ( vl.encDef.isTypes(enc.y, ['N','O']) && vl.encDef.isMeasure(enc.x)) ? 'y' : false;
+          return (
+              (enc.x.type === 'N' || enc.x.type === 'O') &&
+              vl.encDef.isMeasure(enc.y)
+            ) ? 'x' :
+            (
+              (enc.y.type === 'N' || enc.y.type === 'O') &&
+              vl.encDef.isMeasure(enc.x)
+            ) ? 'y' : false;
         };
 
         scope.toggleSortClass = function(vlSpec) {
