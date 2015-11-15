@@ -76,9 +76,7 @@ angular.module('vlui')
 
       schema = dl.stablesort(schema, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.name);
 
-      var count = vl.encDef.count();
-      count.type = vl.Type[count.type];  // vl internal to external type
-      schema.push(count);
+      schema.push(vl.encDef.count());
       return schema;
     };
 
