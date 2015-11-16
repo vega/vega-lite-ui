@@ -62,7 +62,7 @@ angular.module('vlui')
         schema = _.reduce(types, function(s, type, name) {
           var field = {
             name: name,
-            type: vl.Type[vl.data.TYPES[type]],  // from dl type to vl type to string representation
+            type: vl.data.types[type],
             primitiveType: type
           };
 
@@ -76,9 +76,7 @@ angular.module('vlui')
 
       schema = dl.stablesort(schema, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.name);
 
-      var count = vl.encDef.count();
-      count.type = vl.Type[count.type];  // vl internal to external type
-      schema.push(count);
+      schema.push(vl.encDef.count());
       return schema;
     };
 
