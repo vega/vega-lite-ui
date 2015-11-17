@@ -76,16 +76,16 @@ angular.module('vlui')
         scope.log.support = function(spec, encType) {
           if (!spec) { return false; }
           var encoding = spec.encoding,
-            encDef = encoding[encType];
+            fieldDef = encoding[encType];
 
-          return encDef && encDef.type === vl.Type.Quantitative && !encDef.bin;
+          return fieldDef && fieldDef.type === vl.Type.Quantitative && !fieldDef.bin;
         };
 
         scope.log.toggle = function(spec, encType) {
           if (!scope.log.support(spec, encType)) { return; }
 
-          var encDef = spec.encoding[encType],
-            scale = encDef.scale = encDef.scale || {};
+          var fieldDef = spec.encoding[encType],
+            scale = fieldDef.scale = fieldDef.scale || {};
 
           scale.type = scale.type === 'log' ? 'linear' : 'log';
           Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand);
@@ -93,8 +93,8 @@ angular.module('vlui')
         scope.log.active = function(spec, encType) {
           if (!scope.log.support(spec, encType)) { return; }
 
-          var encDef = spec.encoding[encType],
-            scale = encDef.scale = encDef.scale || {};
+          var fieldDef = spec.encoding[encType],
+            scale = fieldDef.scale = fieldDef.scale || {};
 
           return scale.type === 'log';
         };
@@ -228,11 +228,11 @@ angular.module('vlui')
 
           return (
               (enc.x.type === vl.Type.Nominal || enc.x.type === vl.Type.Ordinal) &&
-              vl.encDef.isMeasure(enc.y)
+              vl.fieldDef.isMeasure(enc.y)
             ) ? 'x' :
             (
               (enc.y.type === vl.Type.Nominal || enc.y.type === vl.Type.Ordinal) &&
-              vl.encDef.isMeasure(enc.x)
+              vl.fieldDef.isMeasure(enc.x)
             ) ? 'y' : false;
         };
 
