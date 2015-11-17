@@ -36,7 +36,7 @@
     </span>
 
    <span class="no-shrink info" ng-show="showInfo">
-      <i ng-if="field.aggregate !== 'count' && containsType(['nominal', 'ordinal'], field.type)"
+      <i ng-if="field.aggregate !== 'count' && containsType([Type.Nominal, Type.Ordinal], field.type)"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
         tooltip-html="
@@ -48,7 +48,7 @@
           <strong>Sample:</strong> <span class='sample'>{{stats.sample.join(', ')}}</span>
         </div>"
         tooltip-side="right"></i>
-      <i ng-if="field.aggregate !== 'count' && field.type === 'temporal'"
+      <i ng-if="field.aggregate !== 'count' && field.type === Type.Temporal"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
         tooltip-html="
@@ -60,7 +60,7 @@
           <strong>Sample:</strong> <span class='sample'>{{stats.sample.join(', ')}}</span>
         </div>"
         tooltip-side="right"></i>
-      <i ng-if="field.aggregate !== 'count' && field.type === 'quantitative'"
+      <i ng-if="field.aggregate !== 'count' && field.type === Type.Quantitative"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
         tooltip-html="
