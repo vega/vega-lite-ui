@@ -32,10 +32,10 @@ angular.module('vlui', [])
     myriaRest: 'http://ec2-52-1-38-182.compute-1.amazonaws.com:8753',
     defaultTimeFn: 'month',
     typeNames: {
-      N: 'text',
-      O: 'text-ordinal',
-      Q: 'number',
-      T: 'time',
-      G: 'geo'
+      nominal: 'text',
+      ordinal: 'text-ordinal',
+      quantitative: 'number',
+      temporal: 'time',
+      geographic: 'geo'
     }
   });

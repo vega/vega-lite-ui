@@ -78,7 +78,7 @@ angular.module('vlui')
           var encoding = spec.encoding,
             field = encoding[encType];
 
-          return field && field.type ==='Q' && !field.bin;
+          return field && field.type === vl.Type.Quantitative && !field.bin;
         };
 
         scope.log.toggle = function(spec, encType) {
@@ -108,13 +108,13 @@ angular.module('vlui')
           spec.config = spec.config || {};
           spec.config.filterNull = spec.config.filterNull || {
             // TODO: initiate this from filterNull's schema instead
-            N: false,
-            O: false,
-            T: true,
-            Q: true
+            nominal: false,
+            ordinal: false,
+            temporal: true,
+            quantitative: true
           };
-          spec.config.filterNull.O = !spec.config.filterNull.O;
-          spec.config.filterNull.N = !spec.config.filterNull.N;
+          spec.config.filterNull.ordinal = !spec.config.filterNull.ordinal;
+          spec.config.filterNull.nominal = !spec.config.filterNull.nominal;
         };
 
         scope.toggleFilterNull.support = function(spec, stats) {
@@ -122,7 +122,7 @@ angular.module('vlui')
           for (var fieldName in fields) {
             var fieldList = fields[fieldName];
             if (
-                (fieldList.containsType.O || fieldList.containsType.N) &&
+                (fieldList.containsType.ordinal || fieldList.containsType.nominal) &&
                 (fieldName in stats) &&
                 stats[fieldName].missing > 0
               ) {
@@ -212,7 +212,7 @@ angular.module('vlui')
         };
 
         toggleSort.channels = function(spec) {
-          return spec.encoding.x.type === 'N' || spec.encoding.x.type === 'O' ?
+          return spec.encoding.x.type === vl.Type.Nominal || spec.encoding.x.type === vl.Type.Ordinal ?
                   {ordinal: 'x', quantitative: 'y'} :
                   {ordinal: 'y', quantitative: 'x'};
         };
@@ -227,11 +227,11 @@ angular.module('vlui')
           }
 
           return (
-              (enc.x.type === 'N' || enc.x.type === 'O') &&
+              (enc.x.type === vl.Type.Nominal || enc.x.type === vl.Type.Ordinal) &&
               vl.encDef.isMeasure(enc.y)
             ) ? 'x' :
             (
-              (enc.y.type === 'N' || enc.y.type === 'O') &&
+              (enc.y.type === vl.Type.Nominal || enc.y.type === vl.Type.Ordinal) &&
               vl.encDef.isMeasure(enc.x)
             ) ? 'y' : false;
         };

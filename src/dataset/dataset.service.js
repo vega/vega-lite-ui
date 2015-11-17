@@ -23,11 +23,11 @@ angular.module('vlui')
     Dataset.type = undefined;
 
     var typeOrder = {
-      N: 0,
-      O: 0,
-      G: 2,
-      T: 3,
-      Q: 4
+      nominal: 0,
+      ordinal: 0,
+      geographic: 2,
+      temporal: 3,
+      quantitative: 4
     };
 
     Dataset.fieldOrderBy = {};
@@ -66,8 +66,8 @@ angular.module('vlui')
             primitiveType: type
           };
 
-          if (field.type === 'Q' && stats[field.name].distinct <= 5) {
-            field.type = 'O';
+          if (field.type === vl.Type.Quantitative && stats[field.name].distinct <= 5) {
+            field.type = vl.Type.Ordinal;
           }
 
           s.push(field);
