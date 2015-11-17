@@ -33,16 +33,16 @@ angular.module('vlui')
         };
 
         switch(scope.field.type){
-          case 'O':
+          case vl.Type.Ordinal:
             scope.icon = 'fa-font';
             break;
-          case 'N':
+          case vl.Type.Nominal:
             scope.icon = 'fa-font';
             break;
-          case 'Q':
+          case vl.Type.Quantitative:
             scope.icon = 'icon-hash';
             break;
-          case 'T':
+          case vl.Type.Temporal:
             scope.icon = 'fa-calendar';
             break;
         }
