@@ -39,12 +39,12 @@ var sourceFiles = [
   // Then add all JavaScript files
   path.join(sourceDirectory, '/**/*.js'),
   // except spec files
-  '!'+path.join(sourceDirectory, '/**/*.spec.js')
+  '!'+path.join(sourceDirectory, '/**/*.test.js')
 ];
 
 gulp.task('build', ['partials', 'css'], function() {
   gulp.src(sourceFiles)
-    // .pipe(filter('-'+path.join(sourceDirectory, '/**/*.spec.js')))
+    // .pipe(filter('-'+path.join(sourceDirectory, '/**/*.test.js')))
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
       .pipe($.ngAnnotate({
