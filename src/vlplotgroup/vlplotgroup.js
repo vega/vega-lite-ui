@@ -78,7 +78,7 @@ angular.module('vlui')
           var encoding = spec.encoding,
             fieldDef = encoding[encType];
 
-          return fieldDef && fieldDef.type === vl.Type.Quantitative && !fieldDef.bin;
+          return fieldDef && fieldDef.type === vl.Type.QUANTITATIVE && !fieldDef.bin;
         };
 
         scope.log.toggle = function(spec, encType) {
@@ -212,7 +212,7 @@ angular.module('vlui')
         };
 
         toggleSort.channels = function(spec) {
-          return spec.encoding.x.type === vl.Type.Nominal || spec.encoding.x.type === vl.Type.Ordinal ?
+          return spec.encoding.x.type === vl.Type.NOMINAL || spec.encoding.x.type === vl.Type.ORDINAL ?
                   {ordinal: 'x', quantitative: 'y'} :
                   {ordinal: 'y', quantitative: 'x'};
         };
@@ -227,11 +227,11 @@ angular.module('vlui')
           }
 
           return (
-              (enc.x.type === vl.Type.Nominal || enc.x.type === vl.Type.Ordinal) &&
+              (enc.x.type === vl.Type.NOMINAL || enc.x.type === vl.Type.ORDINAL) &&
               vl.fieldDef.isMeasure(enc.y)
             ) ? 'x' :
             (
-              (enc.y.type === vl.Type.Nominal || enc.y.type === vl.Type.Ordinal) &&
+              (enc.y.type === vl.Type.NOMINAL || enc.y.type === vl.Type.ORDINAL) &&
               vl.fieldDef.isMeasure(enc.x)
             ) ? 'y' : false;
         };

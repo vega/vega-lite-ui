@@ -66,8 +66,8 @@ angular.module('vlui')
             primitiveType: type
           };
 
-          if (fieldDef.type === vl.Type.Quantitative && stats[fieldDef.name].distinct <= 5) {
-            fieldDef.type = vl.Type.Ordinal;
+          if (fieldDef.type === vl.Type.QUANTITATIVE && stats[fieldDef.name].distinct <= 5) {
+            fieldDef.type = vl.Type.ORDINAL;
           }
 
           s.push(fieldDef);
