@@ -222,7 +222,7 @@ angular.module('vlui')
 
           if (vl.enc.has(enc, 'row') || vl.enc.has(enc, 'col') ||
             !vl.enc.has(enc, 'x') || !vl.enc.has(enc, 'y') ||
-            !vl.Encoding.alwaysNoOcclusion(spec, stats)) {
+            !vl.spec.alwaysNoOcclusion(spec, stats)) {
             return false;
           }
 
@@ -262,7 +262,7 @@ angular.module('vlui')
 
         scope.transpose = function() {
           Logger.logInteraction(Logger.actions.TRANSPOSE_TOGGLE, scope.chart.shorthand);
-          vl.Encoding.transpose(scope.chart.vlSpec);
+          vl.spec.transpose(scope.chart.vlSpec);
         };
 
         scope.$on('$destroy', function() {

@@ -49,6 +49,8 @@ angular.module('vlui')
         scope.hoverFocus = false;
         scope.tooltipActive = false;
         scope.destroyed = false;
+
+        // FIXME use d3.format?
         var format = vl.format('');
 
         scope.mouseover = function() {
@@ -269,7 +271,7 @@ angular.module('vlui')
         }, function() {
           var spec = scope.chart.vgSpec = getVgSpec();
           if (!scope.chart.cleanSpec) {
-            scope.chart.cleanSpec = vl.Encoding.fromSpec(scope.chart.vlSpec).toSpec(true);
+            scope.chart.cleanSpec = vl.spec.getCleanSpec(scope.chart.vlSpec);
           }
           render(spec);
         }, true);
