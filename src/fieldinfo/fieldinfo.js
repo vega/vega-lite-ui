@@ -25,7 +25,7 @@ angular.module('vlui')
       },
       link: function(scope, element) {
         var funcsPopup;
-        scope.Type = vl.Type;
+        scope.vlType = vl.type;
         scope.typeNames = consts.typeNames;
         scope.stats = Dataset.stats[scope.fieldDef.name];
         scope.containsType = function(types, type) {
@@ -33,16 +33,16 @@ angular.module('vlui')
         };
 
         switch(scope.fieldDef.type){
-          case vl.Type.ORDINAL:
+          case vl.type.ORDINAL:
             scope.icon = 'fa-font';
             break;
-          case vl.Type.NOMINAL:
+          case vl.type.NOMINAL:
             scope.icon = 'fa-font';
             break;
-          case vl.Type.QUANTITATIVE:
+          case vl.type.QUANTITATIVE:
             scope.icon = 'icon-hash';
             break;
-          case vl.Type.TEMPORAL:
+          case vl.type.TEMPORAL:
             scope.icon = 'fa-calendar';
             break;
         }
