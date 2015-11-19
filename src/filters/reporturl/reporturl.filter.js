@@ -18,16 +18,16 @@ angular.module('vlui')
         url += 'entry.1245199477=' + query + '&';
       }
 
-      if (params.encoding) {
-        var encoding = _.omit(params.encoding, 'config');
-        encoding = encodeURI(compactJSONFilter(encoding));
-        url += 'entry.1323680136=' + encoding + '&';
+      if (params.spec) {
+        var spec = _.omit(params.spec, 'config');
+        spec = encodeURI(compactJSONFilter(spec));
+        url += 'entry.1323680136=' + spec + '&';
       }
 
-      if (params.encoding2) {
-        var encoding2 = _.omit(params.encoding2, 'config');
-        encoding2 = encodeURI(compactJSONFilter(encoding2));
-        url += 'entry.853137786=' + encoding2 + '&';
+      if (params.spec2) {
+        var spec2 = _.omit(params.spec2, 'config');
+        spec2 = encodeURI(compactJSONFilter(spec2));
+        url += 'entry.853137786=' + spec2 + '&';
       }
 
       var typeProp = 'entry.1940292677=';
@@ -48,10 +48,10 @@ angular.module('vlui')
 
     function vluiReport(params) {
       var url = 'https://docs.google.com/forms/d/1xKs-qGaLZEUfbTmhdmSoS13OKOEpuu_NNWE5TAAml_Y/viewform?';
-      if (params.encoding) {
-        var encoding = _.omit(params.encoding, 'config');
-        encoding = encodeURI(compactJSONFilter(encoding));
-        url += 'entry.1245199477=' + encoding + '&';
+      if (params.spec) {
+        var spec = _.omit(params.spec, 'config');
+        spec = encodeURI(compactJSONFilter(spec));
+        url += 'entry.1245199477=' + spec + '&';
       }
       return url;
     }
