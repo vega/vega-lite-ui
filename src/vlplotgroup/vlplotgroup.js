@@ -118,7 +118,7 @@ angular.module('vlui')
         };
 
         scope.toggleFilterNull.support = function(spec, stats) {
-          var fields = vl.enc.fields(spec.encoding);
+          var fields = vl.encoding.fields(spec.encoding);
           for (var fieldName in fields) {
             var fieldList = fields[fieldName];
             if (
@@ -218,21 +218,21 @@ angular.module('vlui')
         };
 
         toggleSort.support = function(spec, stats) {
-          var enc = spec.encoding;
+          var encoding = spec.encoding;
 
-          if (vl.enc.has(enc, 'row') || vl.enc.has(enc, 'col') ||
-            !vl.enc.has(enc, 'x') || !vl.enc.has(enc, 'y') ||
+          if (vl.encoding.has(encoding, 'row') || vl.encoding.has(encoding, 'col') ||
+            !vl.encoding.has(encoding, 'x') || !vl.encoding.has(encoding, 'y') ||
             !vl.spec.alwaysNoOcclusion(spec, stats)) {
             return false;
           }
 
           return (
-              (enc.x.type === vl.type.NOMINAL || enc.x.type === vl.type.ORDINAL) &&
-              vl.fieldDef.isMeasure(enc.y)
+              (encoding.x.type === vl.type.NOMINAL || encoding.x.type === vl.type.ORDINAL) &&
+              vl.fieldDef.isMeasure(encoding.y)
             ) ? 'x' :
             (
-              (enc.y.type === vl.type.NOMINAL || enc.y.type === vl.type.ORDINAL) &&
-              vl.fieldDef.isMeasure(enc.x)
+              (encoding.y.type === vl.type.NOMINAL || encoding.y.type === vl.type.ORDINAL) &&
+              vl.fieldDef.isMeasure(encoding.x)
             ) ? 'y' : false;
         };
 
