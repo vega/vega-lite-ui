@@ -137,7 +137,7 @@ angular.module('vlui')
           // use chart stats if available (for example from bookmarks)
           var stats = scope.chart.stats || Dataset.stats;
 
-          return vl.compile(vlSpec, stats);
+          return vl.compile(vlSpec, stats).spec;
         }
 
         function getVisElement() {
