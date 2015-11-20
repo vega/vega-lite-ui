@@ -22,7 +22,7 @@
       <span>{{vgCopied}}</span>
     </div>
     <a class="command debug"
-      ng-href="{{ {type:'vl', encoding: chart.cleanSpec} | reportUrl }}"
+      ng-href="{{ {type:'vl', spec: chart.cleanSpec} | reportUrl }}"
       target="_blank">Report Bad Render</a>
     <a ng-click="showFeature=!showFeature" class="command debug">{{chart.score}}</a>
     <div ng-repeat="f in chart.scoreFeatures track by f.reason">
