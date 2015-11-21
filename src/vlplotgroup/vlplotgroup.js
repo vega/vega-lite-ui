@@ -220,7 +220,7 @@ angular.module('vlui')
         toggleSort.support = function(spec, stats) {
           var encoding = spec.encoding;
 
-          if (vl.encoding.has(encoding, 'row') || vl.encoding.has(encoding, 'col') ||
+          if (vl.encoding.has(encoding, 'row') || vl.encoding.has(encoding, 'column') ||
             !vl.encoding.has(encoding, 'x') || !vl.encoding.has(encoding, 'y') ||
             !vl.spec.alwaysNoOcclusion(spec, stats)) {
             return false;
