@@ -7,12 +7,12 @@
         field-def='fieldDef'
         show-type='true'
         ng-class="{
-          selected: alwaysSelected || (isSelected && isSelected(fieldDef.name)),
-          unselected: isSelected && !isSelected(fieldDef.name),
-          highlighted: (highlighted||{})[fieldDef.name]
+          selected: alwaysSelected || (isSelected && isSelected(fieldDef.field)),
+          unselected: isSelected && !isSelected(fieldDef.field),
+          highlighted: (highlighted||{})[fieldDef.field]
         }"
-        ng-mouseover="(highlighted||{})[fieldDef.name] = true"
-        ng-mouseout="(highlighted||{})[fieldDef.name] = false"
+        ng-mouseover="(highlighted||{})[fieldDef.field] = true"
+        ng-mouseout="(highlighted||{})[fieldDef.field] = false"
       ></field-info>
     </div>
     <div class="toolbox">

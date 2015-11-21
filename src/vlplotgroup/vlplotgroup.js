@@ -170,7 +170,7 @@ angular.module('vlui')
           if (mode === 'quantitative-ascending') {
             return {
               op: qEncDef.aggregate,
-              field: qEncDef.name,
+              field: qEncDef.field,
               order: 'ascending'
             };
           }
@@ -178,7 +178,7 @@ angular.module('vlui')
           if (mode === 'quantitative-descending') {
             return {
               op: qEncDef.aggregate,
-              field: qEncDef.name,
+              field: qEncDef.field,
               order: 'descending'
             };
           }
