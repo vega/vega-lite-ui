@@ -2,7 +2,7 @@
 
 function getNameMap(dataschema) {
   return dataschema.reduce(function(m, fieldDef) {
-    m[fieldDef.name] = fieldDef;
+    m[fieldDef.field] = fieldDef;
     return m;
   }, {});
 }
@@ -39,7 +39,7 @@ angular.module('vlui')
 
     Dataset.fieldOrderBy.typeThenName = function(fieldDef) {
       return Dataset.fieldOrderBy.type(fieldDef) + '_' +
-        (fieldDef.aggregate === 'count' ? '~' : fieldDef.name.toLowerCase());
+        (fieldDef.aggregate === 'count' ? '~' : fieldDef.field.toLowerCase());
         // ~ is the last character in ASCII
     };
 
@@ -47,26 +47,26 @@ angular.module('vlui')
       return 0; // no swap will occur
     };
 
-    Dataset.fieldOrderBy.name = function(fieldDef) {
-      return fieldDef.name;
+    Dataset.fieldOrderBy.field = function(fieldDef) {
+      return fieldDef.field;
     };
 
     Dataset.fieldOrderBy.cardinality = function(fieldDef, stats) {
-      return stats[fieldDef.name].distinct;
+      return stats[fieldDef.field].distinct;
     };
 
     Dataset.fieldOrder = Dataset.fieldOrderBy.typeThenName;
 
     Dataset.getSchema = function(data, stats, order) {
       var types = dl.type.inferAll(data),
-        schema = _.reduce(types, function(s, type, name) {
+        schema = _.reduce(types, function(s, type, field) {
           var fieldDef = {
-            name: name,
+            field: field,
             type: vl.data.types[type],
             primitiveType: type
           };
 
-          if (fieldDef.type === vl.type.QUANTITATIVE && stats[fieldDef.name].distinct <= 5) {
+          if (fieldDef.type === vl.type.QUANTITATIVE && stats[fieldDef.field].distinct <= 5) {
             fieldDef.type = vl.type.ORDINAL;
           }
 
@@ -74,7 +74,7 @@ angular.module('vlui')
           return s;
         }, []);
 
-      schema = dl.stablesort(schema, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.name);
+      schema = dl.stablesort(schema, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.field);
 
       schema.push(vl.fieldDef.count());
       return schema;

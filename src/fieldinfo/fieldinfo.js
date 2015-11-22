@@ -27,7 +27,7 @@ angular.module('vlui')
         var funcsPopup;
         scope.vlType = vl.type;
         scope.typeNames = consts.typeNames;
-        scope.stats = Dataset.stats[scope.fieldDef.name];
+        scope.stats = Dataset.stats[scope.fieldDef.field];
         scope.containsType = function(types, type) {
           return _.contains(types, type);
         };
