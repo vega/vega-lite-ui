@@ -51,16 +51,6 @@ angular.module('vlui').constant('SampleData', [{
   id: 'burtin',
   group: 'sample'
 },{
-  name: 'Budget 2016',
-  url: 'data/budget.json',
-  id: 'budget',
-  group: 'sample'
-},{
-  name: 'Climate Normals',
-  url: 'data/climate.json',
-  id: 'climate',
-  group: 'sample'
-},{
   name: 'Campaigns',
   url: 'data/weball26.json',
   id: 'weball26',
