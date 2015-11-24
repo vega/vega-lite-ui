@@ -50,8 +50,7 @@ angular.module('vlui')
         scope.tooltipActive = false;
         scope.destroyed = false;
 
-        // FIXME use d3.format?
-        var format = vl.format('');
+        var format = dl.format.number('');
 
         scope.mouseover = function() {
           scope.hoverPromise = $timeout(function(){
@@ -132,7 +131,7 @@ angular.module('vlui')
           if (!scope.chart.vlSpec) return;
 
           var vlSpec = _.cloneDeep(scope.chart.vlSpec);
-          vl.extend(vlSpec.config, Config[configSet]());
+          dl.extend(vlSpec.config, Config[configSet]());
 
           // use chart stats if available (for example from bookmarks)
           var stats = scope.chart.stats || Dataset.stats;
