@@ -136,6 +136,15 @@ angular.module('vlui')
           // use chart stats if available (for example from bookmarks)
           var stats = scope.chart.stats || Dataset.stats;
 
+          // put
+          var encoding = vlSpec.encoding;
+          if (encoding.y && encoding.y.field && vl.fieldDef.isOrdinalScale(encoding.y) && encoding.x) {
+             var fieldStats = stats[encoding.y.field];
+             if (fieldStats && vl.fieldDef.cardinality(encoding.y, stats) > 30) {
+               (encoding.x.axis = encoding.x.axis || {}).orient = 'top';
+             }
+          }
+
           return vl.compile(vlSpec, stats).spec;
         }
 
