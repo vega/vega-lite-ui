@@ -140,7 +140,7 @@ angular.module('vlui')
           var encoding = vlSpec.encoding;
 
           // put x-axis on top if too high-cardinality
-          if (encoding.y && encoding.y.field && vl.fieldDef.isOrdinalScale(encoding.y)) {
+          if (encoding.y && encoding.y.field && [vl.type.NOMINAL, vl.type.ORDINAL].indexOf(encoding.y.type) > -1) {
             if (encoding.x) {
               var fieldStats = stats[encoding.y.field];
               if (fieldStats && vl.fieldDef.cardinality(encoding.y, stats) > 30) {
@@ -153,7 +153,12 @@ angular.module('vlui')
           if (encoding.row || encoding.column ||
               (encoding.x && stats[encoding.x.field] && vl.fieldDef.cardinality(encoding.x, stats) > 10) ||
               (encoding.y && stats[encoding.y.field] && vl.fieldDef.cardinality(encoding.y, stats) > 10)) {
-            vlSpec.config.bandWidth = 12;
+            (vlSpec.config = vlSpec.config || {}).bandWidth = 12;
+          }
+
+          if (encoding.color && encoding.color.type === vl.type.NOMINAL &&
+              vl.fieldDef.cardinality(encoding.x, stats) > 10) {
+            (encoding.color.scale = encoding.color.scale || {}).range = 'category20';
           }
 
 
