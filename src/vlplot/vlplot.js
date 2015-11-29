@@ -162,7 +162,7 @@ angular.module('vlui')
           }
 
 
-          return vl.compile(vlSpec, stats).spec;
+          return vl.compile(vlSpec).spec;
         }
 
         function getVisElement() {
