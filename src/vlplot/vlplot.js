@@ -136,7 +136,33 @@ angular.module('vlui')
           // use chart stats if available (for example from bookmarks)
           var stats = scope.chart.stats || Dataset.stats;
 
-          return vl.compile(vlSpec, stats).spec;
+          // Special Rules
+          var encoding = vlSpec.encoding;
+
+          // put x-axis on top if too high-cardinality
+          if (encoding.y && encoding.y.field && [vl.type.NOMINAL, vl.type.ORDINAL].indexOf(encoding.y.type) > -1) {
+            if (encoding.x) {
+              var fieldStats = stats[encoding.y.field];
+              if (fieldStats && vl.fieldDef.cardinality(encoding.y, stats) > 30) {
+                (encoding.x.axis = encoding.x.axis || {}).orient = 'top';
+              }
+            }
+          }
+
+          // Use smaller band size if has X or Y has cardinality > 10 or has a facet
+          if (encoding.row || encoding.column ||
+              (encoding.x && stats[encoding.x.field] && vl.fieldDef.cardinality(encoding.x, stats) > 10) ||
+              (encoding.y && stats[encoding.y.field] && vl.fieldDef.cardinality(encoding.y, stats) > 10)) {
+            (vlSpec.config = vlSpec.config || {}).bandWidth = 12;
+          }
+
+          if (encoding.color && encoding.color.type === vl.type.NOMINAL &&
+              vl.fieldDef.cardinality(encoding.x, stats) > 10) {
+            (encoding.color.scale = encoding.color.scale || {}).range = 'category20';
+          }
+
+
+          return vl.compile(vlSpec).spec;
         }
 
         function getVisElement() {
