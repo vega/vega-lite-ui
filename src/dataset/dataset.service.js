@@ -128,7 +128,15 @@ angular.module('vlui')
       Dataset.data = data;
 
       Dataset.currentDataset = dataset;
-      Dataset.stats = vl.data.stats(Dataset.data);
+      Dataset.stats = dl.summary(data).reduce(function(s, profile) {
+        s[profile.field] = profile;
+        return s;
+      }, {
+        '*': {
+          max: data.length,
+          min: 0
+        }
+      });
 
       for (var fieldName in Dataset.stats) {
         if (fieldName !== '*') {
