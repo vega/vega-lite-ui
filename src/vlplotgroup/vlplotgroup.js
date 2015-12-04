@@ -118,13 +118,12 @@ angular.module('vlui')
         };
 
         scope.toggleFilterNull.support = function(spec, stats) {
-          var fields = vl.encoding.fields(spec.encoding);
-          for (var fieldName in fields) {
-            var fieldList = fields[fieldName];
-            if (
-                (fieldList.containsType.ordinal || fieldList.containsType.nominal) &&
-                (fieldName in stats) &&
-                stats[fieldName].missing > 0
+          var fieldDefs = vl.spec.fieldDefs(spec);
+          for (var i in fieldDefs) {
+            var fieldDef = fieldDefs[i];
+            if (_.contains([vl.type.ORDINAL, vl.type.NOMINAL], fieldDef.type) &&
+                (fieldDef.name in stats) &&
+                stats[fieldDef.name].missing > 0
               ) {
               return true;
             }
