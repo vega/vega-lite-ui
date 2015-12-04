@@ -39,7 +39,7 @@ describe('Directive: vlPlotGroup', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<vl-plot-group chart="{vlSpec:{marktype:\'point\', config:{}}}"></vl-plot-group>');
+    element = angular.element('<vl-plot-group chart="{vlSpec:{mark:\'point\', config:{}}}"></vl-plot-group>');
     element = $compile(element)(scope);
     scope.$digest();
   }));

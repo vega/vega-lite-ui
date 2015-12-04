@@ -37,7 +37,7 @@ describe('Directive: vlPlot', function() {
   }));
 
   it('should attach visualization', inject(function($compile) {
-    element = angular.element('<vl-plot chart="{vlSpec:{marktype:\'point\', config:{}}}"></vl-plot>');
+    element = angular.element('<vl-plot chart="{vlSpec:{mark:\'point\', config:{}}}"></vl-plot>');
     element = $compile(element)(scope);
     scope.$digest();
     expect(element.attr('class')).to.eql('vl-plot ng-isolate-scope');
