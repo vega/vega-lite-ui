@@ -161,7 +161,7 @@ angular.module('vlui')
             }
 
             if (encoding.color && encoding.color.type === vl.type.NOMINAL &&
-                vl.fieldDef.cardinality(encoding.x, stats) > 10) {
+                vl.fieldDef.cardinality(encoding.COLOR, stats) > 10) {
               (encoding.color.scale = encoding.color.scale || {}).range = 'category20';
             }
           }
