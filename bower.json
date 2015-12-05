@@ -29,13 +29,14 @@
     "angular": "~1.4.1",
     "angular-sanitize": "~1.4.1",
     "angular-local-storage": "~0.2.2",
-    "angular-zeroclipboard": "~0.4.0",
-    "drop": "~1.0.4",
+    "angular-zeroclipboard": "~0.8.0",
+    "drop": "~1.4.1",
     "heap": "~0.2.6",
     "vega": "^2.3.0",
     "vega-lite": "^0.9.0",
     "datalib": "^1.4.6",
-    "selectize": "~0.12.1"
+    "selectize": "~0.12.1",
+    "angular-google-analytics": "~1.1.3"
   },
   "resolutions": {
     "angular": ">=1.4.5"

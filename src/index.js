@@ -1,7 +1,10 @@
 'use strict';
 /* globals window, angular */
 
-angular.module('vlui', [])
+angular.module('vlui', [
+    'LocalStorageModule',
+    'angular-google-analytics'
+  ])
   .constant('_', window._)
   // datalib, vegalite, vega
   .constant('dl', window.dl)
