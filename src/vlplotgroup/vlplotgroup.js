@@ -106,15 +106,7 @@ angular.module('vlui')
           Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE, scope.chart.shorthand);
 
           spec.config = spec.config || {};
-          spec.config.filterNull = spec.config.filterNull || {
-            // TODO: initiate this from filterNull's schema instead
-            nominal: false,
-            ordinal: false,
-            temporal: true,
-            quantitative: true
-          };
-          spec.config.filterNull.ordinal = !spec.config.filterNull.ordinal;
-          spec.config.filterNull.nominal = !spec.config.filterNull.nominal;
+          spec.config.filterNull = spec.config.filterNull === true ? undefined : true;
         };
 
         scope.toggleFilterNull.support = function(spec, stats) {
