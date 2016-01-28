@@ -1,7 +1,7 @@
 'use strict';
 /* global vl:true */
 
-describe.skip('Directive: datasetSelector', function() {
+describe('Directive: datasetSelector', function() {
 
   // load the directive's module
   beforeEach(module('vlui', function($provide) {
@@ -36,9 +36,6 @@ describe.skip('Directive: datasetSelector', function() {
     element = $compile(element)(scope);
     scope.$digest();
 
-    expect(element.find('option').length).to.eql(3);
-    expect(element.find('option:first').attr('label')).to.eql(undefined);
-    expect(element.find('option:nth-child(2)').attr('label')).to.eql('foo');
-    expect(element.find('option:nth-child(3)').attr('label')).to.eql('bar');
+    expect(element.attr('id')).to.eql('select-data');
   }));
 });
