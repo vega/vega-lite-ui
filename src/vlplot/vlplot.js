@@ -152,12 +152,12 @@ angular.module('vlui')
             // Use smaller band size if has X or Y has cardinality > 10 or has a facet
             if (encoding.row ||
                 (encoding.y && stats[encoding.y.field] && vl.fieldDef.cardinality(encoding.y, stats) > 10)) {
-              (encoding.y.scale = encoding.y.scale || {}).bandWidth = 12;
+              (encoding.y.scale = encoding.y.scale || {}).bandSize = 12;
             }
 
             if (encoding.column ||
                 (encoding.x && stats[encoding.x.field] && vl.fieldDef.cardinality(encoding.x, stats) > 10)) {
-              (encoding.x.scale = encoding.x.scale || {}).bandWidth = 12;
+              (encoding.x.scale = encoding.x.scale || {}).bandSize = 12;
             }
 
             if (encoding.color && encoding.color.type === vl.type.NOMINAL &&
