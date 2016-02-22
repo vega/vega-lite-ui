@@ -3,14 +3,14 @@
 // Service for the spec config.
 // We keep this separate so that changes are kept even if the spec changes.
 angular.module('vlui')
-  .factory('Config', function(vl, _) {
+  .factory('Config', function() {
     var Config = {};
 
     Config.data = {};
-    Config.config = _.cloneDeep(vl.config.default);
+    Config.config = {};
 
     Config.getConfig = function() {
-      return _.cloneDeep(Config.config);
+      return {};
     };
 
     Config.getData = function() {
@@ -19,14 +19,28 @@ angular.module('vlui')
 
     Config.large = function() {
       return {
-        singleWidth: 400,
-        singleHeight: 400,
-        largeBandMaxCardinality: 20
+        cell: {
+          width: 400,
+          height: 400
+        },
+        facet: {
+          cell: {
+            width: 200,
+            height: 200
+          }
+        }
       };
     };
 
     Config.small = function() {
-      return {};
+      return {
+        facet: {
+          cell: {
+            width: 150,
+            height: 150
+          }
+        }
+      };
     };
 
     Config.updateDataset = function(dataset, type) {
