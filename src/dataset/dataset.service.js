@@ -140,7 +140,7 @@ angular.module('vlui')
 
       for (var fieldName in Dataset.stats) {
         if (fieldName !== '*') {
-          Dataset.stats[fieldName].sample = _.sample(_.pluck(Dataset.data, fieldName), 7);
+          Dataset.stats[fieldName].sample = _.sample(_.map(Dataset.data, fieldName), 7);
         }
       }
 
