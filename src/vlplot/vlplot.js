@@ -300,7 +300,8 @@ angular.module('vlui')
         }, function() {
           var spec = scope.chart.vgSpec = getVgSpec();
           if (!scope.chart.cleanSpec) {
-            scope.chart.cleanSpec = vl.spec.getCleanSpec(scope.chart.vlSpec);
+            // FIXME
+            scope.chart.cleanSpec = scope.chart.vlSpec;
           }
           render(spec);
         }, true);

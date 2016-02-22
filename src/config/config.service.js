@@ -6,11 +6,8 @@ angular.module('vlui')
   .factory('Config', function(vl, _) {
     var Config = {};
 
-    Config.schema = vl.schema.schema.properties.config;
-    Config.dataschema = vl.schema.schema.properties.data;
-
-    Config.data = vl.schema.util.instantiate(Config.dataschema);
-    Config.config = vl.schema.util.instantiate(Config.schema);
+    Config.data = {};
+    Config.config = _.cloneDeep(vl.config.default);
 
     Config.getConfig = function() {
       return _.cloneDeep(Config.config);
