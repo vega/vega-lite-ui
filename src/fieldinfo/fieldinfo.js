@@ -29,7 +29,7 @@ angular.module('vlui')
         scope.typeNames = consts.typeNames;
         scope.stats = Dataset.stats[scope.fieldDef.field];
         scope.containsType = function(types, type) {
-          return _.contains(types, type);
+          return _.includes(types, type);
         };
 
         switch(scope.fieldDef.type){

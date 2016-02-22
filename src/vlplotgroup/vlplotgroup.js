@@ -113,7 +113,7 @@ angular.module('vlui')
           var fieldDefs = vl.spec.fieldDefs(spec);
           for (var i in fieldDefs) {
             var fieldDef = fieldDefs[i];
-            if (_.contains([vl.type.ORDINAL, vl.type.NOMINAL], fieldDef.type) &&
+            if (_.includes([vl.type.ORDINAL, vl.type.NOMINAL], fieldDef.type) &&
                 (fieldDef.name in stats) &&
                 stats[fieldDef.name].missing > 0
               ) {

@@ -24,7 +24,7 @@
     "tests"
   ],
   "dependencies": {
-    "lodash": "~4.0.1",
+    "lodash": "~4.5.1",
     "angular-mocks": "~1.4.9",
     "angular": "~1.4.9",
     "angular-sanitize": "~1.4.9",
