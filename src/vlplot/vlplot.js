@@ -83,7 +83,7 @@ angular.module('vlui')
             // convert data into a format that we can easily use with ng table and ng-repeat
             // TODO: revise if this is actually a good idea
             scope.data = _(item.datum).omit('_prev', '_id') // omit vega internals
-              .pairs().value()
+              .toPairs().value()
               .map(function(p) {
                 p[1] = dl.isNumber(p[1]) ? format(p[1]) : p[1];
                 return p;
