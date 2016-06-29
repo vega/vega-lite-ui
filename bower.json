@@ -32,9 +32,9 @@
     "angular-zeroclipboard": "~0.8.0",
     "drop": "~1.4.2",
     "heap": "~0.2.6",
-    "vega": "^2.5.0",
-    "vega-lite": "^1.0.3",
-    "datalib": "^1.6.1",
+    "vega": "~2.5.0",
+    "vega-lite": "~1.0.3",
+    "datalib": "~1.6.1",
     "selectize": "~0.12.1",
     "angular-google-analytics": "~1.1.5"
   },
