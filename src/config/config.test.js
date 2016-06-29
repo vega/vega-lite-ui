@@ -18,15 +18,20 @@ describe('Service: Config', function() {
     Config = _Config_;
   }));
 
-  it('should have correct schema and config ', function() {
-    var schema = vl.schema.schema.properties.config,
-      config = {
-        singleWidth: 400,
-        singleHeight: 400,
-        largeBandMaxCardinality: 20
-      };
+  it('should have correct config ', function() {
+    var config = {
+      cell: {
+        width: 400,
+        height: 400
+      },
+      facet: {
+        cell: {
+          width: 200,
+          height: 200
+        }
+      }
+    };
 
-    expect(Config.schema).to.eql(schema);
     expect(Config.large()).to.eql(config);
   });
 
