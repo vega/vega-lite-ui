@@ -5,7 +5,7 @@ angular.module('vlui')
   .factory('Schema', function() {
     var Schema = {};
 
-    Schema.schema = window.vlSchema;
+    Schema.schema = dl.json('bower_components/vega-lite/vega-lite-schema.json');
 
     Schema.getChannelSchema = function(channel) {
       var encodingChannelProp = Schema.schema.definitions.Encoding.properties[channel];

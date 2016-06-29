@@ -1,8 +1,6 @@
 'use strict';
 /* globals window, angular */
 
-window.vlSchema = dl.json('bower_components/vega-lite/vega-lite-schema.json');
-
 angular.module('vlui', [
     'LocalStorageModule',
     'angular-google-analytics'
