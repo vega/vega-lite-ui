@@ -246,7 +246,11 @@ angular.module('vlui')
 
             var start = new Date().getTime();
             // render if still a part of the list
-            vg.parse.spec(spec, function(chart) {
+            vg.parse.spec(spec, function(error, chart) {
+              if (error) {
+                console.error('error', error);
+                return;
+              }
               try {
                 var endParse = new Date().getTime();
                 view = null;
@@ -281,7 +285,7 @@ angular.module('vlui')
               } catch (e) {
                 console.error(e, JSON.stringify(spec));
               } finally {
-                renderQueueNext();
+                $timeout(renderQueueNext);
               }
 
             });
