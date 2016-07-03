@@ -27,7 +27,8 @@ describe('Directive: vlPlot', function() {
             };
           });
         }
-      }
+      },
+      util: vg.util
     });
     $provide.constant('vl', vl);
   }));

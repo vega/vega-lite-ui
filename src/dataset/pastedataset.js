@@ -7,7 +7,7 @@
  * # pasteDataset
  */
 angular.module('vlui')
-  .directive('pasteDataset', function (Dataset, Logger, Config, _, dl) {
+  .directive('pasteDataset', function (Dataset, Logger, Config, _, vg) {
     return {
       templateUrl: 'dataset/pastedataset.html',
       restrict: 'E',
@@ -30,7 +30,7 @@ angular.module('vlui')
         };
 
         scope.addDataset = function() {
-          var data = dl.read(scope.dataset.data, {
+          var data = vg.util.read(scope.dataset.data, {
             type: 'csv'
           });
 

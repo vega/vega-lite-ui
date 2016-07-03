@@ -7,7 +7,7 @@
  * # visListItem
  */
 angular.module('vlui')
-  .directive('vlPlotGroup', function (Bookmarks, consts, dl, vl, Dataset, Logger, _) {
+  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _) {
     return {
       templateUrl: 'vlplotgroup/vlplotgroup.html',
       restrict: 'E',
@@ -195,7 +195,7 @@ angular.module('vlui')
             }
           }
 
-          if (dl.isObject(sort) && sort.op && sort.field) {
+          if (vg.util.isObject(sort) && sort.op && sort.field) {
             return 'custom';
           }
           console.error('invalid mode');

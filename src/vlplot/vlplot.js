@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('vlPlot', function(dl, vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap, $window) {
+  .directive('vlPlot', function(vl, vg, $timeout, $q, Dataset, Config, consts, _, $document, Logger, Heap, $window) {
     var counter = 0;
     var MAX_CANVAS_SIZE = 32767/2, MAX_CANVAS_AREA = 268435456/4;
 
@@ -50,7 +50,7 @@ angular.module('vlui')
         scope.tooltipActive = false;
         scope.destroyed = false;
 
-        var format = dl.format.number('');
+        var format = vg.util.format.number('');
 
         scope.mouseover = function() {
           scope.hoverPromise = $timeout(function(){
@@ -89,7 +89,7 @@ angular.module('vlui')
             scope.data = _(item.datum).omit('_prev', '_id') // omit vega internals
               .toPairs().value()
               .map(function(p) {
-                p[1] = dl.isNumber(p[1]) ? format(p[1]) : p[1];
+                p[1] = vg.util.isNumber(p[1]) ? format(p[1]) : p[1];
                 return p;
               });
             scope.$digest();
@@ -137,7 +137,7 @@ angular.module('vlui')
           }
 
           var vlSpec = _.cloneDeep(scope.chart.vlSpec);
-          dl.extend(vlSpec.config, Config[configSet]());
+          vg.util.extend(vlSpec.config, Config[configSet]());
 
           // use chart stats if available (for example from bookmarks)
           var stats = scope.chart.stats || Dataset.stats;

@@ -28,7 +28,8 @@ describe('Directive: vlPlotGroup', function () {
             };
           });
         }
-      }
+      },
+      util: vg.util
     });
     $provide.constant('vl', vl);
   }));

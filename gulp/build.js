@@ -11,7 +11,7 @@ var $ = require('gulp-load-plugins')({
 gulp.task('vlschema', function() {
   gulp.src('bower_components/vega-lite/vega-lite-schema.json')
     .pipe($.jsonTransform(function(data, file) {
-      return 'window.vlSchema = ' + JSON.stringify(data, null, 2) + ';';
+      return 'window.     vlSchema = ' + JSON.stringify(data, null, 2) + ';';
     }))
     .pipe($.rename('vl-schema.js'))
     .pipe(gulp.dest(paths.tmp + '/schema/'));

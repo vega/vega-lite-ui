@@ -8,7 +8,7 @@ function getNameMap(dataschema) {
 }
 
 angular.module('vlui')
-  .factory('Dataset', function($http, $q, Alerts, _, dl, vl, SampleData, Config, Logger) {
+  .factory('Dataset', function($http, $q, Alerts, _, vg, vl, SampleData, Config, Logger) {
     var Dataset = {};
 
     // Start with the list of sample datasets
@@ -58,7 +58,7 @@ angular.module('vlui')
     Dataset.fieldOrder = Dataset.fieldOrderBy.typeThenName;
 
     Dataset.getSchema = function(data, stats, order) {
-      var types = dl.type.inferAll(data),
+      var types = vg.util.type.inferAll(data),
         schema = _.reduce(types, function(s, type, field) {
           var fieldDef = {
             field: field,
@@ -74,7 +74,7 @@ angular.module('vlui')
           return s;
         }, []);
 
-      schema = dl.stablesort(schema, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.field);
+      schema = vg.util.stablesort(schema, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.field);
 
       schema.push(vl.fieldDef.count());
       return schema;
@@ -104,7 +104,7 @@ angular.module('vlui')
              data = response.data;
              Dataset.type = 'json';
           } else {
-            data = dl.read(response.data, {type: 'csv'});
+            data = vg.util.read(response.data, {type: 'csv'});
             Dataset.type = 'csv';
           }
 
@@ -128,7 +128,7 @@ angular.module('vlui')
       Dataset.data = data;
 
       Dataset.currentDataset = dataset;
-      Dataset.stats = dl.summary(data).reduce(function(s, profile) {
+      Dataset.stats = vg.util.summary(data).reduce(function(s, profile) {
         s[profile.field] = profile;
         return s;
       }, {
