@@ -77,7 +77,7 @@ angular.module('vlui')
         });
 
         scope.$on('$destroy', function() {
-          if (funcsPopup) {
+          if (funcsPopup && funcsPopup.destroy) {
             funcsPopup.destroy();
           }
         });
