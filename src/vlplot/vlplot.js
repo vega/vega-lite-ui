@@ -69,12 +69,16 @@ angular.module('vlui')
         };
 
         function viewOnMouseOver(event, item) {
-          if (!item || !item.datum) { return; }
+          if (!item || !item.datum) {
+            return;
+          }
 
           scope.tooltipPromise = $timeout(function activateTooltip(){
 
             // avoid showing tooltip for facet's background
-            if (item.datum._facetID) return;
+            if (item.datum._facetID) {
+              return;
+            }
 
             scope.tooltipActive = true;
             Logger.logInteraction(Logger.actions.CHART_TOOLTIP, item.datum);
@@ -128,7 +132,9 @@ angular.module('vlui')
         function getVgSpec() {
           var configSet = scope.configSet || consts.defaultConfigSet || {};
 
-          if (!scope.chart.vlSpec) return;
+          if (!scope.chart.vlSpec) {
+            return;
+          }
 
           var vlSpec = _.cloneDeep(scope.chart.vlSpec);
           dl.extend(vlSpec.config, Config[configSet]());
