@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('vlui').constant('SampleData', [{
   name: 'Barley',
   description: 'Barley yield by variety across the upper midwest in 1931 and 1932',
