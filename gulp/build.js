@@ -8,6 +8,14 @@ var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
 });
 
+gulp.task('vlschema', function() {
+  gulp.src('bower_components/vega-lite/vega-lite-schema.json')
+    .pipe($.jsonTransform(function(data, file) {
+      return 'window.vlSchema = ' + JSON.stringify(data, null, 2) + ';';
+    }))
+    .pipe($.rename('vl-schema.js'))
+    .pipe(gulp.dest(paths.tmp + '/schema/'));
+});
 
 gulp.task('partials', function () {
   return gulp.src([
@@ -32,6 +40,8 @@ var sourceDirectory = path.join(rootDirectory, './src');
 var sourceFiles = [
   // Start with 3rd-party dependencies
   path.join(sourceDirectory, '/vendor/**/*.js'),
+  // schema file
+  paths.tmp + '/schema/vl-schema.js',
   // Make sure the module is handled first
   path.join(sourceDirectory, '/index.js'),
   // template cache file
@@ -42,7 +52,7 @@ var sourceFiles = [
   '!'+path.join(sourceDirectory, '/**/*.test.js')
 ];
 
-gulp.task('build', ['partials', 'css'], function() {
+gulp.task('build', ['vlschema', 'partials', 'css'], function() {
   gulp.src(sourceFiles)
     // .pipe(filter('-'+path.join(sourceDirectory, '/**/*.test.js')))
     .pipe($.plumber())

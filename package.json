@@ -39,7 +39,6 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
     "gulp-wrapper": "^1.0.0",
-    "jasmine-core": "^2.4.1",
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.1.0",
     "karma": "^0.13.19",
@@ -66,5 +65,8 @@
   },
   "engines": {
     "node": ">=0.8.0"
+  },
+  "dependencies": {
+    "gulp-json-transform": "^0.4.1"
   }
 }

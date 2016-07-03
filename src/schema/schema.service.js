@@ -2,10 +2,10 @@
 
 // Service for serving VL Schema
 angular.module('vlui')
-  .factory('Schema', function() {
+  .factory('Schema', function(vlSchema) {
     var Schema = {};
 
-    Schema.schema = dl.json('bower_components/vega-lite/vega-lite-schema.json');
+    Schema.schema = vlSchema;
 
     Schema.getChannelSchema = function(channel) {
       var encodingChannelProp = Schema.schema.definitions.Encoding.properties[channel];

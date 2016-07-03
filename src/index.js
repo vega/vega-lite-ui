@@ -9,6 +9,7 @@ angular.module('vlui', [
   // datalib, vegalite, vega
   .constant('dl', window.dl)
   .constant('vl', window.vl)
+  .constant('vlSchema', window.vlSchema)
   .constant('vg', window.vg)
   // other libraries
   .constant('Blob', window.Blob)
