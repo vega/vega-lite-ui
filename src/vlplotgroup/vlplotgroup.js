@@ -94,9 +94,9 @@ angular.module('vlui')
           if (!scope.log.support(spec, channel)) { return; }
 
           var fieldDef = spec.encoding[channel],
-            scale = fieldDef.scale = fieldDef.scale || {};
+            scale = fieldDef.scale;
 
-          return scale.type === 'log';
+          return scale && scale.type === 'log';
         };
 
         // TOGGLE FILTER
