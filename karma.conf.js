@@ -18,7 +18,8 @@ var testFiles = [
   src + '/vendor/*.js',
   src + '/index.js',
   src + '/**/*.js',
-  tmp + '/partials/templateCacheHtml.js'
+  tmp + '/partials/templateCacheHtml.js',
+  tmp + '/schema/vl-schema.js'
 ]);
 
 // console.log('testFiles', testFiles);
