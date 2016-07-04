@@ -17,7 +17,6 @@ angular.module('vlui')
       dragStart: dragStart,
       dragStop: dragStop,
       // Event, with handler in the listener
-      update: update,
       remove: remove,
       dragDrop: dragDrop,
 
@@ -34,9 +33,16 @@ angular.module('vlui')
 
     /**
      * Set a fieldDef of a pill of a given channelId
+     * @param channelId channel id of the pill to be updated
+     * @param fieldDef fieldDef to to be updated
+     * @param update whether to propagate change to the channel update listener
      */
-    function set(channelId, fieldDef) {
+    function set(channelId, fieldDef, update) {
       Pills.pills[channelId] = fieldDef;
+
+      if (update && Pills.listener) {
+        Pills.listener.set(channelId, fieldDef);
+      }
     }
 
     /**
