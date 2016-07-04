@@ -58,6 +58,7 @@ angular.module('vlui')
     Dataset.fieldOrder = Dataset.fieldOrderBy.typeThenName;
 
     Dataset.getSchema = function(data, stats, order) {
+      // TODO: call cql's schema utility instead
       var types = vg.util.type.inferAll(data),
         schema = _.reduce(types, function(s, type, field) {
           var fieldDef = {
@@ -127,6 +128,7 @@ angular.module('vlui')
     Dataset.updateFromData = function(dataset, data) {
       Dataset.data = data;
 
+      // TODO: use cql's new schema utility instead
       Dataset.currentDataset = dataset;
       Dataset.stats = vg.util.summary(data).reduce(function(s, profile) {
         s[profile.field] = profile;
@@ -145,6 +147,8 @@ angular.module('vlui')
       }
 
       Dataset.dataschema = Dataset.getSchema(Dataset.data, Dataset.stats);
+
+      // TODO: remove and use cql's fieldSchemaIndex instead
       Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
     };
 
