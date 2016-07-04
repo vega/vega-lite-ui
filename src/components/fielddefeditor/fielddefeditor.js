@@ -28,7 +28,9 @@ angular.module('vlui')
 
         scope.pills = Pills.pills;
 
-        scope.vl = vl;
+        scope.supportMark = function(channel, mark) {
+          return vl.channel.supportMark(channel, mark);
+        };
 
         propsPopup = new Drop({
           content: element.find('.shelf-properties')[0],
