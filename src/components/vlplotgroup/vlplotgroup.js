@@ -9,7 +9,7 @@
 angular.module('vlui')
   .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _) {
     return {
-      templateUrl: 'vlplotgroup/vlplotgroup.html',
+      templateUrl: 'components/vlplotgroup/vlplotgroup.html',
       restrict: 'E',
       replace: true,
       controller: function($scope, $element) {

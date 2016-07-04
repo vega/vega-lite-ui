@@ -9,7 +9,7 @@
 angular.module('vlui')
   .directive('fieldInfo', function (Dataset, Drop, vl, consts, _) {
     return {
-      templateUrl: 'fieldinfo/fieldinfo.html',
+      templateUrl: 'components/fieldinfo/fieldinfo.html',
       restrict: 'E',
       replace: true,
       scope: {

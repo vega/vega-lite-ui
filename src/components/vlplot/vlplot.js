@@ -19,7 +19,7 @@ angular.module('vlui')
     }
 
     return {
-      templateUrl: 'vlplot/vlplot.html',
+      templateUrl: 'components/vlplot/vlplot.html',
       restrict: 'E',
       scope: {
         chart: '=',

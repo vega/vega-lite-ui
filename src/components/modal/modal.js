@@ -9,7 +9,7 @@
 angular.module('vlui')
   .directive('modal', function ($document, Modals) {
     return {
-      templateUrl: 'modal/modal.html',
+      templateUrl: 'components/modal/modal.html',
       restrict: 'E',
       transclude: true,
       scope: {

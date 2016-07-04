@@ -72,7 +72,7 @@ angular.module('vlui')
         return;
       }
       var value = data ? data.value : undefined;
-      if(action.level.rank >= service.levels.INFO.rank) {
+      if(action.level.rank >= service.levels[consts.logging].rank) {
         Analytics.trackEvent(action.category, action.id, label, value);
         console.log('[Logging] ', action.id, label, data);
       }

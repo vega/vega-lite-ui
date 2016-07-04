@@ -9,7 +9,7 @@
 angular.module('vlui')
   .directive('tabset', function() {
     return {
-      templateUrl: 'tabs/tabset.html',
+      templateUrl: 'components/tabs/tabset.html',
       restrict: 'E',
       transclude: true,
 

@@ -9,7 +9,7 @@
 angular.module('vlui')
   .directive('modalCloseButton', function() {
     return {
-      templateUrl: 'modal/modalclosebutton.html',
+      templateUrl: 'components/modal/modalclosebutton.html',
       restrict: 'E',
       require: '^^modal',
       scope: {

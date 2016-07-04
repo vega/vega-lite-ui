@@ -9,7 +9,7 @@
 angular.module('vlui')
   .directive('bookmarkList', function (Bookmarks, consts, Logger) {
     return {
-      templateUrl: 'bookmarklist/bookmarklist.html',
+      templateUrl: 'components/bookmarklist/bookmarklist.html',
       restrict: 'E',
       replace: true,
       scope: {
