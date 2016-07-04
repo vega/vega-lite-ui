@@ -7,7 +7,7 @@
  * # Pills
  * Service in the polestar.
  */
-angular.module('polestar')
+angular.module('vlui')
   .service('Pills', function () {
     var Pills = {
       // Functions
@@ -58,7 +58,7 @@ angular.module('polestar')
       if (Pills.listener) {
         Pills.listener.update(channelId, Pills.pills[channelId]);
       }
-    };
+    }
 
     /**
      * @param {any} pill pill being dragged
@@ -67,12 +67,12 @@ angular.module('polestar')
     function dragStart(pill, cidDragFrom) {
       Pills.dragging = pill;
       Pills.cidDragFrom = cidDragFrom;
-    };
+    }
 
     /** Stop pill dragging */
     function dragStop() {
       Pills.dragging = null;
-    };
+    }
 
     /**
      * When a pill is dropped
@@ -80,9 +80,9 @@ angular.module('polestar')
      */
     function dragDrop(cidDragTo) {
       if (Pills.listener) {
-        Pills.listener.dragDrop(cidDragTo, Pills.cidDragFrom)
+        Pills.listener.dragDrop(cidDragTo, Pills.cidDragFrom);
       }
-    };
+    }
 
     return Pills;
   });

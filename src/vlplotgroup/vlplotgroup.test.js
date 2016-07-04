@@ -1,6 +1,6 @@
 'use strict';
 
-/* global vl:true */
+/* global vl:true, vg:true */
 
 describe('Directive: vlPlotGroup', function () {
 
