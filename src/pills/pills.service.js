@@ -12,12 +12,14 @@ angular.module('vlui')
     var Pills = {
       // Functions
       get: get,
-      set: set,
       // Event
       dragStart: dragStart,
       dragStop: dragStop,
       // Event, with handler in the listener
+      set: set,
       remove: remove,
+      update: update,
+      reset: reset,
       dragDrop: dragDrop,
 
       // Data
@@ -58,11 +60,22 @@ angular.module('vlui')
         Pills.listener.remove(channelId);
       }
     }
-
-    /** Updating the pill (e.g., via function select) */
-    function update(channelId) {
+    /**
+     * Update the whole pill set
+     *
+     * @param {any} spec
+     */
+    function update(spec) {
       if (Pills.listener) {
-        Pills.listener.update(channelId, Pills.pills[channelId]);
+        Pills.listener.update(spec);
+      }
+    }
+
+
+    /** Reset Pills */
+    function reset() {
+      if (Pills.listener) {
+        Pills.listener.reset();
       }
     }
 
