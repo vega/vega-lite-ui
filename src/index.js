@@ -17,6 +17,7 @@ angular.module('vlui', [
   .constant('Heap', window.Heap)
   // Use the customized vendor/json3-compactstringify
   .constant('JSON3', window.JSON3.noConflict())
+  .constant('ANY', '__ANY__')
   // constants
   .constant('consts', {
     addCount: true, // add count field to Dataset.dataschema

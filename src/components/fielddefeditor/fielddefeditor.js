@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('fieldDefEditor', function(Dataset, Pills, _, Drop, Logger, vl, Schema) {
+  .directive('fieldDefEditor', function(ANY, Dataset, Pills, _, Drop, Logger, vl, Schema) {
     return {
       templateUrl: 'components/fielddefeditor/fielddefeditor.html',
       restrict: 'E',
@@ -25,10 +25,16 @@ angular.module('vlui')
 
         scope.Dataset = Dataset;
         scope.schema = Schema.getChannelSchema(scope.channel);
-
+        scope.ANY = ANY;
         scope.pills = Pills.pills;
 
         scope.supportMark = function(channel, mark) {
+          if (channel === ANY) {
+            return true;
+          }
+          if (mark === ANY) { // TODO: support {values: [...]}
+            return true;
+          }
           return vl.channel.supportMark(channel, mark);
         };
 

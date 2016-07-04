@@ -7,10 +7,13 @@ angular.module('vlui')
       templateUrl: 'components/shelves/shelves.html',
       restrict: 'E',
       scope: {
-        spec: '='
+        spec: '=',
+        anyChannelShelves: '='
       },
       replace: true,
-      controller: function($scope, vl, Config, Dataset, Logger, Pills) {
+      controller: function($scope, ANY, vl, Config, Dataset, Logger, Pills) {
+        $scope.ANY = ANY;
+
         $scope.markChange = function() {
           Logger.logInteraction(Logger.actions.MARK_CHANGE, $scope.spec.mark);
         };

@@ -2,6 +2,14 @@
   <a class="right"  ng-click="clear()"><i class="fa fa-eraser"></i> Clear</a>
   <h2>Encoding</h2>
 
+  <div class="shelf-pane shelf-any-pane full-width" ng-if="anyChannelShelves">
+    <h3>Flexible</h3>
+    <field-def-editor channel="ANY"
+      encoding="spec.encoding"
+      mark="spec.mark">
+    </field-def-editor>
+  </div>
+
   <div class="shelf-pane shelf-encoding-pane full-width">
     <h3>Positional</h3>
     <field-def-editor channel="'x'"
@@ -52,6 +60,8 @@
       mark="spec.mark">
     </field-def-editor>
   </div>
+
+  <!-- TODO support filter -->
 
   <!-- <div class="shelf-pane shelf-config-pane full-width">
     <h3>Config</h3>
