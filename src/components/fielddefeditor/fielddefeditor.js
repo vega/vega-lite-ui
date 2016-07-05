@@ -25,7 +25,7 @@ angular.module('vlui')
 
         scope.Dataset = Dataset;
         scope.schema = Schema.getChannelSchema(scope.channelId);
-        scope.isAnyChannel = Pills.isAnyChannel;
+        scope.isAnyChannel = false;
         scope.pills = Pills.pills;
 
         scope.supportMark = function(channelId, mark) {
@@ -80,6 +80,10 @@ angular.module('vlui')
           Pills.dragDrop(scope.channelId);
           Logger.logInteraction(Logger.actions.FIELD_DROP, pill, pill);
         };
+
+        scope.$watch('channelId', function(channelId) {
+          scope.isAnyChannel = Pills.isAnyChannel(channelId);
+        }, true);
 
         // If some external action changes the fieldDef, we also need to update the pill
         scope.$watch('encoding[channelId]', function(fieldDef) {
