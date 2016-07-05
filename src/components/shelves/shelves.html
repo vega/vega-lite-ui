@@ -2,7 +2,7 @@
   <a class="right"  ng-click="clear()"><i class="fa fa-eraser"></i> Clear</a>
   <h2>Encoding</h2>
 
-  <div class="shelf-pane shelf-any-pane full-width" ng-if="anyChannelShelves">
+  <div class="shelf-pane shelf-any-pane full-width" ng-if="supportAny">
     <h3>Flexible</h3>
     <field-def-editor channel="ANY"
       encoding="spec.encoding"
@@ -34,7 +34,7 @@
   <div class="shelf-pane shelf-marks-pane full-width">
     <div class="right">
       <select class="markselect" ng-model="spec.mark"
-              ng-options="type for type in ['point', 'tick', 'bar', 'line', 'area', 'text']"
+              ng-options="(type === ANY ? 'auto' : type) for type in (supportAny ? marksWithAny : marks)"
               ng-change="markChange()"></select>
     </div>
     <h3>Marks</h3>

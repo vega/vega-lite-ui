@@ -8,11 +8,14 @@ angular.module('vlui')
       restrict: 'E',
       scope: {
         spec: '=',
-        anyChannelShelves: '='
+        supportAny: '='
       },
       replace: true,
       controller: function($scope, ANY, vl, Config, Dataset, Logger, Pills) {
         $scope.ANY = ANY;
+
+        $scope.marks = ['point', 'tick', 'bar', 'line', 'area', 'text'];
+        $scope.marksWithAny = [ANY].concat($scope.marks);
 
         $scope.markChange = function() {
           Logger.logInteraction(Logger.actions.MARK_CHANGE, $scope.spec.mark);
