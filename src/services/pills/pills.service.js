@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc service
- * @name polestar.Pills
- * @description
- * # Pills
- * Service in the polestar.
- */
 angular.module('vlui')
   .service('Pills', function () {
     var Pills = {

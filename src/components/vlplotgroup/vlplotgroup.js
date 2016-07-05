@@ -37,6 +37,7 @@ angular.module('vlui')
 
         /* vlplotgroup specific */
 
+        /** Set of fieldDefs for showing field info */
         fieldSet: '=',
 
         showBookmark: '@',

@@ -26,6 +26,7 @@ angular.module('vlui')
 
         //optional
         disabled: '=',
+        /** A function that returns if the plot is still in the view, so it might be omitted from the render queue if necessary. */
         isInList: '=',
 
         alwaysScrollable: '=',
