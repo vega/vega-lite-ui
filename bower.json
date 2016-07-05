@@ -31,8 +31,10 @@
     "angular-sanitize": "~1.5.7",
     "angular-touch": "~1.5.7",
     "angular-zeroclipboard": "~0.8.0",
+    "compassql": "~0.1.0",
     "drop": "~1.4.2",
     "heap": "~0.2.6",
+    "jquery": "~2.2.0",
     "lodash": "~4.5.1",
     "vega-lite": "~1.0.12",
     "selectize": "~0.12.1"

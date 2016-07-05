@@ -8,9 +8,11 @@ angular.module('vlui', [
   .constant('_', window._)
   // datalib, vegalite, vega
   .constant('vl', window.vl)
+  .constant('cql', window.cql)
   .constant('vlSchema', window.vlSchema)
   .constant('vg', window.vg)
   // other libraries
+  .constant('jQuery', window.$)
   .constant('Blob', window.Blob)
   .constant('URL', window.URL)
   .constant('Drop', window.Drop)
