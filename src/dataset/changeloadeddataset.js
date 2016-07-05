@@ -13,7 +13,7 @@
 angular.module('vlui')
   .filter('inGroup', function(_) {
     return function(arr, datasetGroup) {
-      return _.where(arr, {
+      return _.filter(arr, {
         group: datasetGroup
       });
     };
@@ -49,7 +49,7 @@ angular.module('vlui')
           return dataset.group !== 'sample';
         });
 
-        scope.sampleData = _.where(Dataset.datasets, {
+        scope.sampleData = _.filter(Dataset.datasets, {
           group: 'sample'
         });
 
