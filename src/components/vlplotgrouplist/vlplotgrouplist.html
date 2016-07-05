@@ -1,0 +1,30 @@
+<div class="vl-plot-group-list-container abs-100 scroll-y">
+  <div class="vis-list hflex flex-wrap">
+    <vl-plot-group
+      ng-repeat="item in modelGroup.items | limitTo: limit"
+      ng-init="chart = getChart(item)"
+      class="wrapped-vl-plot-group card"
+
+      chart="chart"
+      is-in-list="isInList"
+
+      field-set="chart.fieldSet"
+      show-bookmark="true"
+      show-debug="consts.debug && consts.debugInList"
+      show-expand="true"
+      show-filter-null="true"
+      show-sort="true"
+
+      overflow="true"
+      tooltip="true"
+
+      is-selected="Fields.isSelected"
+      highlighted="Fields.highlighted"
+      expand-action="select(chart)"
+
+      priority="consts.priority.vislist + $index"
+    >
+    </vl-plot-group>
+  </div>
+  <!-- FIXME support scrolling -->
+</div>

@@ -8,7 +8,7 @@ function getNameMap(dataschema) {
 }
 
 angular.module('vlui')
-  .factory('Dataset', function($http, $q, Alerts, _, vg, vl, SampleData, Config, Logger) {
+  .factory('Dataset', function($http, $q, Alerts, _, vg, vl, cql, SampleData, Config, Logger) {
     var Dataset = {};
 
     // Start with the list of sample datasets
@@ -146,7 +146,17 @@ angular.module('vlui')
         }
       }
 
+      // TODO: remove and use cql's fieldSchemaIndex instead
       Dataset.dataschema = getSchema(Dataset.data, Dataset.stats);
+
+      Dataset.schema = new cql.schema.Schema(Dataset.dataschema);
+
+      // TODO: remove this object once we consolidate them in cql
+      Dataset.tmpStats = new cql.stats.Stats(Dataset.dataschema.map(function(fieldSchema) {
+        var fieldStats = vg.util.duplicate(fieldSchema);
+        fieldStats.distinct = Dataset.stats[fieldSchema.field].distinct;
+        return fieldStats;
+      }));
 
       // TODO: remove and use cql's fieldSchemaIndex instead
       Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
