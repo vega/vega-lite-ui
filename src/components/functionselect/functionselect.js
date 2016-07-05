@@ -10,16 +10,15 @@ angular.module('vlui')
         fieldDef: '='
       },
       link: function(scope /*,element, attrs*/) {
-        var BIN='bin', RAW='', COUNT='count', maxbins;
+        var BIN='bin', COUNT='count', maxbins;
 
         scope.pills = Pills.pills;
         scope.func = {
-          selected: RAW,
-          list: [RAW]
+          selected: undefined,
+          list: [undefined]
         };
 
         function getFns(type) {
-
           if (type === 'temporal') {
             return Schema.schema.definitions.TimeUnit.enum;
           }
@@ -86,7 +85,7 @@ angular.module('vlui')
             scope.func.list=[COUNT];
             scope.func.selected = COUNT;
           } else {
-            scope.func.list = ( isOrdinalShelf && (isQ || isT) ? [] : [''])
+            scope.func.list = ( isOrdinalShelf && (isQ || isT) ? [] : [undefined])
               .concat(getFns(type))
               .concat(getAggrs(type).filter(function(x) { return x !== COUNT; }))
               // TODO: check supported type based on primitive data?
@@ -94,11 +93,10 @@ angular.module('vlui')
 
             var defaultVal = (isOrdinalShelf &&
               (isQ && BIN) || (isT && consts.defaultTimeFn)
-            ) || RAW;
+            ) || undefined;
 
             var selected = pill.bin ? 'bin' :
-              pill.aggregate || pill.timeUnit ||
-              defaultVal;
+              pill.aggregate || pill.timeUnit;
 
             if (scope.func.list.indexOf(selected) >= 0) {
               scope.func.selected = selected;
