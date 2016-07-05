@@ -11,6 +11,7 @@ angular.module('vlui', [
   .constant('cql', window.cql)
   .constant('vlSchema', window.vlSchema)
   .constant('vg', window.vg)
+  .constant('util', window.vg.util)
   // other libraries
   .constant('jQuery', window.$)
   .constant('Blob', window.Blob)
