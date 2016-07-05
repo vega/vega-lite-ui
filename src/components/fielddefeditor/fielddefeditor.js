@@ -7,7 +7,7 @@ angular.module('vlui')
       restrict: 'E',
       replace: true,
       scope: {
-        channel: '=',
+        channelId: '=',
         encoding: '=',
         mark: '='
       },
@@ -24,18 +24,18 @@ angular.module('vlui')
         };
 
         scope.Dataset = Dataset;
-        scope.schema = Schema.getChannelSchema(scope.channel);
-        scope.ANY = ANY;
+        scope.schema = Schema.getChannelSchema(scope.channelId);
+        scope.isAnyChannel = Pills.isAnyChannel;
         scope.pills = Pills.pills;
 
-        scope.supportMark = function(channel, mark) {
-          if (channel === ANY) {
+        scope.supportMark = function(channelId, mark) {
+          if (Pills.isAnyChannel(channelId)) {
             return true;
           }
           if (mark === ANY) { // TODO: support {values: [...]}
             return true;
           }
-          return vl.channel.supportMark(channel, mark);
+          return vl.channel.supportMark(channelId, mark);
         };
 
         propsPopup = new Drop({
@@ -48,11 +48,11 @@ angular.module('vlui')
         scope.fieldInfoPopupContent =  element.find('.shelf-functions')[0];
 
         scope.removeField = function() {
-          Pills.remove(scope.channel);
+          Pills.remove(scope.channelId);
         };
 
         scope.fieldDragStart = function() {
-          Pills.dragStart(Pills[scope.channel], scope.channel);
+          Pills.dragStart(Pills.get(scope.channelId), scope.channelId);
         };
 
         scope.fieldDragStop = function() {
@@ -63,7 +63,7 @@ angular.module('vlui')
          * Event handler for dropping pill.
          */
         scope.fieldDropped = function() {
-          var pill = Pills.get(scope.channel);
+          var pill = Pills.get(scope.channelId);
           if (funcsPopup) {
             funcsPopup = null;
           }
@@ -77,16 +77,16 @@ angular.module('vlui')
 
           // TODO validate timeUnit / aggregate
 
-          Pills.dragDrop(scope.channel);
+          Pills.dragDrop(scope.channelId);
           Logger.logInteraction(Logger.actions.FIELD_DROP, pill, pill);
         };
 
         // If some external action changes the fieldDef, we also need to update the pill
-        scope.$watch('encoding[channel]', function(fieldDef) {
-          Pills.set(scope.channel, fieldDef ? _.cloneDeep(fieldDef) : {});
+        scope.$watch('encoding[channelId]', function(fieldDef) {
+          Pills.set(scope.channelId, fieldDef ? _.cloneDeep(fieldDef) : {});
         }, true);
 
-        scope.$watchGroup(['allowedCasting[Dataset.dataschema.byName[encoding[channel].field].type]', 'encoding[channel].aggregate'], function(arr){
+        scope.$watchGroup(['allowedCasting[Dataset.dataschema.byName[encoding[channelId].field].type]', 'encoding[channel].aggregate'], function(arr){
           var allowedTypes = arr[0], aggregate=arr[1];
           scope.allowedTypes = aggregate === 'count' ? [vl.type.QUANTITATIVE] : allowedTypes;
         });

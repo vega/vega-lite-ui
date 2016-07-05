@@ -24,14 +24,14 @@ describe('Directive: fieldDefEditor', function() {
 
   beforeEach(inject(function($rootScope, _$compile_) {
     scope = $rootScope.$new();
-    scope.channel = 'x';
+    scope.channelId = 'x';
     scope.encoding = {'x': {}};
 
     $compile = _$compile_;
   }));
 
   it('should show title', function() {
-    element = angular.element('<field-def-editor channel="channel" encoding="encoding" schema="{properties:{}}"></field-def-editor>');
+    element = angular.element('<field-def-editor channel-id="channelId" encoding="encoding" schema="{properties:{}}"></field-def-editor>');
     element = $compile(element)(scope);
     scope.$digest();
     expect(element.find('.shelf-label').text().trim()).to.eql('x');
@@ -39,7 +39,7 @@ describe('Directive: fieldDefEditor', function() {
 
   describe('fieldDrop', function() {
     it('should initially have placeholder', function() {
-      element = angular.element('<field-def-editor channel="channel" encoding="encoding" schema="schema"></field-def-editor>');
+      element = angular.element('<field-def-editor channel-id="channelId" encoding="encoding" schema="schema"></field-def-editor>');
       element = $compile(element)(scope);
       scope.$digest();
       expect(element.find('.placeholder').length).to.eql(1);

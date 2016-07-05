@@ -1,9 +1,12 @@
 'use strict';
 
 angular.module('vlui')
-  .service('Pills', function () {
+  .service('Pills', function (ANY) {
     var Pills = {
       // Functions
+      isAnyChannel: isAnyChannel,
+      getNextAnyChannelId: getNextAnyChannelId,
+
       get: get,
       // Event
       dragStart: dragStart,
@@ -25,6 +28,23 @@ angular.module('vlui')
       /** Listener  */
       listener: null
     };
+
+    /**
+     * Returns whether the given channel id is an "any" channel
+     *
+     * @param {any} channelId
+     */
+    function isAnyChannel(channelId) {
+      return channelId && channelId.indexOf(ANY) === 0; // prefix by ANY
+    }
+
+    function getNextAnyChannelId() {
+      var i = 0;
+      while (Pills.pills[ANY + i]) {
+        i++;
+      }
+      return ANY + i;
+    }
 
     /**
      * Set a fieldDef of a pill of a given channelId
