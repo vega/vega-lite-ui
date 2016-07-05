@@ -238,7 +238,7 @@ angular.module('vlui')
 
           function parseVega() {
             // if no longer a part of the list, cancel!
-            if (scope.destroyed || scope.disabled || (scope.isInList && scope.chart.fieldSetKey && !scope.isInList(scope.chart.fieldSetKey))) {
+            if (scope.destroyed || scope.disabled || (scope.isInList && scope.chart.fieldSetKey && !scope.isInList(scope.chart))) {
               console.log('cancel rendering', shorthand);
               renderQueueNext();
               return;
