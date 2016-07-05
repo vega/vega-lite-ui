@@ -57,7 +57,7 @@ angular.module('vlui')
 
     Dataset.fieldOrder = Dataset.fieldOrderBy.typeThenName;
 
-    Dataset.getSchema = function(data, stats, order) {
+    function getSchema(data, stats, order) {
       // TODO: call cql's schema utility instead
       var types = vg.util.type.inferAll(data),
         schema = _.reduce(types, function(s, type, field) {
@@ -79,7 +79,7 @@ angular.module('vlui')
 
       schema.push(vl.fieldDef.count());
       return schema;
-    };
+    }
 
     // update the schema and stats
     Dataset.onUpdate = [];
@@ -93,7 +93,7 @@ angular.module('vlui')
         updatePromise = $q(function(resolve, reject) {
           // jshint unused:false
           Dataset.type = undefined;
-          Dataset.updateFromData(dataset, dataset.values);
+          updateFromData(dataset, dataset.values);
           resolve();
         });
       } else {
@@ -109,7 +109,7 @@ angular.module('vlui')
             Dataset.type = 'csv';
           }
 
-          Dataset.updateFromData(dataset, data);
+          updateFromData(dataset, data);
         });
       }
 
@@ -125,7 +125,7 @@ angular.module('vlui')
       return updatePromise;
     };
 
-    Dataset.updateFromData = function(dataset, data) {
+    function updateFromData(dataset, data) {
       Dataset.data = data;
 
       // TODO: use cql's new schema utility instead
@@ -146,11 +146,11 @@ angular.module('vlui')
         }
       }
 
-      Dataset.dataschema = Dataset.getSchema(Dataset.data, Dataset.stats);
+      Dataset.dataschema = getSchema(Dataset.data, Dataset.stats);
 
       // TODO: remove and use cql's fieldSchemaIndex instead
       Dataset.dataschema.byName = getNameMap(Dataset.dataschema);
-    };
+    }
 
     Dataset.add = function(dataset) {
       if (!dataset.id) {
