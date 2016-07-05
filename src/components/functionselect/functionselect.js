@@ -12,7 +12,6 @@ angular.module('vlui')
       link: function(scope /*,element, attrs*/) {
         var BIN='bin', COUNT='count', maxbins;
 
-        scope.pills = Pills.pills;
         scope.func = {
           selected: undefined,
           list: [undefined]
