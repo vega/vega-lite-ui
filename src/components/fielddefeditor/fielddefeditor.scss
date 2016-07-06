@@ -18,6 +18,10 @@ $text-color: #212121;
   display: flex;
   height: 22px;
 
+  &.any {
+    background-color: hsla(185,80%,29%,0.4);
+  }
+
   &.disabled {
     opacity: 0.5;
   }
