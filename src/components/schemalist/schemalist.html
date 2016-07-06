@@ -1,6 +1,7 @@
 <div class="schema no-top-margin full-width">
-  <schema-list-item field-def="fieldDef"
+  <schema-list-item
     ng-repeat="fieldDef in Dataset.dataschema | orderBy : Dataset.fieldOrder"
+    field-def="fieldDef"
     >
   </schema-list-item>
 </div>

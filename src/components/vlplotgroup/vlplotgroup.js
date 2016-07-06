@@ -37,7 +37,7 @@ angular.module('vlui')
 
         /* vlplotgroup specific */
 
-        /** Set of fieldDefs for showing field info */
+        /** Set of fieldDefs for showing field info.  For Voyager2, this might be just a subset of fields that are ambiguous. */
         fieldSet: '=',
 
         showBookmark: '@',
