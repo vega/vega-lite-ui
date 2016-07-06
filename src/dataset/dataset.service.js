@@ -77,7 +77,7 @@ angular.module('vlui')
 
       schema = vg.util.stablesort(schema, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.field);
 
-      schema.push(vl.fieldDef.count());
+      schema.push({ field: '*', aggregate: vl.aggregate.AggregateOp.COUNT, type: vl.type.QUANTITATIVE, title: 'Count' });
       return schema;
     }
 
