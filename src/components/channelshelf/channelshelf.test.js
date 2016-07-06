@@ -2,7 +2,7 @@
 
 /* global vl:true, vlSchema:true */
 
-describe('Directive: fieldDefEditor', function() {
+describe('Directive: channelShelf', function() {
 
   // load the directive's module
   beforeEach(module('vlui', function($provide) {
@@ -31,7 +31,7 @@ describe('Directive: fieldDefEditor', function() {
   }));
 
   it('should show title', function() {
-    element = angular.element('<field-def-editor channel-id="channelId" encoding="encoding" schema="{properties:{}}"></field-def-editor>');
+    element = angular.element('<channel-shelf channel-id="channelId" encoding="encoding" schema="{properties:{}}"></channel-shelf>');
     element = $compile(element)(scope);
     scope.$digest();
     expect(element.find('.shelf-label').text().trim()).to.eql('x');
@@ -39,7 +39,7 @@ describe('Directive: fieldDefEditor', function() {
 
   describe('fieldDrop', function() {
     it('should initially have placeholder', function() {
-      element = angular.element('<field-def-editor channel-id="channelId" encoding="encoding" schema="schema"></field-def-editor>');
+      element = angular.element('<channel-shelf channel-id="channelId" encoding="encoding" schema="schema"></channel-shelf>');
       element = $compile(element)(scope);
       scope.$digest();
       expect(element.find('.placeholder').length).to.eql(1);

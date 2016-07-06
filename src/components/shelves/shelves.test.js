@@ -18,7 +18,7 @@ describe('Directive: shelves', function() {
 
   beforeEach(module('vlui', function($provide) {
     // add Directive suffix to mock directives
-    $provide.value('fieldDefEditorDirective', {});
+    $provide.value('channelShelfDirective', {});
     $provide.value('functionSelectDirective', {});
     $provide.factory('VegaliteSpecSchema', function($q) {
       return {

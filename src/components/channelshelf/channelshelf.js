@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('fieldDefEditor', function(ANY, Dataset, Pills, _, Drop, Logger, vl, Schema) {
+  .directive('channelShelf', function(ANY, Dataset, Pills, _, Drop, Logger, vl, Schema) {
     return {
-      templateUrl: 'components/fielddefeditor/fielddefeditor.html',
+      templateUrl: 'components/channelshelf/channelshelf.html',
       restrict: 'E',
       replace: true,
       scope: {

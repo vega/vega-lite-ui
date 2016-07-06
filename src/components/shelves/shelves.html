@@ -4,34 +4,34 @@
 
   <div class="shelf-pane shelf-any-pane full-width" ng-if="supportAny">
     <h3>Flexible</h3>
-    <field-def-editor
+    <channel-shelf
       ng-repeat="channelId in anyChannelIds"
       channel-id="channelId"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
+    </channel-shelf>
   </div>
 
   <div class="shelf-pane shelf-encoding-pane full-width">
     <h3>Positional</h3>
-    <field-def-editor channel-id="'x'"
+    <channel-shelf channel-id="'x'"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
-    <field-def-editor
+    </channel-shelf>
+    <channel-shelf
       channel-id="'y'"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
-    <field-def-editor channel-id="'column'"
+    </channel-shelf>
+    <channel-shelf channel-id="'column'"
       encoding="spec.encoding"
       mark="spec.mark">
     >
-    </field-def-editor>
-    <field-def-editor channel-id="'row'"
+    </channel-shelf>
+    <channel-shelf channel-id="'row'"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
+    </channel-shelf>
   </div>
   <div class="shelf-pane shelf-marks-pane full-width">
     <div class="right">
@@ -41,26 +41,26 @@
     </div>
     <h3>Marks</h3>
 
-    <field-def-editor channel-id="'size'"
+    <channel-shelf channel-id="'size'"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
-    <field-def-editor channel-id="'color'"
+    </channel-shelf>
+    <channel-shelf channel-id="'color'"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
-    <field-def-editor channel-id="'shape'"
+    </channel-shelf>
+    <channel-shelf channel-id="'shape'"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
-    <field-def-editor channel-id="'detail'"
+    </channel-shelf>
+    <channel-shelf channel-id="'detail'"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
-    <field-def-editor channel-id="'text'"
+    </channel-shelf>
+    <channel-shelf channel-id="'text'"
       encoding="spec.encoding"
       mark="spec.mark">
-    </field-def-editor>
+    </channel-shelf>
   </div>
 
   <!-- TODO support filter -->
