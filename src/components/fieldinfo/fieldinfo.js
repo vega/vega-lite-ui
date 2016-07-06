@@ -29,55 +29,14 @@ angular.module('vlui')
         scope.vlType = vl.type;
         scope.isEnumSpec = cql.enumSpec.isEnumSpec;
 
-        var TYPE_NAMES = {
-          nominal: 'text',
-          ordinal: 'text-ordinal',
-          quantitative: 'number',
-          temporal: 'time',
-          geographic: 'geo'
-        };
+        scope.typeName = null; // created by a watcher later
+        scope.icon = null; // created by a watcher later
 
-        function getTypeNames(type) {
-          if (cql.enumSpec.isEnumSpec(type)) { // is enumSpec
-            var typeName = null;
-            for (var i = 0; i < type.values.length; i++) {
-              var _type = type.values[i];
-              if (typeName === null) {
-                typeName = TYPE_NAMES[_type];
-              } else {
-                if (typeName !== TYPE_NAMES[_type]) {
-                  return ANY; // If there are many conflicting types
-                }
-              }
-            }
-            return typeName;
-          }
-          return TYPE_NAMES[type];
-        }
-
-        scope.getTypeNames = getTypeNames;
         scope.stats = Dataset.stats[scope.fieldDef.field];
         scope.containsType = function(types, type) {
           return _.includes(types, type);
         };
 
-        switch(scope.fieldDef.type){
-          case vl.type.ORDINAL:
-            scope.icon = 'fa-font';
-            break;
-          case vl.type.NOMINAL:
-            scope.icon = 'fa-font';
-            break;
-          case vl.type.QUANTITATIVE:
-            scope.icon = 'icon-hash';
-            break;
-          case vl.type.TEMPORAL:
-            scope.icon = 'fa-calendar';
-            break;
-          default:
-            scope.icon = 'fa-asterisk';
-            break;
-        }
 
         scope.clicked = function($event){
           if(scope.action && $event.target !== element.find('.fa-caret-down')[0] &&
@@ -106,6 +65,45 @@ angular.module('vlui')
             position: 'bottom left',
             openOn: 'click'
           });
+        });
+
+        var TYPE_NAMES = {
+          nominal: 'text',
+          ordinal: 'text-ordinal',
+          quantitative: 'number',
+          temporal: 'time',
+          geographic: 'geo'
+        };
+
+        var TYPE_ICONS = {
+          nominal: 'fa-font',
+          ordinal: 'fa-font',
+          quantitative: 'icon-hash',
+          temporal: 'fa-calendar',
+        };
+        TYPE_ICONS[ANY] = 'fa-asterisk'; // separate line because we might change what's the string for ANY
+
+        function getTypeDictValue(type, dict) {
+          if (cql.enumSpec.isEnumSpec(type)) { // is enumSpec
+            var val = null;
+            for (var i = 0; i < type.values.length; i++) {
+              var _type = type.values[i];
+              if (val === null) {
+                val = dict[_type];
+              } else {
+                if (val !== dict[_type]) {
+                  return ANY; // If there are many conflicting types
+                }
+              }
+            }
+            return val;
+          }
+          return dict[type];
+        }
+
+        scope.$watch('fieldDef', function(fieldDef) {
+          scope.icon = getTypeDictValue(fieldDef.type, TYPE_ICONS);
+          scope.typeName = getTypeDictValue(fieldDef.type, TYPE_NAMES);
         });
 
         scope.$on('$destroy', function() {
