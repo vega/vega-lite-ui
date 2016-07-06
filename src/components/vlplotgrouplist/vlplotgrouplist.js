@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('vlPlotGroupList', function (vl, cql, jQuery, consts, _, Logger, Modals) {
+  .directive('vlPlotGroupList', function (vl, cql, jQuery, consts, _, Logger) {
     return {
       templateUrl: 'components/vlplotgrouplist/vlplotgrouplist.html',
       restrict: 'E',
@@ -46,9 +46,7 @@ angular.module('vlui')
         function increaseLimit() {
           // FIXME
           Logger.logInteraction(Logger.actions.LOAD_MORE, scope.limit);
-        };
-
-
+        }
 
         /** return if the plot is still in the view, so it might be omitted from the render queue if necessary. */
         function isInList(/*chart*/) {
