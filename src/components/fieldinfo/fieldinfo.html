@@ -21,7 +21,7 @@
       </span><!--
       --><span class="field-name"
         ng-class="{hasfunc: func(fieldDef), any: fieldDef._any}"
-        >{{ fieldDef.field | underscore2space }}</span>
+        >{{ ((useTitle ? fieldDef.title : null) || fieldDef.field) | underscore2space }}</span>
     </span>
 
     <span ng-if="fieldDef.aggregate==='count'"
