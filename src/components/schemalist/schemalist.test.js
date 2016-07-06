@@ -14,7 +14,7 @@ describe('Directive: schemaList', function() {
 
   beforeEach(module('vlui', function($provide) {
     var mockDataset = {
-      dataschema: ['foo', 'bar', 'baz'],
+      dataschema: [{field: 'foo'}, {field: 'bar'}, {field: 'baz'}],
       stats: {
         foo: {},
         bar: {},
@@ -30,10 +30,10 @@ describe('Directive: schemaList', function() {
   }));
 
   it('should have field', inject(function($compile) {
-    element = angular.element('<schema-list></schema-list>');
+    element = angular.element('<schema-list field-defs="[{field: \'foo\'}, {field: \'bar\'}, {field: \'baz\'}]"></schema-list>');
     element = $compile(element)(scope);
     scope.$digest();
 
-    expect(element.find('.field-info').length).to.eql(3);
+    expect(element.find('schema-list-item').length).to.eql(3);
   }));
 });
