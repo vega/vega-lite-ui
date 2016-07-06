@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('fieldInfo', function (Dataset, Drop, vl, consts, _) {
+  .directive('fieldInfo', function (ANY, Dataset, Drop, vl, cql, consts, _) {
     return {
       templateUrl: 'components/fieldinfo/fieldinfo.html',
       restrict: 'E',
@@ -27,7 +27,35 @@ angular.module('vlui')
       link: function(scope, element) {
         var funcsPopup;
         scope.vlType = vl.type;
-        scope.typeNames = consts.typeNames;
+        scope.isEnumSpec = cql.enumSpec.isEnumSpec;
+
+        var TYPE_NAMES = {
+          nominal: 'text',
+          ordinal: 'text-ordinal',
+          quantitative: 'number',
+          temporal: 'time',
+          geographic: 'geo'
+        };
+
+        function getTypeNames(type) {
+          if (cql.enumSpec.isEnumSpec(type)) { // is enumSpec
+            var typeName = null;
+            for (var i = 0; i < type.values.length; i++) {
+              var _type = type.values[i];
+              if (typeName === null) {
+                typeName = TYPE_NAMES[_type];
+              } else {
+                if (typeName !== TYPE_NAMES[_type]) {
+                  return ANY; // If there are many conflicting types
+                }
+              }
+            }
+            return typeName;
+          }
+          return TYPE_NAMES[type];
+        }
+
+        scope.getTypeNames = getTypeNames;
         scope.stats = Dataset.stats[scope.fieldDef.field];
         scope.containsType = function(types, type) {
           return _.includes(types, type);
@@ -45,6 +73,9 @@ angular.module('vlui')
             break;
           case vl.type.TEMPORAL:
             scope.icon = 'fa-calendar';
+            break;
+          default:
+            scope.icon = 'fa-asterisk';
             break;
         }
 

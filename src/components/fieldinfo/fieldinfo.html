@@ -7,7 +7,7 @@
       ></i>
       <span class="type fa {{icon}}"
         ng-show="showType"
-        title="{{typeNames[fieldDef.type]}}">
+        title="{{getTypeNames(fieldDef.type)}}">
       </span>
     </span>
 
@@ -18,7 +18,7 @@
         ng-class="{any: fieldDef._any}"
         >
         {{ func(fieldDef) }}
-      </span><!--
+      </span><!--prevent unnecessary space
       --><span class="field-name"
         ng-class="{hasfunc: func(fieldDef), any: fieldDef._any}"
         >{{ ((useTitle ? fieldDef.title : null) || fieldDef.field) | underscore2space }}</span>
@@ -35,7 +35,7 @@
       </a>
     </span>
 
-   <span class="no-shrink info" ng-show="showInfo">
+   <span class="no-shrink info" ng-show="showInfo && !isEnumSpec(fieldDef.field)">
       <i ng-if="fieldDef.aggregate !== 'count' && containsType([vlType.NOMINAL, vlType.ORDINAL], fieldDef.type)"
         class="fa fa-info-circle"
         tooltips tooltip-size="small"
