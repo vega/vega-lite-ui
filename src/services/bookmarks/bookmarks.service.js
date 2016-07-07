@@ -10,7 +10,7 @@
 angular.module('vlui')
   .service('Bookmarks', function(_, vl, localStorageService, Logger, Dataset) {
     var Bookmarks = function() {
-      this.dict = {};
+      this.dict = [];
       this.length = 0;
       this.isSupported = localStorageService.isSupported;
     };
@@ -18,7 +18,7 @@ angular.module('vlui')
     var proto = Bookmarks.prototype;
 
     proto.updateLength = function() {
-      this.length = Object.keys(this.dict).length;
+      this.length = this.dict.length;
     };
 
     proto.save = function() {
@@ -26,12 +26,12 @@ angular.module('vlui')
     };
 
     proto.load = function() {
-      this.dict = localStorageService.get('bookmarks') || {};
+      this.dict = localStorageService.get('bookmarks') || [];
       this.updateLength();
     };
 
     proto.clear = function() {
-      this.dict = {};
+      this.dict.splice(0, this.dict.length);
       this.updateLength();
       this.save();
 
@@ -39,9 +39,10 @@ angular.module('vlui')
     };
 
     proto.toggle = function(chart) {
+
       var shorthand = chart.shorthand;
 
-      if (this.dict[shorthand]) {
+      if (this.isBookmarked(shorthand)) {
         this.remove(chart);
       } else {
         this.add(chart);
@@ -57,7 +58,8 @@ angular.module('vlui')
 
       chart.stats = Dataset.stats;
 
-      this.dict[shorthand] = _.cloneDeep(chart);
+      this.dict.push({shorthand: shorthand, chart: _.cloneDeep(chart)});
+
       this.updateLength();
       this.save();
 
@@ -69,7 +71,10 @@ angular.module('vlui')
 
       console.log('removing', chart.vlSpec, shorthand);
 
-      delete this.dict[shorthand];
+      var index = this.dict.findIndex(function(bookmark) { return bookmark.shorthand === shorthand; });
+      if (index >= 0) {
+        this.dict.splice(index, 1);
+      }
       this.updateLength();
       this.save();
 
@@ -77,7 +82,7 @@ angular.module('vlui')
     };
 
     proto.isBookmarked = function(shorthand) {
-      return shorthand in this.dict;
+      return this.dict.some(function(bookmark) { return bookmark.shorthand === shorthand; });
     };
 
     return new Bookmarks();
