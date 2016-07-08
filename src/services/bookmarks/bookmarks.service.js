@@ -10,7 +10,7 @@
 angular.module('vlui')
   .service('Bookmarks', function(_, vl, localStorageService, Logger, Dataset) {
     var Bookmarks = function() {
-      this.dict = [];
+      this.list = [];
       this.length = 0;
       this.isSupported = localStorageService.isSupported;
 
@@ -20,34 +20,34 @@ angular.module('vlui')
     var proto = Bookmarks.prototype;
 
     proto.updateLength = function() {
-      this.length = this.dict.length;
+      this.length = this.list.length;
     };
 
     proto.save = function() {
-      localStorageService.set('bookmarks', this.dict);
+      localStorageService.set('bookmarks', this.list);
     };
 
     proto.load = function() {
-      this.dict = localStorageService.get('bookmarks') || [];
+      this.list = localStorageService.get('bookmarks') || [];
       this.updateLength();
     };
 
     /**
      * Clear deprecated bookmarks in localStorage. 
-     * We switched from this.dict = {} to this.dict = [],
-     * this.dict = {} may be still in localStorage and cause problems on this.load() 
+     * We switched from this.list = {} to this.list = [],
+     * this.list = {} may be still in localStorage and cause problems on this.load() 
      * This function is mostly beneficial to developers working on this repo.
      */
     proto.clearDeprecatedBookmarks = function() {
       if ( localStorageService.keys().includes('bookmarks') &&
         localStorageService.get('bookmarks').constructor !== Array ) {
-          localStorageService.remove('bookmarks'); // remove deprecated bookmarks where this.dict === {}
-          this.save(); // save new bookmarks where this.dict === []
+          localStorageService.remove('bookmarks'); // remove deprecated bookmarks where this.list === {}
+          this.save(); // save new bookmarks where this.list === []
       }
     }
-    
+
     proto.clear = function() {
-      this.dict.splice(0, this.dict.length);
+      this.list.splice(0, this.list.length);
       this.updateLength();
       this.save();
 
@@ -74,7 +74,7 @@ angular.module('vlui')
 
       chart.stats = Dataset.stats;
 
-      this.dict.push({shorthand: shorthand, chart: _.cloneDeep(chart)});
+      this.list.push({shorthand: shorthand, chart: _.cloneDeep(chart)});
 
       this.updateLength();
       this.save();
@@ -87,9 +87,9 @@ angular.module('vlui')
 
       console.log('removing', chart.vlSpec, shorthand);
 
-      var index = this.dict.findIndex(function(bookmark) { return bookmark.shorthand === shorthand; });
+      var index = this.list.findIndex(function(bookmark) { return bookmark.shorthand === shorthand; });
       if (index >= 0) {
-        this.dict.splice(index, 1);
+        this.list.splice(index, 1);
       }
       this.updateLength();
       this.save();
@@ -98,7 +98,7 @@ angular.module('vlui')
     };
 
     proto.isBookmarked = function(shorthand) {
-      return this.dict.some(function(bookmark) { return bookmark.shorthand === shorthand; });
+      return this.list.some(function(bookmark) { return bookmark.shorthand === shorthand; });
     };
 
     return new Bookmarks();

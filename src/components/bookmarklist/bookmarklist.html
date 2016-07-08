@@ -7,9 +7,9 @@
   <div class="flex-grow-1 scroll-y">
     <div ng-if="Bookmarks.length > 0"
         class="hflex flex-wrap"
-        sv-root sv-part="Bookmarks.dict">
+        sv-root sv-part="Bookmarks.list">
       <vl-plot-group
-        ng-repeat="bookmark in Bookmarks.dict | orderObjectBy : 'timeAdded' : false"
+        ng-repeat="bookmark in Bookmarks.list | orderObjectBy : 'timeAdded' : false"
         class="wrapped-vl-plot-group card"
 
         chart="bookmark.chart"
