@@ -21,6 +21,7 @@ angular.module('vlui')
 
           scope.pill = {
             field: fieldDef.field,
+            title: fieldDef.title,
             type: fieldDef.type,
             aggregate: fieldDef.aggregate
           };
