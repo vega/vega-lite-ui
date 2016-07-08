@@ -73,20 +73,16 @@
       </div>
     </div>
     <div class="popup-menu shelf-functions shelf-functions-{{channelId}}">
-      <div class="mb5">
+      <function-select field-def="encoding[channelId]" channelId="channelId"></function-select>
+
+      <div class="mb5" ng-if="allowedTypes.length>1">
         <h4>Types</h4>
-        <span ng-if="allowedTypes.length<=1">
-          {{encoding[channelId].type}}
-        </span>
         <label class="type-label"
-          ng-if="allowedTypes.length>1"
           ng-repeat="type in allowedTypes">
           <input type="radio" ng-value="type" ng-model="encoding[channelId].type">
           {{type}}
         </label>
       </div>
-
-      <function-select field-def="encoding[channelId]" channel-id="channelId"></function-select>
       <!-- <a class="remove-field" ng-click="removeField()">Remove Field</a> -->
     </div>
   </div>
