@@ -102,7 +102,7 @@ angular.module('vlui')
   }
 
     proto.isBookmarked = function(shorthand) {
-      return this.list.some(function(bookmark) { return bookmark.shorthand === shorthand; });
+      return _.some(this.list, function(bookmark) { return bookmark.shorthand === shorthand; });
     };
 
     return new Bookmarks();
