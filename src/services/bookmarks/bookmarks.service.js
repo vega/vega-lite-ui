@@ -97,6 +97,10 @@ angular.module('vlui')
       Logger.logInteraction(Logger.actions.BOOKMARK_REMOVE, shorthand);
     };
 
+    proto.reorder = function() {
+      this.save();
+  }
+
     proto.isBookmarked = function(shorthand) {
       return this.list.some(function(bookmark) { return bookmark.shorthand === shorthand; });
     };
