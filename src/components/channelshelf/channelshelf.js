@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('channelShelf', function(ANY, Dataset, Pills, _, Drop, Logger, vl, Schema) {
+  .directive('channelShelf', function(ANY, Dataset, Pills, _, Drop, Logger, vl, cql, Schema) {
     return {
       templateUrl: 'components/channelshelf/channelshelf.html',
       restrict: 'E',
@@ -70,7 +70,7 @@ angular.module('vlui')
 
           // validate type
           var types = Schema.schema.definitions.Type.enum;
-          if (!_.includes(types, pill.type)) {
+          if (!_.includes(types, pill.type) && !cql.enumSpec.isEnumSpec(pill.type)) {
             // if existing type is not supported
             pill.type = types[0];
           }
