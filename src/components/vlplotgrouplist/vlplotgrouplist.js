@@ -23,7 +23,7 @@ angular.module('vlui')
 
         element.bind('scroll', function(){
            if(jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight){
-            if (scope.limit < scope.items.length) {
+            if (scope.limit < scope.modelGroup.items.length) {
               scope.increaseLimit();
             }
            }
