@@ -58,7 +58,6 @@ angular.module('vlui')
       link: function postLink(scope) {
         scope.Bookmarks = Bookmarks;
         scope.consts = consts;
-        scope.Dataset = Dataset;
 
         // bookmark alert
         scope.showBookmarkAlert = false;
@@ -130,14 +129,11 @@ angular.module('vlui')
           spec.config.filterNull = spec.config.filterNull === true ? undefined : true;
         };
 
-        scope.toggleFilterNull.support = function(spec, stats) {
+        scope.toggleFilterNull.support = function(spec) {
           var fieldDefs = vl.spec.fieldDefs(spec);
           for (var i in fieldDefs) {
             var fieldDef = fieldDefs[i];
-            if (_.includes([vl.type.ORDINAL, vl.type.NOMINAL], fieldDef.type) &&
-                (fieldDef.name in stats) &&
-                stats[fieldDef.name].missing > 0
-              ) {
+            if (_.includes([vl.type.ORDINAL, vl.type.NOMINAL], fieldDef.type) && Dataset.schema.stats(fieldDef).missing > 0) {
               return true;
             }
           }
@@ -229,12 +225,12 @@ angular.module('vlui')
                   {ordinal: 'y', quantitative: 'x'};
         };
 
-        toggleSort.support = function(spec, stats) {
+        toggleSort.support = function(spec) {
           var encoding = spec.encoding;
 
           if (vl.encoding.has(encoding, 'row') || vl.encoding.has(encoding, 'column') ||
             !vl.encoding.has(encoding, 'x') || !vl.encoding.has(encoding, 'y') ||
-            !vl.spec.alwaysNoOcclusion(spec, stats)) {
+            !vl.spec.alwaysNoOcclusion(spec)) { // FIXME replace this with CompassQL method
             return false;
           }
 
@@ -249,7 +245,7 @@ angular.module('vlui')
         };
 
         scope.toggleSortClass = function(vlSpec) {
-          if (!vlSpec || !toggleSort.support(vlSpec, Dataset.stats)) {
+          if (!vlSpec || !toggleSort.support(vlSpec)) {
             return 'invisible';
           }
 
