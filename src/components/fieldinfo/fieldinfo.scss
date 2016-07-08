@@ -132,6 +132,10 @@ $any-hover-color: #666;
   border: 1px solid hsla(0,0%,0%,0.15);
   background-color: hsla(0,0%,93%,0.8);
   font-weight: 500;
+
+  &.any {
+    background-color: #C5EAEB
+  }
 }
 
 .field-info.pill {

@@ -25,8 +25,11 @@ angular.module('vlui')
 
         scope.Dataset = Dataset;
         scope.schema = Schema.getChannelSchema(scope.channelId);
-        scope.isAnyChannel = false;
         scope.pills = Pills.pills;
+
+        // These will get updated in the watcher
+        scope.isAnyChannel = false;
+        scope.isAnyField = false;
 
         scope.supportMark = function(channelId, mark) {
           if (Pills.isAnyChannel(channelId)) {
@@ -88,6 +91,7 @@ angular.module('vlui')
         // If some external action changes the fieldDef, we also need to update the pill
         scope.$watch('encoding[channelId]', function(fieldDef) {
           Pills.set(scope.channelId, fieldDef ? _.cloneDeep(fieldDef) : {});
+          scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
         }, true);
 
         scope.$watchGroup(['allowedCasting[Dataset.schema.type(encoding[channelId].field)]', 'encoding[channel].aggregate'], function(arr){
