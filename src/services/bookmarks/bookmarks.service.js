@@ -13,8 +13,6 @@ angular.module('vlui')
       this.list = [];
       this.length = 0;
       this.isSupported = localStorageService.isSupported;
-
-      this.clearDeprecatedBookmarks();
     };
 
     var proto = Bookmarks.prototype;
@@ -31,20 +29,6 @@ angular.module('vlui')
       this.list = localStorageService.get('bookmarks') || [];
       this.updateLength();
     };
-
-    /**
-     * Clear deprecated bookmarks in localStorage. 
-     * We switched from this.list = {} to this.list = [],
-     * this.list = {} may be still in localStorage and cause problems on this.load() 
-     * This function is mostly beneficial to developers working on this repo.
-     */
-    proto.clearDeprecatedBookmarks = function() {
-      if ( localStorageService.keys().includes('bookmarks') &&
-        localStorageService.get('bookmarks').constructor !== Array ) {
-          localStorageService.remove('bookmarks'); // remove deprecated bookmarks where this.list === {}
-          this.save(); // save new bookmarks where this.list === []
-      }
-    }
 
     proto.clear = function() {
       this.list.splice(0, this.list.length);
@@ -99,7 +83,7 @@ angular.module('vlui')
 
     proto.reorder = function() {
       this.save();
-  }
+    }
 
     proto.isBookmarked = function(shorthand) {
       return _.some(this.list, function(bookmark) { return bookmark.shorthand === shorthand; });
