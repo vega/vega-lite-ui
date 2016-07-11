@@ -85,6 +85,11 @@ angular.module('vlui')
       this.save();
     }
 
+    proto.getAnnotation = function(shorthand) {
+      var savedBookmark = _.find(this.list, function(bookmark) { return bookmark.shorthand === shorthand; });
+      return savedBookmark ? savedBookmark.chart.annotation : undefined;
+    }
+
     proto.isBookmarked = function(shorthand) {
       return _.some(this.list, function(bookmark) { return bookmark.shorthand === shorthand; });
     };
