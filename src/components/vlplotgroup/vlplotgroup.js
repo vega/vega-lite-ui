@@ -260,14 +260,6 @@ angular.module('vlui')
         scope.$on('$destroy', function() {
           scope.chart = null;
         });
-
-        scope.saveAnnotation = function() {
-          Bookmarks.save();
-        }
-
-        scope.loadAnnotation = function(chartShorthand) {
-          scope.chart.annotation = Bookmarks.getAnnotation(chartShorthand) || 'notes';
-        }
       }
     };
   });
