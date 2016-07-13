@@ -12,7 +12,7 @@
 // TODO consider if this can just be moved to .vis-list
 .vl-plot-group.wrapped-vl-plot-group {
   max-width: 520px;
-  max-height: 310px;
+  max-height: 390px;
   flex-grow: 1;
   padding-right: 11px;
   padding-bottom: 11px;
@@ -25,7 +25,7 @@
 .vl-plot-group.row-vl-plot-group {
   max-width: 100%;
 
-  max-height: 310px;
+  max-height: 390px;
 
   &.selected {
     border: 3px solid #aaa;
@@ -75,8 +75,10 @@
   margin-bottom: 5px;
   display: flex;
   .toolbox {
+    position: relative;
     flex-grow: 0;
     flex-shrink: 0;
+    text-align: right;
   }
   .toolbox .command {
     text-transform: uppercase;
@@ -111,4 +113,33 @@
 
 .dev-tool {
   width: 150px;
+}
+
+.vl-plot-group .annotation {
+  min-height: 60px;
+  resize: none;
+  border-color: lightgray;
+}
+
+.bookmark-alert {
+  position: absolute;
+  right: 0;
+  top: 20px;
+  color: white;
+  background-color: #38425D;
+  padding: 8px;
+  border-radius: 3px;
+  text-align: left;
+  z-index: 1;
+  min-width: 150px;
+}
+.bookmark-alert a {
+  color: white;
+  margin-right: 8px;
+}
+.bookmark-alert a:hover {
+  color: lightgray;
+}
+.bookmark-alert a i {
+  margin-right: 4px;
 }

@@ -10,42 +10,39 @@
 angular.module('vlui')
   .service('Bookmarks', function(_, vl, localStorageService, Logger, Dataset) {
     var Bookmarks = function() {
+      this.list = [];
       this.dict = {};
-      this.length = 0;
       this.isSupported = localStorageService.isSupported;
     };
 
     var proto = Bookmarks.prototype;
 
-    proto.updateLength = function() {
-      this.length = Object.keys(this.dict).length;
+    proto.save = function() {
+      localStorageService.set('bookmarkList', this.list);
     };
 
-    proto.save = function() {
-      localStorageService.set('bookmarks', this.dict);
-    };
+    proto.saveAnnotations = function(shorthand) {
+      _.find(this.list, function(bookmark) { return bookmark.shorthand === shorthand; })
+        .chart.annotation = this.dict[shorthand].annotation;
+      this.save();
+    }
 
     proto.load = function() {
-      this.dict = localStorageService.get('bookmarks') || {};
-      this.updateLength();
+      this.list = localStorageService.get('bookmarkList') || [];
+
+      // populate this.dict
+      var dictionary = this.dict;
+      _.forEach(this.list, function(bookmark) {
+        dictionary[bookmark.shorthand] = _.cloneDeep(bookmark.chart);
+      });
     };
 
     proto.clear = function() {
+      this.list.splice(0, this.list.length);
       this.dict = {};
-      this.updateLength();
       this.save();
 
       Logger.logInteraction(Logger.actions.BOOKMARK_CLEAR);
-    };
-
-    proto.toggle = function(chart) {
-      var shorthand = chart.shorthand;
-
-      if (this.dict[shorthand]) {
-        this.remove(chart);
-      } else {
-        this.add(chart);
-      }
     };
 
     proto.add = function(chart) {
@@ -57,8 +54,10 @@ angular.module('vlui')
 
       chart.stats = Dataset.stats;
 
-      this.dict[shorthand] = _.cloneDeep(chart);
-      this.updateLength();
+      this.dict[chart.shorthand] = _.cloneDeep(chart);
+
+      this.list.push({shorthand: shorthand, chart: _.cloneDeep(chart)});
+
       this.save();
 
       Logger.logInteraction(Logger.actions.BOOKMARK_ADD, shorthand);
@@ -69,15 +68,26 @@ angular.module('vlui')
 
       console.log('removing', chart.vlSpec, shorthand);
 
-      delete this.dict[shorthand];
-      this.updateLength();
+      // remove bookmark from this.list
+      var index = this.list.findIndex(function(bookmark) { return bookmark.shorthand === shorthand; });
+      if (index >= 0) {
+        this.list.splice(index, 1);
+      }
+
+      // remove bookmark from this.dict
+      delete this.dict[chart.shorthand];
+
       this.save();
 
       Logger.logInteraction(Logger.actions.BOOKMARK_REMOVE, shorthand);
     };
 
+    proto.reorder = function() {
+      this.save();
+    }
+
     proto.isBookmarked = function(shorthand) {
-      return shorthand in this.dict;
+      return this.dict.hasOwnProperty(shorthand);
     };
 
     return new Bookmarks();
