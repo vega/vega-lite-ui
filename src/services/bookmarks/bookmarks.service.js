@@ -25,7 +25,7 @@ angular.module('vlui')
       _.find(this.list, function(bookmark) { return bookmark.shorthand === shorthand; })
         .chart.annotation = this.dict[shorthand].annotation;
       this.save();
-    }
+    };
 
     // export all bookmarks and annotations
     proto.export = function() {
@@ -37,14 +37,14 @@ angular.module('vlui')
         var spec = bookmark.chart.vlSpec;
         spec.description = dictionary[bookmark.shorthand].annotation;
         exportSpecs.push(spec);
-      })
-      
+      });
+
       // write export data in a new tab
       var exportWindow = window.open();
       exportWindow.document.open();
       exportWindow.document.write('<html><body><pre>' + JSON.stringify(exportSpecs, null, 2) + '</pre></body></html>');
       exportWindow.document.close();
-    }
+    };
 
     proto.load = function() {
       this.list = localStorageService.get('bookmarkList') || [];
@@ -103,7 +103,7 @@ angular.module('vlui')
 
     proto.reorder = function() {
       this.save();
-    }
+    };
 
     proto.isBookmarked = function(shorthand) {
       return this.dict.hasOwnProperty(shorthand);

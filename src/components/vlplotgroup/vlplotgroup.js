@@ -69,14 +69,16 @@ angular.module('vlui')
           else {
             Bookmarks.add(chart);
           }
-        }
+        };
+
         scope.removeBookmark = function(chart) {
           Bookmarks.remove(chart);
           scope.showBookmarkAlert = false;
-        }
+        };
+
         scope.keepBookmark = function() {
           scope.showBookmarkAlert = false;
-        }
+        };
 
         // Defer rendering the debug Drop popup until it is requested
         scope.renderPopup = false;
