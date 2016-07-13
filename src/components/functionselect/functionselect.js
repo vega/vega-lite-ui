@@ -6,7 +6,7 @@ angular.module('vlui')
       templateUrl: 'components/functionselect/functionselect.html',
       restrict: 'E',
       scope: {
-        channel: '=',
+        channelId: '=',
         fieldDef: '='
       },
       link: function(scope /*,element, attrs*/) {
@@ -44,7 +44,7 @@ angular.module('vlui')
         // FIXME func.selected logic should be all moved to selectChanged
         // when the function select is updated, propagates change the parent
         scope.$watch('func.selected', function(selectedFunc) {
-          var oldPill = Pills.get(scope.channel),
+          var oldPill = Pills.get(scope.channelId),
             pill = _.clone(oldPill),
             type = pill ? pill.type : '';
 
@@ -59,7 +59,7 @@ angular.module('vlui')
           pill.timeUnit = getFns(type).indexOf(selectedFunc) !== -1 ? selectedFunc : undefined;
 
           if(!_.isEqual(oldPill, pill)){
-            Pills.set(scope.channel, pill, true /* propagate change */);
+            Pills.set(scope.channelId, pill, true /* propagate change */);
           }
         });
 
@@ -76,7 +76,7 @@ angular.module('vlui')
             maxbins = pill.bin.maxbins;
           }
 
-          var isOrdinalShelf = ['row','column','shape'].indexOf(scope.channel) !== -1,
+          var isOrdinalShelf = ['row','column','shape'].indexOf(scope.channelId) !== -1,
             isQ = type === vl.type.QUANTITATIVE,
             isT = type === vl.type.TEMPORAL;
 
