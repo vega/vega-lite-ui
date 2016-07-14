@@ -130,11 +130,12 @@ angular.module('vlui')
         scope.log.toggle = function(spec, channel) {
           if (!scope.log.support(spec, channel)) { return; }
 
-          var fieldDef = spec.encoding[channel],
+          var fieldDef = Pills.get(channel),
             scale = fieldDef.scale = fieldDef.scale || {};
 
           scale.type = scale.type === 'log' ? 'linear' : 'log';
           Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand);
+          Pills.set(channel, fieldDef, true);
         };
         scope.log.active = function(spec, channel) {
           if (!scope.log.support(spec, channel)) { return; }
