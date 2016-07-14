@@ -14,8 +14,10 @@ angular.module('vlui')
       replace: true,
       scope: {
         fieldDef: '=',
+        filterAction: '&',
         showAdd: '=',
         showCaret: '=',
+        showFilter: '=',
         showInfo: '=',
         showRemove: '=',
         showType: '=',

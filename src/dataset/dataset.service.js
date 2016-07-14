@@ -104,6 +104,15 @@ angular.module('vlui')
       return fieldDefs;
     }
 
+    // TODO: remove
+    Dataset.domain = function(field) {
+      var stats = Dataset.schema.stats({field: field});
+      return util.keys(stats.unique)
+        .map(function(x) {
+          if (+x === +x) { return +x; }
+          return x;
+        }).sort();
+    };
 
     function updateFromData(dataset, data) {
       Dataset.data = data;

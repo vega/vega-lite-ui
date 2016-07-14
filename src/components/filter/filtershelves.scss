@@ -1,0 +1,24 @@
+.shelf.filter-shelf {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: 150px;
+
+  .field-drop {
+    flex-shrink: 0;
+  }
+}
+
+.filter-box {
+  padding: 0 4px 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.categorical-filter-box .actions {
+  margin-bottom: 4px;
+}
+
+.categorical-filter-box .values {
+  overflow-y: scroll;
+}
