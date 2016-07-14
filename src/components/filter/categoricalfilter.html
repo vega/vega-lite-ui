@@ -1,0 +1,17 @@
+<div class="categorical-filter-box filter-box">
+  <div class="actions">
+    <div class="right">
+      <a ng-click="selectAll()">All</a>
+      <a ng-click="selectNone()">None</a>
+    </div>
+    Selected {{filter.in.length}}/{{values.length}}
+  </div>
+  <div class="values">
+    <div ng-repeat="val in values">
+      <label>
+        <input type="checkbox" ng-model="include[val]">
+        {{val}}
+      </label>
+    </div>
+  </div>
+</div>

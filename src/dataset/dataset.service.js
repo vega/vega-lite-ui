@@ -88,6 +88,31 @@ angular.module('vlui')
       return updatePromise;
     };
 
+    function getFieldDefs(schema, order) {
+      var fieldDefs = schema.fields().map(function(field) {
+        return {
+          field: field,
+          type: schema.type(field),
+          primitiveType: schema.primitiveType(field)
+        };
+      });
+
+      fieldDefs = util.stablesort(fieldDefs, order || Dataset.fieldOrderBy.typeThenName, Dataset.fieldOrderBy.field);
+
+      fieldDefs.push({ field: '*', aggregate: vl.aggregate.AggregateOp.COUNT, type: vl.type.QUANTITATIVE, title: 'Count' });
+      return fieldDefs;
+    }
+
+    // TODO: remove
+    Dataset.domain = function(field) {
+      var stats = Dataset.schema.stats({field: field});
+      return util.keys(stats.unique)
+        .map(function(x) {
+          if (+x === +x) { return +x; }
+          return x;
+        }).sort();
+    };
+
     function updateFromData(dataset, data) {
       Dataset.data = data;
       Dataset.currentDataset = dataset;

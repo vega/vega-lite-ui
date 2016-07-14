@@ -14,13 +14,14 @@ angular.module('vlui')
       replace: true,
       scope: {
         fieldDef: '<',
+        filterAction: '&',
         showAdd: '<',
         showCaret: '<',
+        showFilter: '=',
         showRemove: '<',
         showType: '<',
         showEnumSpecFn: '<',
         popupContent: '<',
-
         action: '&',
         addAction: '&',
         removeAction: '&',
