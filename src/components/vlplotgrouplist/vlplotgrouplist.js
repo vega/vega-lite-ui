@@ -34,8 +34,8 @@ angular.module('vlui')
          * @param {SpecQueryModelGroup | SpecQueryModel} item
          */
         function getChart(item) {
-          var specM = cql.modelgroup.isSpecQueryModelGroup(item) ?
-            cql.modelgroup.getTopItem(item) :
+          var specM = cql.modelGroup.isSpecQueryModelGroup(item) ?
+            cql.modelGroup.getTopItem(item) :
             item;
           return {
             fieldSet: specM.getEncodings(),
