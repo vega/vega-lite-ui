@@ -8,7 +8,8 @@ angular.module('vlui')
       replace: true,
       scope: {
         /** An instance of specQueryModelGroup */
-        modelGroup: '='
+        modelGroup: '=',
+        enablePillsPreview: '='
       },
       link: function postLink(scope , element /*, attrs*/) {
         scope.consts = consts;

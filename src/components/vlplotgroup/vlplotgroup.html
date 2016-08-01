@@ -1,7 +1,8 @@
 <div class="vl-plot-group vflex">
   <div ng-show="showExpand || fieldSet || showTranspose || showBookmark && Bookmarks.isSupported || showToggle"
-    class="vl-plot-group-header no-shrink">
-    <div class="field-set-info" >
+      class="vl-plot-group-header no-shrink"
+    >
+    <div class="field-set-info">
       <field-info ng-repeat="fieldDef in fieldSet"
         ng-if="fieldSet && fieldDef.field"
         field-def='fieldDef'
@@ -13,8 +14,8 @@
           highlighted: (highlighted||{})[fieldDef.field],
           any: isFieldAny(chart, $index)
         }"
-        ng-mouseover="(highlighted||{})[fieldDef.field] = true"
-        ng-mouseout="(highlighted||{})[fieldDef.field] = false"
+        ng-mouseover="fieldInfoMouseover(fieldDef)"
+        ng-mouseout="fieldInfoMouseout(fieldDef)"
       ></field-info>
     </div>
     <div class="toolbox">

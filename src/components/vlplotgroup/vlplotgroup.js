@@ -7,7 +7,7 @@
  * # visListItem
  */
 angular.module('vlui')
-  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _) {
+  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _, Pills) {
     return {
       templateUrl: 'components/vlplotgroup/vlplotgroup.html',
       restrict: 'E',
@@ -27,6 +27,7 @@ angular.module('vlui')
 
         alwaysScrollable: '=',
         configSet: '@',
+        enablePillsPreview: '=',
         maxHeight: '=',
         maxWidth: '=',
         overflow: '=',
@@ -67,6 +68,22 @@ angular.module('vlui')
           }
           else {
             Bookmarks.add(chart);
+          }
+        };
+
+        scope.fieldInfoMouseover = function(fieldDef) {
+          (scope.highlighted||{})[fieldDef.field] = true;
+
+          if (scope.enablePillsPreview) {
+            Pills.preview(scope.chart.vlSpec);
+          }
+        };
+
+        scope.fieldInfoMouseout = function(fieldDef) {
+          (scope.highlighted||{})[fieldDef.field] = false;
+
+          if (scope.enablePillsPreview) {
+            Pills.preview(null);
           }
         };
 

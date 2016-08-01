@@ -8,6 +8,7 @@ angular.module('vlui')
       restrict: 'E',
       scope: {
         spec: '=',
+        preview: '=',
         supportAny: '='
       },
       replace: true,
@@ -42,7 +43,10 @@ angular.module('vlui')
               return anyChannelIds;
             }, []);
           }
-          Pills.update(spec);
+          // Only call Pills.update, which will trigger Spec.spec to update if it's not a preview.
+          if (!$scope.preview) {
+            Pills.update(spec);
+          }
         }, true); //, true /* watch equality rather than reference */);
       }
     };

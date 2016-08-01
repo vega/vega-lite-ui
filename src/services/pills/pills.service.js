@@ -15,6 +15,7 @@ angular.module('vlui')
       set: set,
       remove: remove,
       parse: parse,
+      preview: preview,
       update: update,
       reset: reset,
       dragDrop: dragDrop,
@@ -83,6 +84,17 @@ angular.module('vlui')
     function parse(spec) {
       if (Pills.listener) {
         Pills.listener.parse(spec);
+      }
+    }
+
+    /**
+     * Add Spec to be previewed (for Voyager2)
+     *
+     * @param {any} spec
+     */
+    function preview(spec) {
+      if (Pills.listener) {
+        Pills.listener.preview(spec);
       }
     }
 
