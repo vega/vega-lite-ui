@@ -123,6 +123,7 @@ $any-hover-color: #666;
   }
 }
 
+
 .field-info.unselected {
   border: 1px dashed hsla(0,0%,0%,0.15);
   background-color: #fafafa;
@@ -132,10 +133,10 @@ $any-hover-color: #666;
   border: 1px solid hsla(0,0%,0%,0.15);
   background-color: hsla(0,0%,93%,0.8);
   font-weight: 500;
+}
 
-  &.any {
-    background-color: #C5EAEB
-  }
+.field-info.any, .field-info.any.selected, .field-info.any.unselected, .field-info.any.pill {
+  background-color: #C5EAEB
 }
 
 .field-info.pill {

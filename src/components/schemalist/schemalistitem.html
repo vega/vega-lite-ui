@@ -2,6 +2,7 @@
   show-type="true"
   show-info="true"
   class="pill list-item draggable full-width no-right-margin"
+  ng-class="{any: isEnumSpec(fieldDef.field)}"
   ng-model="pill"
   data-drag="true"
   jqyoui-draggable="{placeholder: 'keep', deepCopy:  true, onStart: 'fieldDragStart', onStop:'fieldDragStop'}"

@@ -5,11 +5,13 @@
       <field-info ng-repeat="fieldDef in fieldSet"
         ng-if="fieldSet && fieldDef.field"
         field-def='fieldDef'
+        enum-spec-index="chart.enumSpecIndex"
         show-type='true'
         ng-class="{
           selected: alwaysSelected || (isSelected && isSelected(fieldDef.field)),
           unselected: isSelected && !isSelected(fieldDef.field),
-          highlighted: (highlighted||{})[fieldDef.field]
+          highlighted: (highlighted||{})[fieldDef.field],
+          any: isFieldAny(chart, $index)
         }"
         ng-mouseover="(highlighted||{})[fieldDef.field] = true"
         ng-mouseout="(highlighted||{})[fieldDef.field] = false"
@@ -65,7 +67,7 @@
         <i class="fa fa-refresh transpose"></i>
         <small ng-if="showLabel">Swap X/Y</small>
       </a>
-      
+
       <a ng-if="showBookmark && Bookmarks.isSupported"
         class="command"
         ng-click="toggleBookmark(chart)"
@@ -110,7 +112,7 @@
   ></vl-plot>
 
   <textarea class="annotation"
-    ng-if="Bookmarks.isBookmarked(chart.shorthand)"  
+    ng-if="Bookmarks.isBookmarked(chart.shorthand)"
     ng-model="Bookmarks.dict[chart.shorthand].annotation"
     ng-change="Bookmarks.saveAnnotations(chart.shorthand)"
     placeholder = "notes"

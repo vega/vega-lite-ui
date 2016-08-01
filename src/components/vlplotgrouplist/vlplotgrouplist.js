@@ -38,7 +38,8 @@ angular.module('vlui')
             cql.modelGroup.getTopItem(item) :
             item;
           return {
-            fieldSet: specM.getEncodings(),
+            enumSpecIndex: specM.enumSpecIndex,
+            fieldSet: specM.specQuery.encodings,
             vlSpec: specM.toSpec()
           };
         }

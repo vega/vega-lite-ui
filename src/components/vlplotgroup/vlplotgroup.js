@@ -70,6 +70,15 @@ angular.module('vlui')
           }
         };
 
+        scope.isFieldAny = function(chart, index) {
+          if (chart.enumSpecIndex) {
+            if (chart.enumSpecIndex.encodings && chart.enumSpecIndex.encodings[index] && chart.enumSpecIndex.encodings[index].field) {
+              return true;
+            }
+          }
+          return false;
+        };
+
         scope.removeBookmark = function(chart) {
           Bookmarks.remove(chart);
           scope.showBookmarkAlert = false;

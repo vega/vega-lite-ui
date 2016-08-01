@@ -7,7 +7,7 @@
  * # schemaListItem
  */
 angular.module('vlui')
-  .directive('schemaListItem', function (Pills) {
+  .directive('schemaListItem', function (Pills, cql) {
     return {
       templateUrl: 'components/schemalist/schemalistitem.html',
       restrict: 'E',
@@ -16,6 +16,8 @@ angular.module('vlui')
         fieldDef:'='
       },
       link: function postLink(scope) {
+        scope.isEnumSpec = cql.enumSpec.isEnumSpec;
+
         scope.fieldDragStart = function() {
           var fieldDef = scope.fieldDef;
 
