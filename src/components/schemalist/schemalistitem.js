@@ -18,6 +18,10 @@ angular.module('vlui')
       link: function postLink(scope) {
         scope.isEnumSpec = cql.enumSpec.isEnumSpec;
 
+        scope.fieldAdd = function(fieldDef) {
+          Pills.add(fieldDef);
+        };
+
         scope.fieldDragStart = function() {
           var fieldDef = scope.fieldDef;
 

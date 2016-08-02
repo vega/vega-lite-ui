@@ -1,22 +1,37 @@
 'use strict';
 
 angular.module('vlui')
-  .service('Pills', function (ANY) {
+  .service('Pills', function (ANY, util) {
     var Pills = {
       // Functions
       isAnyChannel: isAnyChannel,
       getNextAnyChannelId: getNextAnyChannelId,
+      getEmptyAnyChannelId: getEmptyAnyChannelId,
 
       get: get,
       // Event
       dragStart: dragStart,
       dragStop: dragStop,
       // Event, with handler in the listener
+
+      /** Set a fieldDef for a channel */
       set: set,
+
+      /** Remove a fieldDef from a channel */
       remove: remove,
+
+      /** Add new field to the pills */
+      add: add,
+
+      /** Parse a new spec */
       parse: parse,
+
+      /** Preview a spec */
       preview: preview,
+
+      /** If the spec/query gets updated */
       update: update,
+
       reset: reset,
       dragDrop: dragDrop,
 
@@ -38,6 +53,20 @@ angular.module('vlui')
      */
     function isAnyChannel(channelId) {
       return channelId && channelId.indexOf(ANY) === 0; // prefix by ANY
+    }
+
+    function getEmptyAnyChannelId() {
+      var i = 0;
+      var anyChannels = util.keys(Pills.pills).filter(function(channelId) {
+        return channelId.indexOf(ANY) === 0;
+      });
+      for (var i=0 ; i < anyChannels.length; i++) {
+        var channelId = anyChannels[i];
+        if (!Pills.pills[channelId].field) {
+          return channelId;
+        }
+      }
+      throw new Error("No empty any channel available!");
     }
 
     function getNextAnyChannelId() {
@@ -67,6 +96,12 @@ angular.module('vlui')
      */
     function get(channelId) {
       return Pills.pills[channelId];
+    }
+
+    function add(fieldDef) {
+      if (Pills.listener && Pills.listener.add) {
+        Pills.listener.add(fieldDef);
+      }
     }
 
     function remove(channelId) {
