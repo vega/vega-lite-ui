@@ -13,7 +13,11 @@
      data-jqyoui-options="{activeClass: 'drop-active'}">
 
       <field-info ng-show="encoding[channelId].field"
-        ng-class="{expanded: funcsExpanded, any: isAnyField}"
+        ng-class="{
+          expanded: funcsExpanded,
+          any: isAnyField,
+          highlighted: (highlighted||{})[encoding[channelId].field]
+        }"
         field-def="encoding[channelId]"
         show-type="true"
         show-caret="true"

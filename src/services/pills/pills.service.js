@@ -38,6 +38,7 @@ angular.module('vlui')
       // Data
       // TODO: split between encoding related and non-encoding related
       pills: {},
+      highlighted: {},
       /** pill being dragged */
       dragging: null,
       /** channelId that's the pill is being dragged from */

@@ -20,7 +20,7 @@ angular.module('vlui')
         scope.increaseLimit = increaseLimit;
         scope.isInlist = isInList;
         scope.select = select;
-
+        scope.Pills = Pills;
 
         element.bind('scroll', function(){
            if(jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight){
