@@ -7,7 +7,8 @@ angular.module('vlui')
       restrict: 'E',
       scope: {
         orderBy: '=',
-        fieldDefs: '='
+        fieldDefs: '=',
+        showAdd: '='
       },
       replace: true
     };

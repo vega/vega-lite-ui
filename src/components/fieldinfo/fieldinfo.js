@@ -14,13 +14,16 @@ angular.module('vlui')
       replace: true,
       scope: {
         fieldDef: '=',
-        showType: '=',
-        showInfo: '=',
+        showAdd: '=',
         showCaret: '=',
-        popupContent: '=',
+        showInfo: '=',
         showRemove: '=',
-        removeAction: '&',
+        showType: '=',
+        popupContent: '=',
+
         action: '&',
+        addAction: '&',
+        removeAction: '&',
         disableCountCaret: '=',
       },
       link: function(scope, element) {
