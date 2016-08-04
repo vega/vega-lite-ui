@@ -2,16 +2,6 @@
   <a class="right"  ng-click="clear()"><i class="fa fa-eraser"></i> Clear</a>
   <h2>Encoding</h2>
 
-  <div class="shelf-pane shelf-any-pane full-width" ng-if="supportAny">
-    <h3>Flexible</h3>
-    <channel-shelf
-      ng-repeat="channelId in anyChannelIds"
-      channel-id="channelId"
-      encoding="spec.encoding"
-      mark="spec.mark">
-    </channel-shelf>
-  </div>
-
   <div class="shelf-pane shelf-encoding-pane full-width">
     <h3>Positional</h3>
     <channel-shelf channel-id="'x'"
@@ -58,6 +48,16 @@
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'text'"
+      encoding="spec.encoding"
+      mark="spec.mark">
+    </channel-shelf>
+  </div>
+
+  <div class="shelf-pane shelf-any-pane full-width" ng-if="supportAny">
+    <h3>Flexible</h3>
+    <channel-shelf
+      ng-repeat="channelId in anyChannelIds"
+      channel-id="channelId"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
