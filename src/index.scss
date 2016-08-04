@@ -410,8 +410,14 @@ h4 {
   }
   background-color: #38425D;
 
-  a {
-    color: white;
+  footer {
+    a {
+      color: white;
+    }
+
+    a:hover, a:focus {
+      color: #ddd;
+    }
   }
 
   .sidebar-header {
@@ -430,9 +436,6 @@ h4 {
       margin-left: 2px;
       margin-right: 5px;
     }
-  }
-  a:hover, a:focus {
-    color: #ddd;
   }
   button {
     margin-top: -3px;
