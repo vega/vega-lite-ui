@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('vlPlotGroupList', function (vl, cql, jQuery, consts, _, Logger, Pills) {
+  .directive('vlPlotGroupList', function (vl, cql, jQuery, consts, _, Logger, Pills, Chart) {
     return {
       templateUrl: 'components/vlplotgrouplist/vlplotgrouplist.html',
       restrict: 'E',
@@ -16,7 +16,7 @@ angular.module('vlui')
         scope.limit = consts.numInitClusters;
 
         // Functions
-        scope.getChart = getChart;
+        scope.getChart = Chart.getChart;
         scope.increaseLimit = increaseLimit;
         scope.isInlist = isInList;
         scope.select = select;
@@ -29,22 +29,6 @@ angular.module('vlui')
             }
            }
         });
-
-        /**
-         *
-         * @param {SpecQueryModelGroup | SpecQueryModel} item
-         */
-        function getChart(item) {
-          var specM = cql.modelGroup.isSpecQueryModelGroup(item) ?
-            cql.modelGroup.getTopItem(item) :
-            item;
-          return {
-            enumSpecIndex: specM.enumSpecIndex,
-            fieldSet: specM.specQuery.encodings,
-            vlSpec: specM.toSpec(),
-            shorthand: specM.toShorthand()
-          };
-        }
 
         function increaseLimit() {
           // FIXME
