@@ -3,9 +3,17 @@
   flex-direction: column;
   height: auto;
   max-height: 150px;
+  background-color: white;
 
   .field-drop {
     flex-shrink: 0;
+    border: none;
+  }
+
+  .field-info.selected {
+    border: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
 }
 
