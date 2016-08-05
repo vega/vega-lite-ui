@@ -37,7 +37,7 @@
     "heap": "~0.2.6",
     "jquery": "~2.2.0",
     "lodash": "~4.5.1",
-    "vega-lite": "1.0.16",
+    "vega-lite": "~1.1.1",
     "selectize": "~0.12.1",
     "angular-rangeslider": "~0.0.14"
   }
