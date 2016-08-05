@@ -1,4 +1,7 @@
-<div class="vl-plot-group-list-container abs-100 scroll-y">
+<div class="vl-plot-group-list-container">
+  <div class="card vis-list-header" ng-show="listTitle">
+    <div><span class="description">{{listTitle}}</span>
+  </div>
   <div class="vis-list hflex flex-wrap">
     <vl-plot-group
       ng-repeat="item in modelGroup.items | limitTo: limit"
@@ -21,10 +24,8 @@
 
       highlighted="Pills.highlighted"
       expand-action="select(chart)"
-
       priority="consts.priority.vislist + $index"
     >
     </vl-plot-group>
   </div>
-  <!-- FIXME support scrolling -->
 </div>
