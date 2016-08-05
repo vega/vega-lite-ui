@@ -17,13 +17,9 @@ angular.module('vlui')
         filter: '='
       },
       link: function(scope, element) {
-        scope.domainMin = 0;
-        scope.domainMax = 100;
-        scope.$watch('field', function(field) {
-          var domain = Dataset.domain(field);
-          scope.domainMin = domain[0];
-          scope.domainMax = domain[1];
-        });
+        var domain = Dataset.domain(scope.field);
+        scope.domainMin = domain[0];
+        scope.domainMax = domain[1];
       }
     };
   });
