@@ -108,14 +108,11 @@ angular.module('vlui')
     Dataset.domain = function(field) {
       var type = Dataset.schema.type(field);
       var stats = Dataset.schema.stats({field: field});
+      console.log('keys', util.keys(stats.unique));
       if (type === vl.type.QUANTITATIVE) {
         return [stats.min, stats.max];
       } else {
-        return util.keys(stats.unique)
-          .map(function(x) {
-            if (+x === +x) { return +x; }
-            return x;
-          }).sort();
+        return util.keys(stats.unique).sort();
       }
 
     };
