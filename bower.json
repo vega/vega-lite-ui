@@ -28,6 +28,7 @@
     "angular-google-analytics": "~1.1.5",
     "angular-local-storage": "~0.2.3",
     "angular-mocks": "~1.5.7",
+    "angular-rangeslider": "~0.0.14",
     "angular-sanitize": "~1.5.7",
     "angular-sortable-view": "^0.0.15",
     "angular-touch": "~1.5.7",

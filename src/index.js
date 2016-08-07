@@ -5,7 +5,8 @@ angular.module('vlui', [
     'LocalStorageModule',
     'angular-google-analytics',
     'angular-sortable-view',
-    'angular-websql'
+    'angular-websql',
+    'ui-rangeSlider'
   ])
   .constant('_', window._)
   // datalib, vegalite, vega
