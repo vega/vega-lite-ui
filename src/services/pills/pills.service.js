@@ -57,7 +57,6 @@ angular.module('vlui')
     }
 
     function getEmptyAnyChannelId() {
-      var i = 0;
       var anyChannels = util.keys(Pills.pills).filter(function(channelId) {
         return channelId.indexOf(ANY) === 0;
       });
