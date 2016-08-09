@@ -11,7 +11,7 @@ angular.module('vlui')
         enablePillsPreview: '=',
         initialLimit: '=',
         listTitle: '@',
-        modelGroup: '=',
+        items: '=',
         priority: '=',
         showMore: '='
       },
@@ -41,9 +41,8 @@ angular.module('vlui')
 
         /** return if the plot is still in the view, so it might be omitted from the render queue if necessary. */
         function isInList(chart) {
-          var items = scope.modelGroup.items;
-          for (var i = 0; i < items.length; i++) {
-            if(chart.specM === cql.modelGroup.getTopItem(items[i])) {
+          for (var i = 0; i < scope.items.length; i++) {
+            if(chart.specM === cql.modelGroup.getTopItem(scope.items[i])) {
               return true;
             }
           }
