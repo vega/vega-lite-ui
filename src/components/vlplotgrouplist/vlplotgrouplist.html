@@ -1,6 +1,11 @@
 <div class="vl-plot-group-list-container">
   <div class="card vis-list-header" ng-show="listTitle">
-    <div><span class="description">{{listTitle}}</span>
+    <span class="description">{{listTitle}}</span>
+    <a ng-if="query"
+      ng-click="selectQuery(query)"
+      class="command">
+      <i class="fa fa-expand"></i>
+    </a>
   </div>
   <div class="vis-list hflex flex-wrap">
     <vl-plot-group

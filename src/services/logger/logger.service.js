@@ -68,6 +68,7 @@ angular.module('vlui')
 
       // Voyager 2
       SPEC_SELECT: {category:'VOYAGER2', id: 'SPEC_SELECT', level: service.levels.DEBUG},
+      QUERY_SELECT: {category:'VOYAGER2', id: 'QUERY_SELECT', level: service.levels.DEBUG},
     };
 
     service.logInteraction = function(action, label, data) {

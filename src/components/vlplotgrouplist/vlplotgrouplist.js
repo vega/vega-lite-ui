@@ -11,6 +11,7 @@ angular.module('vlui')
         enablePillsPreview: '=',
         initialLimit: '=',
         listTitle: '@',
+        query: '=',
         modelGroup: '=',
         priority: '=',
         showMore: '='
@@ -24,6 +25,7 @@ angular.module('vlui')
         scope.increaseLimit = increaseLimit;
         scope.isInlist = isInList;
         scope.select = select;
+        scope.selectQuery = selectQuery;
         scope.Pills = Pills;
 
         // element.bind('scroll', function(){
@@ -43,6 +45,11 @@ angular.module('vlui')
         function isInList(/*chart*/) {
           // FIXME
           return true;
+        }
+
+        function selectQuery(query) {
+          Logger.logInteraction(Logger.actions.QUERY_SELECT, query);
+          Pills.parse(query);
         }
 
         function select(chart) {
