@@ -8,14 +8,16 @@ angular.module('vlui')
       replace: true,
       scope: {
         /** An instance of specQueryModelGroup */
-        modelGroup: '=',
         enablePillsPreview: '=',
+        initialLimit: '=',
         listTitle: '@',
-        priority: '='
+        modelGroup: '=',
+        priority: '=',
+        showMore: '='
       },
       link: function postLink(scope , element /*, attrs*/) {
         scope.consts = consts;
-        scope.limit = consts.numInitClusters;
+        scope.limit = scope.initialLimit || 3;
 
         // Functions
         scope.getChart = Chart.getChart;
@@ -24,16 +26,16 @@ angular.module('vlui')
         scope.select = select;
         scope.Pills = Pills;
 
-        element.bind('scroll', function(){
-           if(jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight){
-            if (scope.limit < scope.modelGroup.items.length) {
-              scope.increaseLimit();
-            }
-           }
-        });
+        // element.bind('scroll', function(){
+        //    if(jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight){
+        //     if (scope.limit < scope.modelGroup.items.length) {
+        //       scope.increaseLimit();
+        //     }
+        //    }
+        // });
 
         function increaseLimit() {
-          // FIXME
+          scope.limit += 5;
           Logger.logInteraction(Logger.actions.LOAD_MORE, scope.limit);
         }
 
