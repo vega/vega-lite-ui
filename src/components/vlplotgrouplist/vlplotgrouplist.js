@@ -10,7 +10,8 @@ angular.module('vlui')
         /** An instance of specQueryModelGroup */
         modelGroup: '=',
         enablePillsPreview: '=',
-        listTitle: '@'
+        listTitle: '@',
+        priority: '='
       },
       link: function postLink(scope , element /*, attrs*/) {
         scope.consts = consts;

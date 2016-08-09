@@ -6,7 +6,7 @@ angular.module('vlui')
     var MAX_CANVAS_SIZE = 32767/2, MAX_CANVAS_AREA = 268435456/4;
 
     var renderQueue = new Heap(function(a, b){
-        return b.priority - a.priority;
+        return a.priority - b.priority;
       }),
       rendering = false;
 
