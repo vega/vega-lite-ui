@@ -30,7 +30,8 @@ angular.module('vlui')
         enumSpecIndex: specM.enumSpecIndex,
         fieldSet: specM.specQuery.encodings,
         vlSpec: specM.toSpec(),
-        shorthand: specM.toShorthand()
+        shorthand: specM.toShorthand(),
+        specM: specM
       };
     }
 
