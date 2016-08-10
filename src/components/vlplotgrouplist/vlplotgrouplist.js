@@ -42,7 +42,7 @@ angular.module('vlui')
         /** return if the plot is still in the view, so it might be omitted from the render queue if necessary. */
         function isInList(chart) {
           for (var i = 0; i < scope.items.length; i++) {
-            if(chart.specM === cql.modelGroup.getTopItem(scope.items[i])) {
+            if(chart.specM === scope.items[i].getTopSpecQueryModel()) {
               return true;
             }
           }
