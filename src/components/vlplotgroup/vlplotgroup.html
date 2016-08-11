@@ -4,7 +4,7 @@
     >
     <div class="field-set-info">
       <field-info ng-repeat="fieldDef in fieldSet"
-        ng-if="fieldSet && fieldDef.field"
+        ng-if="fieldSet && (fieldDef.field || fieldDef.autoCount)"
         field-def='fieldDef'
         enum-spec-index="chart.enumSpecIndex"
         show-type='true'
