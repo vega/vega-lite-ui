@@ -24,7 +24,7 @@
         >{{ (fieldDef.title || fieldDef.field) | underscore2space }}</span>
     </span>
 
-    <span ng-if="fieldDef.aggregate==='count'"
+    <span ng-if="fieldDef.aggregate==='count' || fieldDef.autoCount"
       class="field-count field-info-text">
       <span class="field-name">COUNT</span>
     </span>
