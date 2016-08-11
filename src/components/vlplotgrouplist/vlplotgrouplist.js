@@ -10,7 +10,7 @@ angular.module('vlui')
         /** An instance of specQueryModelGroup */
         enablePillsPreview: '=',
         initialLimit: '=',
-        listTitle: '@',
+        listTitle: '=',
         items: '=',
         priority: '=',
         showMore: '='
