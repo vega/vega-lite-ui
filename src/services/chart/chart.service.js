@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('vlui')
-  .service('Chart', function (cql) {
+  .service('Chart', function (cql, _) {
     var Chart = {
-      getChart: getChart
+      getChart: getChart,
+      transpose: transpose
     };
 
     /**
@@ -33,6 +34,21 @@ angular.module('vlui')
         shorthand: specM.toShorthand(),
         specM: specM
       };
+    }
+
+    function transpose(spec) {
+      var encoding = _.clone(spec.encoding);
+      var oldXEnc = encoding.x;
+      var oldYEnc = encoding.y;
+      encoding.y = oldXEnc;
+      encoding.x = oldYEnc;
+
+      var oldRowEnc = encoding.row;
+      var oldColEnc = encoding.column;
+      encoding.row = oldColEnc;
+      encoding.column = oldRowEnc;
+
+      spec.encoding = encoding;
     }
 
     return Chart;

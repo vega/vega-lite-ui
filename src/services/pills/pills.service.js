@@ -23,6 +23,11 @@ angular.module('vlui')
       /** Add new field to the pills */
       add: add,
 
+      /** Pass message to toggler listeners */
+      rescale: rescale,
+      sort: sort,
+      transpose: transpose,
+
       /** Parse a new spec */
       parse: parse,
 
@@ -108,6 +113,24 @@ angular.module('vlui')
       delete Pills.pills[channelId];
       if (Pills.listener) {
         Pills.listener.remove(channelId);
+      }
+    }
+
+    function sort(channelId, sort) {
+      if (Pills.listener && Pills.listener.sort) {
+        Pills.listener.sort(channelId, sort);
+      }
+    }
+
+    function rescale(channelId, scaleType) {
+      if (Pills.listener && Pills.listener.rescale) {
+        Pills.listener.rescale(channelId, scaleType);
+      }
+    }
+
+    function transpose() {
+      if (Pills.listener && Pills.listener.transpose) {
+        Pills.listener.transpose();
       }
     }
 

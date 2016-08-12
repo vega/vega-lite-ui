@@ -7,7 +7,7 @@
  * # visListItem
  */
 angular.module('vlui')
-  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _, Pills) {
+  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _, Pills, Chart) {
     return {
       templateUrl: 'components/vlplotgroup/vlplotgroup.html',
       restrict: 'E',
@@ -50,6 +50,9 @@ angular.module('vlui')
         showMark: '@',
         showSort: '@',
         showTranspose: '@',
+
+        /** Whether the log / transpose sort cause side effect to the shelf  */
+        toggleShelf: '=',
 
         alwaysSelected: '=',
         isSelected: '=',
@@ -133,9 +136,15 @@ angular.module('vlui')
           var fieldDef = spec.encoding[channel],
             scale = fieldDef.scale = fieldDef.scale || {};
 
-          scale.type = scale.type === 'log' ? 'linear' : 'log';
+          if (scope.toggleShelf) {
+            Pills.rescale(channel, scale.type === 'log' ? 'linear' : 'log');
+          } else {
+            scale.type = scale.type === 'log' ? 'linear' : 'log';
+          }
+
           Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand);
         };
+
         scope.log.active = function(spec, channel) {
           if (!scope.log.support(spec, channel)) { return; }
 
@@ -175,17 +184,25 @@ angular.module('vlui')
           'quantitative-ascending', 'quantitative-descending', 'custom'];
 
         toggleSort.toggle = function(spec) {
-          Logger.logInteraction(Logger.actions.SORT_TOGGLE, scope.chart.shorthand);
+
           var currentMode = toggleSort.mode(spec);
           var currentModeIndex = toggleSort.modes.indexOf(currentMode);
 
           var newModeIndex = (currentModeIndex + 1) % (toggleSort.modes.length - 1);
           var newMode = toggleSort.modes[newModeIndex];
 
-          console.log('toggleSort', currentMode, newMode);
+          Logger.logInteraction(Logger.actions.SORT_TOGGLE, scope.chart.shorthand, {
+            currentMode: currentMode,
+            newMode: newMode
+          });
 
           var channels = toggleSort.channels(spec);
-          spec.encoding[channels.ordinal].sort = toggleSort.getSort(newMode, spec);
+
+          if (scope.toggleShelf) {
+            Pills.setSort(channels.ordinal, toggleSort.getSort(newMode, spec));
+          } else {
+            spec.encoding[channels.ordinal].sort = toggleSort.getSort(newMode, spec);
+          }
         };
 
         /** Get sort property definition that matches each mode. */
@@ -296,7 +313,11 @@ angular.module('vlui')
 
         scope.transpose = function() {
           Logger.logInteraction(Logger.actions.TRANSPOSE_TOGGLE, scope.chart.shorthand);
-          vl.spec.transpose(scope.chart.vlSpec);
+          if (scope.toggleShelf) {
+            Pills.transpose();
+          } else {
+            Chart.transpose(scope.chart.vlSpec);
+          }
         };
 
         scope.$on('$destroy', function() {
