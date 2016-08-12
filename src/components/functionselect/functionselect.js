@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('functionSelect', function(_, consts, vl, Pills, Logger, Schema) {
+  .directive('functionSelect', function(_, consts, vl, Pills, Logger) {
     return {
       templateUrl: 'components/functionselect/functionselect.html',
       restrict: 'E',
@@ -14,25 +14,69 @@ angular.module('vlui')
 
         scope.func = {
           selected: undefined,
-          list: [undefined]
+          list: {
+            aboveFold: [],
+            belowFold: [] // could be empty
+          },
+          isTemporal: false, // for making belowFold timeUnits single-column
+          isCount: false // hide "more" & "less" toggle for COUNT
         };
 
-        function getFns(type) {
+        // timeUnits for T
+        var timeUnits = {
+          aboveFold: [
+            undefined, 'year', 
+            'quarter', 'month', 
+            'date','day', 
+            'hours', 'minutes', 
+            'seconds', 'milliseconds',
+            'yearmonthdate'
+          ],
+          belowFold: [
+            'yearquarter',
+            'yearmonth',
+            'yearmonthdatehours',
+            'yearmonthdatehoursminutes',
+            'yearmonthdatehoursminutesseconds',
+            'hoursminutes',
+            'hoursminutesseconds',
+            'minutesseconds', 
+            'secondsmilliseconds'
+          ]
+        };
+        timeUnits.all = timeUnits.aboveFold.concat(timeUnits.belowFold);
+
+        // aggregates for Q
+        var aggregates = {
+          aboveFold: [
+            undefined, // bin is here
+            'min', 'max',
+            'average', 'median', 
+            'sum'
+          ],
+          belowFold: [
+            'valid', 'missing', 
+            'distinct', 'modeskew',
+            'q1', 'q3',
+            'stdev', 'stdevp', 
+            'variance', 'variancep'
+          ] // hide COUNT for Q in the UI because we dedicate it to a special "# Count" field
+        };
+        aggregates.all = aggregates.aboveFold.concat(aggregates.belowFold)
+          .concat([COUNT]); // COUNT is a valid aggregate
+
+        function getTimeUnits(type) {
           if (type === 'temporal') {
-            return Schema.schema.definitions.TimeUnit.enum;
+            return timeUnits.all;
           }
           return [];
         }
 
-        function getAggrs(type) {
-          if(!type) {
-            return [COUNT];
-          }
-
+        function getAggregates(type) {
           // HACK
           // TODO: make this correct for temporal as well
           if (type === 'quantitative' ){
-            return Schema.schema.definitions.AggregateOp.enum;
+            return aggregates.all;
           }
           return [];
         }
@@ -55,8 +99,8 @@ angular.module('vlui')
           // reset field def
           // HACK: we're temporarily storing the maxbins in the pill
           pill.bin = selectedFunc === BIN ? true : undefined;
-          pill.aggregate = getAggrs(type).indexOf(selectedFunc) !== -1 ? selectedFunc : undefined;
-          pill.timeUnit = getFns(type).indexOf(selectedFunc) !== -1 ? selectedFunc : undefined;
+          pill.aggregate = getAggregates(type).indexOf(selectedFunc) !== -1 ? selectedFunc : undefined;
+          pill.timeUnit = getTimeUnits(type).indexOf(selectedFunc) !== -1 ? selectedFunc : undefined;
 
           if(!_.isEqual(oldPill, pill)){
             Pills.set(scope.channelId, pill, true /* propagate change */);
@@ -80,15 +124,28 @@ angular.module('vlui')
             isQ = type === vl.type.QUANTITATIVE,
             isT = type === vl.type.TEMPORAL;
 
+          // for making belowFold timeUnits single-column
+          scope.func.isTemporal = isT; 
+
+          // hide "more" & "less" toggles for COUNT
+          scope.func.isCount = pill.field === '*';
+
           if(pill.field === '*' && pill.aggregate === COUNT){
-            scope.func.list=[COUNT];
+            scope.func.list.aboveFold=[COUNT];
+            scope.func.list.belowFold=[];
             scope.func.selected = COUNT;
           } else {
-            scope.func.list = ( isOrdinalShelf && (isQ || isT) ? [] : [undefined])
-              .concat(getFns(type))
-              .concat(getAggrs(type).filter(function(x) { return x !== COUNT; }))
-              // TODO: check supported type based on primitive data?
-              .concat(type === 'quantitative' ? ['bin'] : []);
+            // TODO: check supported type based on primitive data?
+            if (isT) {
+              scope.func.list.aboveFold = timeUnits.aboveFold;
+              scope.func.list.belowFold = timeUnits.belowFold;
+            }
+            else if (isQ) {
+              scope.func.list.aboveFold = aggregates.aboveFold;
+              // HACK
+              scope.func.list.aboveFold.splice(1, 0, 'bin'); // support 'bin' for quantitative fields
+              scope.func.list.belowFold = aggregates.belowFold;
+            }
 
             var defaultVal = (isOrdinalShelf &&
               (isQ && BIN) || (isT && consts.defaultTimeFn)
@@ -97,7 +154,7 @@ angular.module('vlui')
             var selected = pill.bin ? 'bin' :
               pill.aggregate || pill.timeUnit;
 
-            if (scope.func.list.indexOf(selected) >= 0) {
+            if (scope.func.list.aboveFold.indexOf(selected) >= 0 || scope.func.list.belowFold.indexOf(selected) >= 0) {
               scope.func.selected = selected;
             } else {
               scope.func.selected = defaultVal;
