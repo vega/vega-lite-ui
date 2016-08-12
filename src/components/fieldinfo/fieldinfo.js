@@ -88,8 +88,8 @@ angular.module('vlui')
         function getTypeDictValue(type, dict) {
           if (cql.enumSpec.isEnumSpec(type)) { // is enumSpec
             var val = null;
-            for (var i = 0; i < type.values.length; i++) {
-              var _type = type.values[i];
+            for (var i = 0; i < type.enum.length; i++) {
+              var _type = type.enum[i];
               if (val === null) {
                 val = dict[_type];
               } else {

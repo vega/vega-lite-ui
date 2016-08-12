@@ -13,7 +13,8 @@ angular.module('vlui')
         listTitle: '=',
         items: '=',
         priority: '=',
-        showMore: '='
+        showMore: '=',
+        postSelectAction: '&'
       },
       link: function postLink(scope , element /*, attrs*/) {
         scope.consts = consts;
@@ -52,6 +53,9 @@ angular.module('vlui')
         function select(chart) {
           Logger.logInteraction(Logger.actions.SPEC_SELECT, chart);
           Pills.parse(chart.vlSpec);
+          if (scope.postSelectAction) {
+            scope.postSelectAction();
+          }
         }
       }
     };

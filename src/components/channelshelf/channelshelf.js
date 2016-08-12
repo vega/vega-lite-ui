@@ -36,7 +36,7 @@ angular.module('vlui')
           if (Pills.isAnyChannel(channelId)) {
             return true;
           }
-          if (mark === ANY) { // TODO: support {values: [...]}
+          if (mark === ANY) { // TODO: support {enum: [...]}
             return true;
           }
           return vl.channel.supportMark(channelId, mark);
