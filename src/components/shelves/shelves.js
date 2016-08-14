@@ -32,8 +32,6 @@ angular.module('vlui')
         };
 
         $scope.$watch('spec', function(spec) {
-          Logger.logInteraction(Logger.actions.SPEC_CHANGE, spec);
-
           // populate anyChannelIds so we show all or them
           if ($scope.supportAny) {
             $scope.anyChannelIds = util.keys(spec.encoding).reduce(function(anyChannelIds, channelId) {
@@ -45,6 +43,7 @@ angular.module('vlui')
           }
           // Only call Pills.update, which will trigger Spec.spec to update if it's not a preview.
           if (!$scope.preview) {
+            Logger.logInteraction(Logger.actions.SPEC_CHANGE, spec);
             Pills.update(spec);
           }
         }, true); //, true /* watch equality rather than reference */);
