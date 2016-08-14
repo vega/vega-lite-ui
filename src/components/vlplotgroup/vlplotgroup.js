@@ -7,7 +7,7 @@
  * # visListItem
  */
 angular.module('vlui')
-  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _, Pills, Chart) {
+  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _, Pills, Chart, $timeout) {
     return {
       templateUrl: 'components/vlplotgroup/vlplotgroup.html',
       restrict: 'E',
@@ -63,6 +63,7 @@ angular.module('vlui')
       link: function postLink(scope) {
         scope.Bookmarks = Bookmarks;
         scope.consts = consts;
+        scope.hovered = false;
 
         // bookmark alert
         scope.showBookmarkAlert = false;
@@ -75,19 +76,37 @@ angular.module('vlui')
           }
         };
 
-        scope.fieldInfoMouseover = function(fieldDef) {
-          (scope.highlighted||{})[fieldDef.field] = true;
+        var hoverPromise = null;
 
-          if (scope.enablePillsPreview) {
-            Pills.preview(scope.chart.vlSpec);
-          }
+        scope.fieldInfoMouseover = function(fieldDef) {
+          scope.hovered = true;
+
+          hoverPromise = $timeout(function() {
+            (scope.highlighted||{})[fieldDef.field] = true;
+
+            if (scope.enablePillsPreview) {
+              Pills.preview(scope.chart.vlSpec);
+            }
+          }, 500);
         };
 
         scope.fieldInfoMouseout = function(fieldDef) {
-          (scope.highlighted||{})[fieldDef.field] = false;
+          scope.hovered = false;
 
-          if (scope.enablePillsPreview) {
-            Pills.preview(null);
+          if (hoverPromise) {
+            // if we unhover within
+            $timeout.cancel(hoverPromise);
+          }
+          hoverPromise = null;
+
+          if ((scope.highlighted||{})[fieldDef.field]) {
+            // disable preview if it's enabled
+
+            (scope.highlighted||{})[fieldDef.field] = false;
+            if (scope.enablePillsPreview) {
+              Pills.preview(null);
+            }
+
           }
         };
 
