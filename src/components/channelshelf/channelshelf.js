@@ -90,11 +90,11 @@ angular.module('vlui')
           scope.isAnyChannel = Pills.isAnyChannel(channelId);
         }, true);
 
+        // FIXME: remove this confusing 2-way binding logics
         // If some external action changes the fieldDef, we also need to update the pill
         scope.$watch('encoding[channelId]', function(fieldDef) {
           // Preview shelf should not cause side effect
           if (scope.preview) return;
-
 
           Pills.set(scope.channelId, fieldDef ? _.cloneDeep(fieldDef) : {});
           scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
