@@ -25,10 +25,10 @@ angular.module('vlui')
         // functions for T = timeUnits + undefined
         var temporalFunctions = {
           aboveFold: [
-            undefined, 'year', 
-            'quarter', 'month', 
-            'date','day', 
-            'hours', 'minutes', 
+            undefined, 'year',
+            'quarter', 'month',
+            'date','day',
+            'hours', 'minutes',
             'seconds', 'milliseconds',
             'yearmonthdate'
           ],
@@ -40,7 +40,7 @@ angular.module('vlui')
             'yearmonthdatehoursminutesseconds',
             'hoursminutes',
             'hoursminutesseconds',
-            'minutesseconds', 
+            'minutesseconds',
             'secondsmilliseconds'
           ]
         };
@@ -54,20 +54,20 @@ angular.module('vlui')
           aboveFold: [
             undefined, 'bin',
             'min', 'max',
-            'average', 'median', 
+            'mean', 'median',
             'sum'
           ],
           belowFold: [
-            'valid', 'missing', 
+            'valid', 'missing',
             'distinct', 'modeskew',
             'q1', 'q3',
-            'stdev', 'stdevp', 
+            'stdev', 'stdevp',
             'variance', 'variancep'
           ] // hide COUNT for Q in the UI because we dedicate it to a special "# Count" field
         };
 
         // aggregates = Q Functions + COUNT - BIN - undefined
-        var aggregates = _.pull(_.concat(quantitativeFunctions.aboveFold, quantitativeFunctions.belowFold, [COUNT]), 
+        var aggregates = _.pull(_.concat(quantitativeFunctions.aboveFold, quantitativeFunctions.belowFold, [COUNT]),
           BIN, undefined);
 
         scope.selectChanged = function() {
@@ -116,7 +116,7 @@ angular.module('vlui')
             isT = type === vl.type.TEMPORAL;
 
           // for making belowFold timeUnits single-column
-          scope.func.isTemporal = isT; 
+          scope.func.isTemporal = isT;
 
           // hide "more" & "less" toggles for COUNT
           scope.func.isCount = pill.field === '*';
