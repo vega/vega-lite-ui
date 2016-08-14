@@ -83,6 +83,13 @@
   .toolbox .command {
     text-transform: uppercase;
   }
+
+  .command.select {
+    .fa-server {
+      transform: scaleX(-1);
+    }
+  }
+
   .field-set-info {
     flex-grow: 1;
   }

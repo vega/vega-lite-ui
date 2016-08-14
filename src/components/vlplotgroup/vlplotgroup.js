@@ -47,6 +47,7 @@ angular.module('vlui')
         showFilterNull: '@',
         showLabel: '@',
         showLog: '@',
+        showSelect: '@',
         showSort: '@',
         showTranspose: '@',
 
@@ -57,6 +58,7 @@ angular.module('vlui')
         isSelected: '=',
         highlighted: '=',
         expandAction: '&',
+        selectAction: '&'
       },
       link: function postLink(scope) {
         scope.Bookmarks = Bookmarks;

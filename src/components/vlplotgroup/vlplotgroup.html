@@ -74,6 +74,11 @@
         class="command">
         <i class="fa fa-expand"></i>
       </a>
+      <a ng-if="showSelect"
+        ng-click="selectAction()"
+        class="command select">
+        <i class="fa fa-server"></i>
+      </a>
       <div ng-if="showBookmarkAlert"
         class="bookmark-alert">
         <div>Remove bookmark?</div>
