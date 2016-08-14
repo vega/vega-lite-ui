@@ -160,7 +160,7 @@ angular.module('vlui')
           Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE, scope.chart.shorthand);
 
           spec.config = spec.config || {};
-          spec.config.filterNull = spec.config.filterNull === true ? undefined : true;
+          spec.config.filterInvalid = spec.config.filterInvalid === true ? undefined : true;
         };
 
         scope.toggleFilterNull.support = function(spec) {
