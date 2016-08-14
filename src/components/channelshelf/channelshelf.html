@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="popup-menu shelf-functions shelf-functions-{{channelId}}">
-      <function-select field-def="encoding[channelId]" channel-id="channelId"></function-select>
+      <function-select ng-if="!preview" field-def="encoding[channelId]" channel-id="channelId"></function-select>
 
       <div class="mb5" ng-if="allowedTypes.length>1">
         <h4>Type</h4>

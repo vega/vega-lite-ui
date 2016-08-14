@@ -9,7 +9,8 @@ angular.module('vlui')
       scope: {
         channelId: '=',
         encoding: '=',
-        mark: '='
+        mark: '=',
+        preview: '='
       },
       link: function(scope, element /*, attrs*/) {
         var propsPopup, funcsPopup;
@@ -91,6 +92,10 @@ angular.module('vlui')
 
         // If some external action changes the fieldDef, we also need to update the pill
         scope.$watch('encoding[channelId]', function(fieldDef) {
+          // Preview shelf should not cause side effect
+          if (scope.preview) return;
+
+
           Pills.set(scope.channelId, fieldDef ? _.cloneDeep(fieldDef) : {});
           scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
         }, true);

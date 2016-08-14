@@ -4,21 +4,28 @@
 
   <div class="shelf-pane shelf-encoding-pane full-width">
     <h3>Positional</h3>
-    <channel-shelf channel-id="'x'"
+    <channel-shelf
+      channel-id="'x'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf
       channel-id="'y'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
-    <channel-shelf channel-id="'column'"
+    <channel-shelf
+      channel-id="'column'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     >
     </channel-shelf>
-    <channel-shelf channel-id="'row'"
+    <channel-shelf
+      channel-id="'row'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
@@ -32,22 +39,27 @@
     <h3>Marks</h3>
 
     <channel-shelf channel-id="'size'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'color'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'shape'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'detail'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'text'"
+      preview="preview"
       encoding="spec.encoding"
       mark="spec.mark">
     </channel-shelf>
@@ -57,6 +69,7 @@
     <h3>Automatic</h3>
     <channel-shelf
       ng-repeat="channelId in anyChannelIds"
+      preview="preview"
       channel-id="channelId"
       encoding="spec.encoding"
       mark="spec.mark">
