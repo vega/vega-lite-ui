@@ -26,14 +26,7 @@
           ng-mouseover="initializePopup();"></i>
       </a>
       <vl-plot-group-popup ng-if="consts.debug && showDebug && renderPopup"></vl-plot-group-popup>
-      <a ng-if="showMark"
-        class="command disabled">
-        <i class="fa fa-font"></i>
-        <i class="fa fa-line-chart"></i>
-        <i class="fa fa-area-chart"></i>
-        <i class="fa fa-bar-chart"></i>
-        <i class="fa fa-circle-o"></i>
-      </a>
+
       <a ng-if="showLog && chart.vlSpec && log.support(chart.vlSpec, 'x')"  class="command"
         ng-click="log.toggle(chart.vlSpec, 'x')"
         ng-class="{active: log.active(chart.vlSpec, 'x')}">

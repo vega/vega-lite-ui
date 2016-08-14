@@ -47,7 +47,6 @@ angular.module('vlui')
         showFilterNull: '@',
         showLabel: '@',
         showLog: '@',
-        showMark: '@',
         showSort: '@',
         showTranspose: '@',
 
