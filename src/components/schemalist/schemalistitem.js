@@ -21,9 +21,6 @@ angular.module('vlui')
 
         scope.fieldAdd = function(fieldDef) {
           Pills.add(fieldDef);
-          Logger.logInteraction(Logger.actions.ADD_FIELD, fieldDef, {
-            pills: Pills.pills
-          });
         };
 
         scope.fieldDragStart = function() {
