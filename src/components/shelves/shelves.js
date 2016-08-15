@@ -28,6 +28,7 @@ angular.module('vlui')
         };
 
         $scope.clear = function(){
+          Logger.logInteraction(Logger.actions.SPEC_CLEAN, null);
           Pills.reset();
         };
 

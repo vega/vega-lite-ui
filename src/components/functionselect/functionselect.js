@@ -46,8 +46,7 @@ angular.module('vlui')
         };
 
         // timeUnits = T functions - undefined
-        var timeUnits = _.pull(_.concat(temporalFunctions.aboveFold, temporalFunctions.belowFold)
-          , undefined);
+        var timeUnits = _.pull(_.concat(temporalFunctions.aboveFold, temporalFunctions.belowFold), undefined);
 
         // functions for Q = aggregates + BIN + undefined - COUNT
         var quantitativeFunctions = {

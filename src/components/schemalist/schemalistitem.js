@@ -7,7 +7,7 @@
  * # schemaListItem
  */
 angular.module('vlui')
-  .directive('schemaListItem', function (Pills, cql, Logger) {
+  .directive('schemaListItem', function (Pills, cql) {
     return {
       templateUrl: 'components/schemalist/schemalistitem.html',
       restrict: 'E',

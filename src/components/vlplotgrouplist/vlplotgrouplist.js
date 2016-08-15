@@ -16,7 +16,7 @@ angular.module('vlui')
         showMore: '=',
         postSelectAction: '&'
       },
-      link: function postLink(scope , element /*, attrs*/) {
+      link: function postLink(scope /*, element, attrs*/) {
         scope.consts = consts;
         scope.limit = scope.initialLimit || 3;
 
@@ -37,7 +37,9 @@ angular.module('vlui')
 
         function increaseLimit() {
           scope.limit += 5;
-          Logger.logInteraction(Logger.actions.LOAD_MORE, scope.limit);
+          Logger.logInteraction(Logger.actions.LOAD_MORE, scope.limit, {
+            list: scope.listTitle
+          });
         }
 
         /** return if the plot is still in the view, so it might be omitted from the render queue if necessary. */
@@ -51,7 +53,9 @@ angular.module('vlui')
         }
 
         function select(chart) {
-          Logger.logInteraction(Logger.actions.SPEC_SELECT, chart.shorthand);
+          Logger.logInteraction(Logger.actions.SPEC_SELECT, chart.shorthand, {
+            list: scope.listTitle
+          });
           Pills.parse(chart.vlSpec);
           if (scope.postSelectAction) {
             scope.postSelectAction();

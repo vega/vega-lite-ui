@@ -83,7 +83,7 @@ angular.module('vlui')
           // TODO validate timeUnit / aggregate
 
           Pills.dragDrop(scope.channelId);
-          Logger.logInteraction(Logger.actions.FIELD_DROP, pill, pill);
+          Logger.logInteraction(Logger.actions.FIELD_DROP, pill);
         };
 
         scope.$watch('channelId', function(channelId) {

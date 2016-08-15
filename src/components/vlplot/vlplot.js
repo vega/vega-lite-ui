@@ -55,14 +55,14 @@ angular.module('vlui')
 
         scope.mouseover = function() {
           scope.hoverPromise = $timeout(function(){
-            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, '', scope.chart.vlSpec);
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.chart.shorthand);
             scope.hoverFocus = !scope.thumbnail;
           }, HOVER_TIMEOUT);
         };
 
         scope.mouseout = function() {
           if (scope.hoverFocus) {
-            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, '', scope.chart.vlSpec);
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, scope.chart.shorthand);
           }
 
           $timeout.cancel(scope.hoverPromise);
@@ -82,8 +82,9 @@ angular.module('vlui')
             }
 
             scope.tooltipActive = true;
-            Logger.logInteraction(Logger.actions.CHART_TOOLTIP, item.datum);
-
+            Logger.logInteraction(Logger.actions.CHART_TOOLTIP, item.datum, {
+              shorthand: scope.chart.shorthand
+            });
 
             // convert data into a format that we can easily use with ng table and ng-repeat
             // TODO: revise if this is actually a good idea
@@ -123,7 +124,9 @@ angular.module('vlui')
           tooltip.css('left', null);
           $timeout.cancel(scope.tooltipPromise);
           if (scope.tooltipActive) {
-            Logger.logInteraction(Logger.actions.CHART_TOOLTIP_END, item.datum);
+            Logger.logInteraction(Logger.actions.CHART_TOOLTIP_END, item.datum, {
+              shorthand: scope.chart.shorthand
+            });
           }
           scope.tooltipActive = false;
           scope.data = [];
@@ -244,7 +247,7 @@ angular.module('vlui')
                   $window.views[shorthand] = view;
                 }
 
-                Logger.logInteraction(Logger.actions.CHART_RENDER, '', scope.chart.vlSpec);
+                Logger.logInteraction(Logger.actions.CHART_RENDER, scope.chart.shorthand);
                 rescaleIfEnable();
 
                 var endChart = new Date().getTime();
