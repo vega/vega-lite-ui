@@ -89,7 +89,7 @@ angular.module('vlui')
 
           // reset field def
           // HACK: we're temporarily storing the maxbins in the pill
-          pill.bin = selectedFunc === BIN ? true : undefined;
+          pill.bin = selectedFunc === BIN ? {} : undefined;
           pill.aggregate = (isQ && aggregates.indexOf(selectedFunc) !== -1) ? selectedFunc : undefined;
           pill.timeUnit = (isT && timeUnits.indexOf(selectedFunc) !== -1) ? selectedFunc : undefined;
 
