@@ -214,6 +214,7 @@ angular.module('vlui')
             vg.parse.spec(spec, function(error, chart) {
               if (error) {
                 console.error('error', error);
+                $timeout(renderQueueNext, 1);
                 return;
               }
               try {
