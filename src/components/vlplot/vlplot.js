@@ -201,8 +201,6 @@ angular.module('vlui')
 
           var shorthand = getShorthand();
 
-          scope.renderer = getRenderer(spec);
-
           function parseVega() {
             // if no longer a part of the list, cancel!
             if (scope.destroyed || scope.disabled || (scope.isInList && scope.chart.fieldSetKey && !scope.isInList(scope.chart))) {
@@ -227,8 +225,13 @@ angular.module('vlui')
                   view.data({raw: Dataset.data});
                 }
 
-                // view.renderer(getRenderer(spec.width, scope.height));
                 view.update();
+                // read width / height from layout
+                var layout = view.data('layout').values()[0];
+                var renderer = getRenderer(layout.width, layout.height);
+                if (renderer === 'svg') {
+                  view.renderer(renderer);
+                }
 
                 var visElement = element.find('.vega > :first-child');
                 // read  <canvas>/<svg>’s width and height, which is vega's outer width and height that includes axes and legends
