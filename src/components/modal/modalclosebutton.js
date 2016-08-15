@@ -13,13 +13,13 @@ angular.module('vlui')
       restrict: 'E',
       require: '^^modal',
       scope: {
-        'closeCallback': '&onClose'
+        closeAction: '&'
       },
       link: function(scope, element, attrs, modalController) {
         scope.closeModal = function() {
           modalController.close();
-          if (scope.closeCallback) {
-            scope.closeCallback();
+          if (scope.closeAction) {
+            scope.closeAction();
           }
         };
       }

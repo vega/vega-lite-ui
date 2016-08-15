@@ -110,5 +110,9 @@ angular.module('vlui')
       return this.dict.hasOwnProperty(shorthand);
     };
 
+    proto.logBookmarksClosed = function() {
+      Logger.logInteraction(Logger.actions.BOOKMARK_CLOSE);
+    };
+
     return new Bookmarks();
   });

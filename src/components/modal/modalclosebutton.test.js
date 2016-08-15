@@ -56,7 +56,7 @@ describe('Directive: modalCloseButton', function () {
 
   it('fires an on-close callback method, if one is provided', inject(function($compile, Modals) {
     var cbHasFired = false;
-    element = angular.element('<modal id="button-parent"><modal-close-button on-close="someCb()"></modal-close-button></modal>');
+    element = angular.element('<modal id="button-parent"><modal-close-button close-action="someCb()"></modal-close-button></modal>');
     scope.someCb = function() {
       cbHasFired = true;
     };

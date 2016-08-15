@@ -1,6 +1,6 @@
 <modal id="bookmark-list" ng-if="Bookmarks.isSupported">
   <div class="modal-header card no-top-margin no-right-margin">
-    <modal-close-button on-close="logBookmarksClosed()"></modal-close-button>
+    <modal-close-button close-action="Bookmarks.logBookmarksClosed()"></modal-close-button>
     <h2 class="no-bottom-margin">Bookmarks ({{ Bookmarks.list.length }})</h2>
     <a class="bookmark-list-util" ng-click="Bookmarks.clear()"><i class="fa fa-trash-o"></i> Clear all </a>
     <a class="bookmark-list-util" ng-click="Bookmarks.export()"><i class="fa fa-clipboard"></i> Export </a>
