@@ -397,6 +397,7 @@ h4 {
   display: none;
   &.drop-open {
     display: block;
+    z-index: 100; /** so it's show above modal */
   }
 }
 
