@@ -252,7 +252,7 @@ angular.module('vlui')
               } catch (e) {
                 console.error(e, JSON.stringify(spec));
               } finally {
-                $timeout(renderQueueNext);
+                $timeout(renderQueueNext, 1);
               }
 
             });
