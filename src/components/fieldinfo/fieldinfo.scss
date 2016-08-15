@@ -45,7 +45,13 @@ $any-hover-color: #666;
 
   .field-func, .field-count {
     flex-shrink: 0;
-    margin-right: 3px;
+    margin-right: 2px;
+  }
+
+  .field-func {
+    text-overflow: ellipsis;
+    max-width: 75px;
+    overflow: hidden;
   }
 }
 

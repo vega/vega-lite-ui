@@ -15,6 +15,7 @@
       class="field-info-text">
       <span ng-if="func(fieldDef)"
         class="field-func"
+        title="{{ func(fieldDef) }}"
         ng-class="{any: fieldDef._any}"
         >
         {{ func(fieldDef) }}
