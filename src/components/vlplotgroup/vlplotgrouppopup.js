@@ -9,7 +9,7 @@
 angular.module('vlui')
   .directive('vlPlotGroupPopup', function (Drop) {
     return {
-      templateUrl: 'vlplotgroup/vlplotgrouppopup.html',
+      templateUrl: 'components/vlplotgroup/vlplotgrouppopup.html',
       restrict: 'E',
       require: '^^vlPlotGroup',
       scope: false,
