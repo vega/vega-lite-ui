@@ -4,7 +4,8 @@
 angular.module('vlui', [
     'LocalStorageModule',
     'angular-google-analytics',
-    'angular-sortable-view'
+    'angular-sortable-view',
+    'angular-websql'
   ])
   .constant('_', window._)
   // datalib, vegalite, vega
@@ -15,6 +16,7 @@ angular.module('vlui', [
   .constant('util', window.vg.util)
   // other libraries
   .constant('jQuery', window.$)
+  .constant('Papa', window.Papa)
   .constant('Blob', window.Blob)
   .constant('URL', window.URL)
   .constant('Drop', window.Drop)
@@ -29,6 +31,7 @@ angular.module('vlui', [
     useUrl: true,
     logging: true,
     logLevel: 'INFO',
+    logToWebSql: false, // in user studies, set this to true
     defaultConfigSet: 'large',
     appId: 'vlui',
     // embedded polestar and voyager with known data
