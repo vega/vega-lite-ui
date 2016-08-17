@@ -45,6 +45,7 @@ angular.module('vlui')
           // Only call Pills.update, which will trigger Spec.spec to update if it's not a preview.
           if (!$scope.preview) {
             Logger.logInteraction(Logger.actions.SPEC_CHANGE, spec);
+            console.log(JSON.stringify(spec));
             Pills.update(spec);
           }
         }, true); //, true /* watch equality rather than reference */);

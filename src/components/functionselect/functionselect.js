@@ -7,7 +7,8 @@ angular.module('vlui')
       restrict: 'E',
       scope: {
         channelId: '=',
-        fieldDef: '='
+        fieldDef: '=',
+        supportAny: '='
       },
       link: function(scope /*,element, attrs*/) {
         var BIN='bin', COUNT='count', maxbins;
@@ -25,12 +26,11 @@ angular.module('vlui')
         // functions for T = timeUnits + undefined
         var temporalFunctions = {
           aboveFold: [
-            undefined, 'year',
+            'year', 'yearmonthdate',
             'quarter', 'month',
-            'date','day',
+            'date', 'day',
             'hours', 'minutes',
-            'seconds', 'milliseconds',
-            'yearmonthdate'
+            'seconds', 'milliseconds'
           ],
           belowFold: [
             'yearquarter',
@@ -45,16 +45,15 @@ angular.module('vlui')
           ]
         };
 
-        // timeUnits = T functions - undefined
-        var timeUnits = _.pull(_.concat(temporalFunctions.aboveFold, temporalFunctions.belowFold), undefined);
+        // timeUnits = T functions
+        var timeUnits = _.concat(temporalFunctions.aboveFold, temporalFunctions.belowFold);
 
         // functions for Q = aggregates + BIN + undefined - COUNT
         var quantitativeFunctions = {
           aboveFold: [
-            undefined, 'bin',
+            'bin', 'sum',
             'min', 'max',
-            'mean', 'median',
-            'sum'
+            'mean', 'median'
           ],
           belowFold: [
             'valid', 'missing',
@@ -65,9 +64,9 @@ angular.module('vlui')
           ] // hide COUNT for Q in the UI because we dedicate it to a special "# Count" field
         };
 
-        // aggregates = Q Functions + COUNT - BIN - undefined
+        // aggregates = Q Functions + COUNT - BIN
         var aggregates = _.pull(_.concat(quantitativeFunctions.aboveFold, quantitativeFunctions.belowFold, [COUNT]),
-          BIN, undefined);
+          BIN);
 
         scope.selectChanged = function() {
           Logger.logInteraction(Logger.actions.FUNC_CHANGE, scope.func.selected);
@@ -127,8 +126,7 @@ angular.module('vlui')
             if (isT) {
               scope.func.list.aboveFold = temporalFunctions.aboveFold;
               scope.func.list.belowFold = temporalFunctions.belowFold;
-            }
-            else if (isQ) {
+            } else if (isQ) {
               scope.func.list.aboveFold = quantitativeFunctions.aboveFold;
               scope.func.list.belowFold = quantitativeFunctions.belowFold;
             }
@@ -140,9 +138,13 @@ angular.module('vlui')
             var selected = pill.bin ? 'bin' :
               pill.aggregate || pill.timeUnit;
 
-            if (scope.func.list.aboveFold.indexOf(selected) >= 0 || scope.func.list.belowFold.indexOf(selected) >= 0) {
+            if (selected === undefined) {
+              scope.func.selected = undefined;
+            } else if (selected) {
+
+            } else if (scope.func.list.aboveFold.indexOf(selected) >= 0 || scope.func.list.belowFold.indexOf(selected) >= 0) {
               scope.func.selected = selected;
-            } else {
+            } else { // FIXME: eliminate this clause and move this reset logic to pill.service
               scope.func.selected = defaultVal;
             }
           }

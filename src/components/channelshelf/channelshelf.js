@@ -11,7 +11,8 @@ angular.module('vlui')
         encoding: '=',
         mark: '=',
         preview: '=',
-        disabled: '='
+        disabled: '=',
+        supportAny: '='
       },
       link: function(scope, element /*, attrs*/) {
         var propsPopup, funcsPopup;
