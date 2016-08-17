@@ -70,13 +70,13 @@ $text-color: #212121;
       display: block;
       width: 100%;
       padding: 0 0.5em;
-      border: 1px solid #ccc;
+      border: 1px solid hsla(0,0%,30%,0.1);
       background-color: white;
       line-height: $pill-height - 2;
       border-radius: $pill-radius;
       text-overflow: ellipsis;
       font-weight: normal;
-      color: #aaa;
+      color: #ccc;
     }
   }
 
