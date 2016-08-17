@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('functionSelect', function(_, consts, vl, Pills, Logger) {
+  .directive('functionSelect', function(_, consts, vl, Pills, Logger, Dataset) {
     return {
       templateUrl: 'components/functionselect/functionselect.html',
       restrict: 'E',
@@ -124,9 +124,16 @@ angular.module('vlui')
             scope.func.selected = COUNT;
           } else {
             // TODO: check supported type based on primitive data?
+            function cardinalityFilter(timeUnit) {
+              // Convert 'any' channel to '?'.
+              var channel = Pills.isAnyChannel(scope.channelId) ? '?' : scope.channelId;
+              return !timeUnit || // Don't filter undefined.
+                // Remove timeUnits that have cardinality <= 1. 
+                Dataset.schema.cardinality({field: pill.field, channel: channel, timeUnit: timeUnit}, true, true) > 1;
+            }
             if (isT) {
-              scope.func.list.aboveFold = temporalFunctions.aboveFold;
-              scope.func.list.belowFold = temporalFunctions.belowFold;
+              scope.func.list.aboveFold = temporalFunctions.aboveFold.filter(cardinalityFilter);
+              scope.func.list.belowFold = temporalFunctions.belowFold.filter(cardinalityFilter);
             }
             else if (isQ) {
               scope.func.list.aboveFold = quantitativeFunctions.aboveFold;
