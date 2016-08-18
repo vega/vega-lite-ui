@@ -156,6 +156,7 @@ $any-hover-color: #666;
 }
 
 .field-info.highlighted,
+.field-info.highlighted.any,
 .field-list-item:hover .field-info {
   border-style: solid;
   background-color: #c6e5ff;

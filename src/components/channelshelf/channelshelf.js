@@ -28,7 +28,12 @@ angular.module('vlui')
         scope.Dataset = Dataset;
         scope.schema = Schema.getChannelSchema(scope.channelId);
         scope.pills = Pills.pills;
-        scope.highlighted = Pills.highlighted;
+
+        scope.isHighlighted = function (channelId) {
+          var highlighted = Pills.highlighted || {};
+          return highlighted[scope.encoding[channelId].field] ||
+            highlighted['f' + channelId];
+        };
 
         // These will get updated in the watcher
         scope.isAnyChannel = false;

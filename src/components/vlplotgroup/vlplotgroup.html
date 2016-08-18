@@ -14,8 +14,8 @@
           highlighted: (highlighted||{})[fieldDef.field],
           any: isFieldAny(chart, $index)
         }"
-        ng-mouseover="fieldInfoMouseover(fieldDef)"
-        ng-mouseout="fieldInfoMouseout(fieldDef)"
+        ng-mouseover="fieldInfoMouseover(fieldDef, $index)"
+        ng-mouseout="fieldInfoMouseout(fieldDef, $index)"
       ></field-info>
     </div>
     <div class="toolbox">
