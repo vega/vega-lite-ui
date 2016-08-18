@@ -100,10 +100,13 @@ angular.module('vlui')
         // If some external action changes the fieldDef, we also need to update the pill
         scope.$watch('encoding[channelId]', function(fieldDef) {
           // Preview shelf should not cause side effect
-          if (scope.preview) return;
-
-          Pills.set(scope.channelId, fieldDef ? _.cloneDeep(fieldDef) : {});
-          scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
+          if (scope.preview) {
+            scope.isEnumeratedField = Pills.isEnumeratedField(scope.channelId);
+            scope.isEnumeratedChannel = Pills.isEnumeratedChannel(scope.channelId);
+          } else {
+            Pills.set(scope.channelId, fieldDef ? _.cloneDeep(fieldDef) : {});
+            scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
+          }
         }, true);
 
         scope.$watchGroup(['allowedCasting[Dataset.schema.type(encoding[channelId].field)]', 'encoding[channel].aggregate'], function(arr){

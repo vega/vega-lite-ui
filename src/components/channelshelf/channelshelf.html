@@ -16,6 +16,8 @@
         ng-class="{
           expanded: funcsExpanded,
           any: isAnyField,
+          'enumerated-field': isEnumeratedField,
+          'enumerated-channel': isEnumeratedChannel,
           highlighted: isHighlighted(channelId)
         }"
         field-def="encoding[channelId]"

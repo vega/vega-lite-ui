@@ -135,10 +135,19 @@ angular.module('vlui')
           }
         };
 
-        scope.isFieldAny = function(chart, index) {
+        scope.isEnumeratedField = function(chart, index) {
           if (chart.enumSpecIndex) {
-            if (chart.enumSpecIndex.encodings && chart.enumSpecIndex.encodings[index] && chart.enumSpecIndex.encodings[index].field) {
-              return true;
+            if (chart.enumSpecIndex.encodings && chart.enumSpecIndex.encodings[index]) {
+              return chart.enumSpecIndex.encodings[index].field;
+            }
+          }
+          return false;
+        };
+
+        scope.isEnumeratedChannel = function(chart, index) {
+          if (chart.enumSpecIndex) {
+            if (chart.enumSpecIndex.encodings && chart.enumSpecIndex.encodings[index]) {
+              return chart.enumSpecIndex.encodings[index].channel;
             }
           }
           return false;

@@ -12,7 +12,8 @@
           selected: alwaysSelected || (isSelected && isSelected(fieldDef.field)),
           unselected: isSelected && !isSelected(fieldDef.field),
           highlighted: (highlighted||{})[fieldDef.field],
-          any: isFieldAny(chart, $index)
+          'enumerated-field': isEnumeratedField(chart, $index),
+          'enumerated-channel': isEnumeratedChannel(chart, $index)
         }"
         ng-mouseover="fieldInfoMouseover(fieldDef, $index)"
         ng-mouseout="fieldInfoMouseout(fieldDef, $index)"
