@@ -45,6 +45,15 @@ angular.module('vlui')
           ]
         };
 
+        var cardinalityFilter = function(timeUnit) {
+          var field = Pills.get(scope.channelId).field;
+          // Convert 'any' channel to '?'.
+          var channel = Pills.isAnyChannel(scope.channelId) ? '?' : scope.channelId;
+          return !timeUnit || // Don't filter undefined.
+            // Remove timeUnits that do not have variation (cardinality <= 1).
+            Dataset.schema.timeUnitHasVariation({field: field, channel: channel, timeUnit: timeUnit});
+        };
+
         // timeUnits = T functions - undefined
         var timeUnits = _.pull(_.concat(temporalFunctions.aboveFold, temporalFunctions.belowFold), undefined);
 
@@ -124,13 +133,6 @@ angular.module('vlui')
             scope.func.selected = COUNT;
           } else {
             // TODO: check supported type based on primitive data?
-            function cardinalityFilter(timeUnit) {
-              // Convert 'any' channel to '?'.
-              var channel = Pills.isAnyChannel(scope.channelId) ? '?' : scope.channelId;
-              return !timeUnit || // Don't filter undefined.
-                // Remove timeUnits that have cardinality <= 1. 
-                Dataset.schema.cardinality({field: pill.field, channel: channel, timeUnit: timeUnit}, true, true) > 1;
-            }
             if (isT) {
               scope.func.list.aboveFold = temporalFunctions.aboveFold.filter(cardinalityFilter);
               scope.func.list.belowFold = temporalFunctions.belowFold.filter(cardinalityFilter);
