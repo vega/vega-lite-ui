@@ -253,7 +253,7 @@ angular.module('vlui')
           var channels = toggleSort.channels(spec);
 
           if (scope.toggleShelf) {
-            Pills.setSort(channels.ordinal, toggleSort.getSort(newMode, spec));
+            Pills.sort(channels.ordinal, toggleSort.getSort(newMode, spec));
           } else {
             spec.encoding[channels.ordinal].sort = toggleSort.getSort(newMode, spec);
           }
