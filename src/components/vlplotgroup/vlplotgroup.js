@@ -24,6 +24,7 @@ angular.module('vlui')
         //optional
         disabled: '=',
         isInList: '=',
+        listTitle: '=',
 
         alwaysScrollable: '=',
         configSet: '@',
@@ -72,7 +73,7 @@ angular.module('vlui')
             scope.showBookmarkAlert = !scope.showBookmarkAlert; // toggle alert
           }
           else {
-            Bookmarks.add(chart);
+            Bookmarks.add(chart, scope.listTitle);
           }
         };
 
@@ -94,7 +95,8 @@ angular.module('vlui')
             }
 
             Logger.logInteraction(Logger.actions.FIELDDEF_HIGHLIGHTED, scope.chart.shorthand, {
-              highlightedField: fieldDef.field
+              highlightedField: fieldDef.field,
+              list: scope.listTitle
             });
 
             if (scope.enablePillsPreview) {
@@ -115,7 +117,8 @@ angular.module('vlui')
           if ((scope.highlighted||{})[fieldDef.field]) {
             // disable preview if it's enabled
             Logger.logInteraction(Logger.actions.FIELDDEF_UNHIGHLIGHTED, scope.chart.shorthand, {
-              highlightedField: fieldDef.field
+              highlightedField: fieldDef.field,
+              list: scope.listTitle
             });
 
             (scope.highlighted||{})[fieldDef.field] = false;
@@ -196,7 +199,9 @@ angular.module('vlui')
             scale.type = scale.type === 'log' ? 'linear' : 'log';
           }
 
-          Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand);
+          Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand, {
+            list: scope.listTitle
+          });
         };
 
         scope.log.active = function(spec, channel) {
@@ -212,7 +217,9 @@ angular.module('vlui')
         // TODO: extract toggleFilterNull to be its own class
 
         scope.toggleFilterNull = function(spec) {
-          Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE, scope.chart.shorthand);
+          Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE, scope.chart.shorthand, {
+            list: scope.listTitle
+          });
 
           spec.transform = spec.transform || {};
           spec.transform.filterInvalid = spec.transform.filterInvalid === true ? undefined : true;
@@ -247,7 +254,8 @@ angular.module('vlui')
 
           Logger.logInteraction(Logger.actions.SORT_TOGGLE, scope.chart.shorthand, {
             currentMode: currentMode,
-            newMode: newMode
+            newMode: newMode,
+            list: scope.listTitle
           });
 
           var channels = toggleSort.channels(spec);
@@ -366,7 +374,9 @@ angular.module('vlui')
         };
 
         scope.transpose = function() {
-          Logger.logInteraction(Logger.actions.TRANSPOSE_TOGGLE, scope.chart.shorthand);
+          Logger.logInteraction(Logger.actions.TRANSPOSE_TOGGLE, scope.chart.shorthand, {
+            list: scope.listTitle
+          });
           if (scope.toggleShelf) {
             Pills.transpose();
           } else {

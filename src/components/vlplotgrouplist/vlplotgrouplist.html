@@ -1,5 +1,5 @@
 <div class="vl-plot-group-list-container">
-  <div class="vis-list-header" ng-show="listTitle">
+  <div class="vis-list-header" ng-show="listTitle && !hideListTitle">
     <h3>{{listTitle}}</h3>
     <span class="description"></span>
   </div>
@@ -11,6 +11,7 @@
 
       chart="chart"
       is-in-list="isInList"
+      list-title="listTitle"
 
       enable-pills-preview="enablePillsPreview"
       field-set="chart.fieldSet"

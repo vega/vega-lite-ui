@@ -11,6 +11,7 @@ angular.module('vlui')
         enablePillsPreview: '=',
         initialLimit: '=',
         listTitle: '=',
+        hideListTitle: '=',
         items: '=',
         priority: '=',
         showMore: '=',

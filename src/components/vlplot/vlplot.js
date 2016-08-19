@@ -28,6 +28,7 @@ angular.module('vlui')
         disabled: '=',
         /** A function that returns if the plot is still in the view, so it might be omitted from the render queue if necessary. */
         isInList: '=',
+        listTitle: '=',
 
         alwaysScrollable: '=',
         configSet: '@',
@@ -55,14 +56,18 @@ angular.module('vlui')
 
         scope.mouseover = function() {
           scope.hoverPromise = $timeout(function(){
-            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.chart.shorthand);
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.chart.shorthand,{
+              list: scope.listTitle
+            });
             scope.hoverFocus = !scope.thumbnail;
           }, HOVER_TIMEOUT);
         };
 
         scope.mouseout = function() {
           if (scope.hoverFocus) {
-            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, scope.chart.shorthand);
+            Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, scope.chart.shorthand, {
+              list: scope.listTitle
+            });
           }
 
           $timeout.cancel(scope.hoverPromise);
@@ -83,7 +88,8 @@ angular.module('vlui')
 
             scope.tooltipActive = true;
             Logger.logInteraction(Logger.actions.CHART_TOOLTIP, item.datum, {
-              shorthand: scope.chart.shorthand
+              shorthand: scope.chart.shorthand,
+              list: scope.listTitle
             });
 
             // convert data into a format that we can easily use with ng table and ng-repeat
@@ -125,7 +131,8 @@ angular.module('vlui')
           $timeout.cancel(scope.tooltipPromise);
           if (scope.tooltipActive) {
             Logger.logInteraction(Logger.actions.CHART_TOOLTIP_END, item.datum, {
-              shorthand: scope.chart.shorthand
+              shorthand: scope.chart.shorthand,
+              list: scope.listTitle
             });
           }
           scope.tooltipActive = false;
@@ -247,7 +254,9 @@ angular.module('vlui')
                   $window.views[shorthand] = view;
                 }
 
-                Logger.logInteraction(Logger.actions.CHART_RENDER, scope.chart.shorthand);
+                Logger.logInteraction(Logger.actions.CHART_RENDER, scope.chart.shorthand, {
+                  list: scope.listTitle
+                });
                 rescaleIfEnable();
 
                 var endChart = new Date().getTime();
