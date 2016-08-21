@@ -110,6 +110,12 @@ angular.module('vlui')
           var allowedTypes = arr[0], aggregate=arr[1];
           scope.allowedTypes = aggregate === 'count' ? [vl.type.QUANTITATIVE] : allowedTypes;
         });
+
+        scope.$on('$destroy', function() {
+          if (propsPopup && propsPopup.destroy) {
+            propsPopup.destroy();
+          }
+        });
       }
     };
   });
