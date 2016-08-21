@@ -46,8 +46,11 @@ angular.module('vlui')
           TOOLTIP_TIMEOUT = 250;
 
         scope.visId = (counter++);
-        scope.hoverPromise = null;
-        scope.tooltipPromise = null;
+
+        var hoverPromise = null;
+        var tooltipPromise = null;
+        var renderQueueNextPromise = null;
+
         scope.hoverFocus = false;
         scope.tooltipActive = false;
         scope.destroyed = false;
@@ -55,7 +58,7 @@ angular.module('vlui')
         var format = vg.util.format.number('');
 
         scope.mouseover = function() {
-          scope.hoverPromise = $timeout(function(){
+          hoverPromise = $timeout(function(){
             Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.chart.shorthand,{
               list: scope.listTitle
             });
@@ -70,7 +73,9 @@ angular.module('vlui')
             });
           }
 
-          $timeout.cancel(scope.hoverPromise);
+          $timeout.cancel(hoverPromise);
+          hoverPromise = null;
+
           scope.hoverFocus = scope.unlocked = false;
         };
 
@@ -79,7 +84,7 @@ angular.module('vlui')
             return;
           }
 
-          scope.tooltipPromise = $timeout(function activateTooltip(){
+          tooltipPromise = $timeout(function activateTooltip(){
 
             // avoid showing tooltip for facet's background
             if (item.datum._facetID) {
@@ -128,7 +133,9 @@ angular.module('vlui')
           var tooltip = element.find('.vis-tooltip');
           tooltip.css('top', null);
           tooltip.css('left', null);
-          $timeout.cancel(scope.tooltipPromise);
+          $timeout.cancel(tooltipPromise);
+          tooltipPromise = null;
+
           if (scope.tooltipActive) {
             Logger.logInteraction(Logger.actions.CHART_TOOLTIP_END, item.datum, {
               shorthand: scope.chart.shorthand,
@@ -224,7 +231,7 @@ angular.module('vlui')
             vg.parse.spec(spec, function(error, chart) {
               if (error) {
                 console.error('error', error);
-                $timeout(renderQueueNext, 1);
+                renderQueueNextPromise = $timeout(renderQueueNext, 1);
                 return;
               }
               try {
@@ -268,7 +275,7 @@ angular.module('vlui')
               } catch (e) {
                 console.error(e, JSON.stringify(spec));
               } finally {
-                $timeout(renderQueueNext, 1);
+                renderQueueNextPromise = $timeout(renderQueueNext, 1);
               }
 
             });
@@ -310,6 +317,21 @@ angular.module('vlui')
           if (consts.debug && $window.views) {
             delete $window.views[shorthand];
           }
+
+          if (hoverPromise) {
+            $timeout.cancel(hoverPromise);
+            hoverPromise = null;
+          }
+
+          if (tooltipPromise) {
+            $timeout.cancel(tooltipPromise);
+            tooltipPromise = null;
+          }
+
+          // if (renderQueueNextPromise) {
+          //   $timeout.cancel(renderQueueNextPromise);
+          //   renderQueueNextPromise = null;
+          // }
 
           scope.destroyed = true;
           // FIXME another way that should eliminate things from memory faster should be removing
