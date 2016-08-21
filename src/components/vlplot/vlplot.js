@@ -53,6 +53,11 @@ angular.module('vlui')
             view.off('mouseout');
             view.destroy();
             view = null;
+
+            var shorthand = getShorthand();
+            if (consts.debug && $window.views) {
+              delete $window.views[shorthand];
+            }
           }
         }
 
@@ -323,10 +328,6 @@ angular.module('vlui')
           console.log('vlplot destroyed');
           if (view) {
             destroyView();
-          }
-          var shorthand = getShorthand();
-          if (consts.debug && $window.views) {
-            delete $window.views[shorthand];
           }
 
           if (hoverPromise) {
