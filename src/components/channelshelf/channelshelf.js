@@ -89,13 +89,13 @@ angular.module('vlui')
           Logger.logInteraction(Logger.actions.FIELD_DROP, pill);
         };
 
-        scope.$watch('channelId', function(channelId) {
+        var channelIdWatcher = scope.$watch('channelId', function(channelId) {
           scope.isAnyChannel = Pills.isAnyChannel(channelId);
         }, true);
 
         // FIXME: remove this confusing 2-way binding logics
         // If some external action changes the fieldDef, we also need to update the pill
-        scope.$watch('encoding[channelId]', function(fieldDef) {
+        var channelEncodingWatcher = scope.$watch('encoding[channelId]', function(fieldDef) {
           // Preview shelf should not cause side effect
           if (scope.preview) {
             scope.isEnumeratedField = Pills.isEnumeratedField(scope.channelId);
@@ -115,6 +115,10 @@ angular.module('vlui')
           if (propsPopup && propsPopup.destroy) {
             propsPopup.destroy();
           }
+
+          // Clean up watchers
+          channelIdWatcher();
+          channelEncodingWatcher();
         });
       }
     };

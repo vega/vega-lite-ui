@@ -294,7 +294,7 @@ angular.module('vlui')
         }
 
         var view;
-        scope.$watch(function() {
+        var specWatcher = scope.$watch(function() {
           // Omit data property to speed up deep watch
           return _.omit(scope.chart.vlSpec, 'data');
         }, function() {
@@ -338,6 +338,9 @@ angular.module('vlui')
           // maybe something like
           // renderQueue.splice(renderQueue.indexOf(parseVega), 1));
           // but without proper testing, this is riskier than setting scope.destroyed.
+
+          // Clean up watcher
+          specWatcher();
         });
       }
     };

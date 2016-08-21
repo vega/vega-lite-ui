@@ -32,7 +32,7 @@ angular.module('vlui')
           Pills.reset();
         };
 
-        $scope.$watch('spec', function(spec) {
+        var specWatcher = $scope.$watch('spec', function(spec) {
           // populate anyChannelIds so we show all or them
           if ($scope.supportAny) {
             $scope.anyChannelIds = util.keys(spec.encoding).reduce(function(anyChannelIds, channelId) {
@@ -48,6 +48,12 @@ angular.module('vlui')
             Pills.update(spec);
           }
         }, true); //, true /* watch equality rather than reference */);
+
+
+        $scope.$on('$destroy', function() {
+          // Clean up watcher
+          specWatcher();
+        });
       }
     };
   });

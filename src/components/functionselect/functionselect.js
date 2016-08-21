@@ -110,7 +110,7 @@ angular.module('vlui')
         };
 
         // when parent objects modify the field
-        scope.$watch('fieldDef', function(pill) {
+        var fieldDefWatcher = scope.$watch('fieldDef', function(pill) {
           if (!pill) {
             return;
           }
@@ -161,6 +161,11 @@ angular.module('vlui')
             }
           }
         }, true);
+
+        scope.$on('$destroy', function() {
+          // Clean up watcher(s)
+          fieldDefWatcher();
+        });
       }
     };
   });

@@ -54,7 +54,7 @@ angular.module('vlui')
             (fieldDef._bin && 'bin') || (fieldDef._any && 'auto');
         };
 
-        scope.$watch('popupContent', function(popupContent) {
+        var popupContentWatcher = scope.$watch('popupContent', function(popupContent) {
           if (!popupContent) { return; }
 
           if (funcsPopup) {
@@ -103,7 +103,7 @@ angular.module('vlui')
           return dict[type];
         }
 
-        scope.$watch('fieldDef', function(fieldDef) {
+        var fieldDefWatcher = scope.$watch('fieldDef', function(fieldDef) {
           scope.icon = getTypeDictValue(fieldDef.type, TYPE_ICONS);
           scope.typeName = getTypeDictValue(fieldDef.type, TYPE_NAMES);
           if (fieldDef.field && Dataset.schema) { // only calculate stats if we have field attached and have schema ready
@@ -115,6 +115,10 @@ angular.module('vlui')
           if (funcsPopup && funcsPopup.destroy) {
             funcsPopup.destroy();
           }
+
+          // unregister watchers
+          popupContentWatcher();
+          fieldDefWatcher();
         });
       }
     };
