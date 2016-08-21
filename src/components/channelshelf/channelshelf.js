@@ -14,7 +14,7 @@ angular.module('vlui')
         disabled: '='
       },
       link: function(scope, element /*, attrs*/) {
-        var propsPopup, funcsPopup;
+        var propsPopup;
 
         // TODO(https://github.com/vega/vega-lite-ui/issues/187):
         // consider if we can use validator / cql instead
@@ -75,9 +75,6 @@ angular.module('vlui')
          */
         scope.fieldDropped = function() {
           var pill = Pills.get(scope.channelId);
-          if (funcsPopup) {
-            funcsPopup = null;
-          }
 
           // validate type
           var types = Schema.schema.definitions.Type.enum;
