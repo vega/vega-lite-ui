@@ -51,6 +51,7 @@ angular.module('vlui')
           if (view) {
             view.off('mouseover');
             view.off('mouseout');
+            view.destroy();
             view = null;
           }
         }
