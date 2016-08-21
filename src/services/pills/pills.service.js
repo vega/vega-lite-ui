@@ -28,6 +28,7 @@ angular.module('vlui')
       /** Pass message to toggler listeners */
       rescale: rescale,
       sort: sort,
+      toggleFilterInvalid: toggleFilterInvalid,
       transpose: transpose,
 
       /** Parse a new spec */
@@ -141,6 +142,12 @@ angular.module('vlui')
     function rescale(channelId, scaleType) {
       if (Pills.listener && Pills.listener.rescale) {
         Pills.listener.rescale(channelId, scaleType);
+      }
+    }
+
+    function toggleFilterInvalid() {
+      if (Pills.listener && Pills.listener.toggleFilterInvalid) {
+        Pills.listener.toggleFilterInvalid();
       }
     }
 

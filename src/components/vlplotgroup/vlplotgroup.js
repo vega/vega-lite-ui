@@ -221,8 +221,12 @@ angular.module('vlui')
             list: scope.listTitle
           });
 
-          spec.transform = spec.transform || {};
-          spec.transform.filterInvalid = spec.transform.filterInvalid === true ? undefined : true;
+          if (scope.toggleShelf) {
+            Pills.toggleFilterInvalid();
+          } else {
+            spec.transform = spec.transform || {};
+            spec.transform.filterInvalid = spec.transform.filterInvalid === true ? undefined : true;
+          }
         };
 
         scope.toggleFilterNull.support = function(spec) {
