@@ -45,6 +45,16 @@ angular.module('vlui')
         var HOVER_TIMEOUT = 500,
           TOOLTIP_TIMEOUT = 250;
 
+        var view;
+
+        function destroyView() {
+          if (view) {
+            view.off('mouseover');
+            view.off('mouseout');
+            view = null;
+          }
+        }
+
         scope.visId = (counter++);
 
         var hoverPromise = null;
@@ -54,6 +64,8 @@ angular.module('vlui')
         scope.hoverFocus = false;
         scope.tooltipActive = false;
         scope.destroyed = false;
+
+
 
         var format = vg.util.format.number('');
 
@@ -202,11 +214,12 @@ angular.module('vlui')
           }
         }
 
+
         function render(spec) {
+
           if (!spec) {
             if (view) {
-              view.off('mouseover');
-              view.off('mouseout');
+              destroyView();
             }
             return;
           }
@@ -236,7 +249,7 @@ angular.module('vlui')
               }
               try {
                 var endParse = new Date().getTime();
-                view = null;
+                destroyView();
                 view = chart({el: element[0]});
 
                 if (!consts.useUrl) {
@@ -293,7 +306,6 @@ angular.module('vlui')
           }
         }
 
-        var view;
         var specWatcher = scope.$watch(function() {
           // Omit data property to speed up deep watch
           return _.omit(scope.chart.vlSpec, 'data');
@@ -309,9 +321,7 @@ angular.module('vlui')
         scope.$on('$destroy', function() {
           console.log('vlplot destroyed');
           if (view) {
-            view.off('mouseover');
-            view.off('mouseout');
-            view = null;
+            destroyView();
           }
           var shorthand = getShorthand();
           if (consts.debug && $window.views) {
