@@ -25,20 +25,20 @@ angular.module('vlui')
         chart: '=',
 
         //optional
-        disabled: '=',
+        disabled: '<',
         /** A function that returns if the plot is still in the view, so it might be omitted from the render queue if necessary. */
-        isInList: '=',
-        listTitle: '=',
+        isInList: '<',
+        listTitle: '<',
 
-        alwaysScrollable: '=',
+        alwaysScrollable: '<',
         configSet: '@',
-        maxHeight:'=',
-        maxWidth: '=',
-        overflow: '=',
-        priority: '=',
-        rescale: '=',
-        thumbnail: '=',
-        tooltip: '=',
+        maxHeight:'<',
+        maxWidth: '<',
+        overflow: '<',
+        priority: '<',
+        rescale: '<',
+        thumbnail: '<',
+        tooltip: '<',
       },
       replace: true,
       link: function(scope, element) {

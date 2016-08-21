@@ -8,13 +8,13 @@ angular.module('vlui')
       replace: true,
       scope: {
         /** An instance of specQueryModelGroup */
-        enablePillsPreview: '=',
-        initialLimit: '=',
-        listTitle: '=',
-        hideListTitle: '=',
-        items: '=',
-        priority: '=',
-        showMore: '=',
+        enablePillsPreview: '<',
+        initialLimit: '<',
+        listTitle: '<',
+        hideListTitle: '<',
+        items: '<',
+        priority: '<',
+        showMore: '<',
         postSelectAction: '&'
       },
       link: function postLink(scope /*, element, attrs*/) {

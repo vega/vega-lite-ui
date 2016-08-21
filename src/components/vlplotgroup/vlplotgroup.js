@@ -22,42 +22,42 @@ angular.module('vlui')
         chart: '=',
 
         //optional
-        disabled: '=',
-        isInList: '=',
-        listTitle: '=',
+        disabled: '<',
+        isInList: '<',
+        listTitle: '<',
 
-        alwaysScrollable: '=',
+        alwaysScrollable: '<',
         configSet: '@',
-        enablePillsPreview: '=',
-        maxHeight: '=',
-        maxWidth: '=',
-        overflow: '=',
-        priority: '=',
-        rescale: '=',
-        thumbnail: '=',
-        tooltip: '=',
+        enablePillsPreview: '<',
+        maxHeight: '<',
+        maxWidth: '<',
+        overflow: '<',
+        priority: '<',
+        rescale: '<',
+        thumbnail: '<',
+        tooltip: '<',
 
         /* vlplotgroup specific */
 
         /** Set of fieldDefs for showing field info.  For Voyager2, this might be just a subset of fields that are ambiguous. */
-        fieldSet: '=',
+        fieldSet: '<',
 
-        showBookmark: '@',
-        showDebug: '=',
-        showExpand: '=',
-        showFilterNull: '@',
-        showLabel: '@',
-        showLog: '@',
-        showSelect: '@',
-        showSort: '@',
-        showTranspose: '@',
+        showBookmark: '<',
+        showDebug: '<',
+        showExpand: '<',
+        showFilterNull: '<',
+        showLabel: '<',
+        showLog: '<',
+        showSelect: '<',
+        showSort: '<',
+        showTranspose: '<',
 
         /** Whether the log / transpose sort cause side effect to the shelf  */
-        toggleShelf: '=',
+        toggleShelf: '<',
 
-        alwaysSelected: '=',
-        isSelected: '=',
-        highlighted: '=',
+        alwaysSelected: '<',
+        isSelected: '<',
+        highlighted: '<',
         expandAction: '&',
         selectAction: '&'
       },

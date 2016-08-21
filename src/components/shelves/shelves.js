@@ -8,8 +8,8 @@ angular.module('vlui')
       restrict: 'E',
       scope: {
         spec: '=',
-        preview: '=',
-        supportAny: '='
+        preview: '<',
+        supportAny: '<'
       },
       replace: true,
       controller: function($scope, ANY, util, vl, Config, Dataset, Logger, Pills) {

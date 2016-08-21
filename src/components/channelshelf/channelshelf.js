@@ -7,11 +7,11 @@ angular.module('vlui')
       restrict: 'E',
       replace: true,
       scope: {
-        channelId: '=',
+        channelId: '<',
         encoding: '=',
-        mark: '=',
-        preview: '=',
-        disabled: '='
+        mark: '<',
+        preview: '<',
+        disabled: '<'
       },
       link: function(scope, element /*, attrs*/) {
         var propsPopup;

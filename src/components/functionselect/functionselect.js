@@ -6,7 +6,7 @@ angular.module('vlui')
       templateUrl: 'components/functionselect/functionselect.html',
       restrict: 'E',
       scope: {
-        channelId: '=',
+        channelId: '<',
         fieldDef: '='
       },
       link: function(scope /*,element, attrs*/) {

@@ -13,17 +13,17 @@ angular.module('vlui')
       restrict: 'E',
       replace: true,
       scope: {
-        fieldDef: '=',
-        showAdd: '=',
-        showCaret: '=',
-        showRemove: '=',
-        showType: '=',
-        popupContent: '=',
+        fieldDef: '<',
+        showAdd: '<',
+        showCaret: '<',
+        showRemove: '<',
+        showType: '<',
+        popupContent: '<',
 
         action: '&',
         addAction: '&',
         removeAction: '&',
-        disableCountCaret: '=',
+        disableCountCaret: '<',
       },
       link: function(scope, element) {
         var funcsPopup;
