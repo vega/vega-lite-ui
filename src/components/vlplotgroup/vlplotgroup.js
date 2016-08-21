@@ -64,7 +64,7 @@ angular.module('vlui')
       link: function postLink(scope) {
         scope.Bookmarks = Bookmarks;
         scope.consts = consts;
-        scope.hovered = false;
+
 
         // bookmark alert
         scope.showBookmarkAlert = false;
@@ -77,12 +77,31 @@ angular.module('vlui')
           }
         };
 
-        var hoverPromise = null;
+        var fieldHoverPromise = null;
+        var previewPromise = null;
+
+        scope.enablePreview = function() {
+          previewPromise = $timeout(function() {
+            if (scope.enablePillsPreview) {
+              Pills.preview(true, scope.chart, scope.listTitle);
+            }
+          }, 500);
+
+        };
+
+        scope.disablePreview = function() {
+          if (previewPromise) {
+            $timeout.cancel(previewPromise);
+          }
+          previewPromise = null;
+
+          if (scope.enablePillsPreview) {
+            Pills.preview(false, scope.chart, scope.listTitle);
+          }
+        };
 
         scope.fieldInfoMouseover = function(fieldDef, index) {
-          scope.hovered = true;
-
-          hoverPromise = $timeout(function() {
+          fieldHoverPromise = $timeout(function() {
             (scope.highlighted||{})[fieldDef.field] = true;
 
             // Link to original field in the CQL-based spec
@@ -98,21 +117,15 @@ angular.module('vlui')
               highlightedField: fieldDef.field,
               list: scope.listTitle
             });
-
-            if (scope.enablePillsPreview) {
-              Pills.preview(scope.chart.vlSpec);
-            }
           }, 500);
         };
 
         scope.fieldInfoMouseout = function(fieldDef, index) {
-          scope.hovered = false;
-
-          if (hoverPromise) {
+          if (fieldHoverPromise) {
             // if we unhover within
-            $timeout.cancel(hoverPromise);
+            $timeout.cancel(fieldHoverPromise);
           }
-          hoverPromise = null;
+          fieldHoverPromise = null;
 
           if ((scope.highlighted||{})[fieldDef.field]) {
             // disable preview if it's enabled
@@ -130,10 +143,6 @@ angular.module('vlui')
                 var fieldEnumSpecName = enumSpecIndex.encodings[index].field.name;
                 delete (scope.highlighted||{})[fieldEnumSpecName];
               }
-            }
-
-            if (scope.enablePillsPreview) {
-              Pills.preview(null);
             }
           }
         };

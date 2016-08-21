@@ -173,9 +173,9 @@ angular.module('vlui')
      *
      * @param {any} spec
      */
-    function preview(spec) {
+    function preview(enable, chart, listTitle) {
       if (Pills.listener) {
-        Pills.listener.preview(spec);
+        Pills.listener.preview(enable, chart, listTitle);
       }
     }
 
