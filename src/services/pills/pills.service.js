@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .service('Pills', function (ANY, util) {
+  .service('Pills', function (ANY, consts, util) {
     var Pills = {
       // Functions
       isAnyChannel: isAnyChannel,
@@ -82,6 +82,11 @@ angular.module('vlui')
       while (Pills.pills[ANY + i]) {
         i++;
       }
+
+      if (!consts.maxAnyShelf || i >= consts.maxAnyShelf) {
+        return null;
+      }
+
       return ANY + i;
     }
 
