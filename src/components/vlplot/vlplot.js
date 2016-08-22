@@ -75,7 +75,7 @@ angular.module('vlui')
 
         var format = vg.util.format.number('');
 
-        scope.mouseover = function() {
+        scope.mouseenter = function() {
           hoverPromise = $timeout(function(){
             Logger.logInteraction(Logger.actions.CHART_MOUSEOVER, scope.chart.shorthand,{
               list: scope.listTitle
@@ -84,7 +84,7 @@ angular.module('vlui')
           }, HOVER_TIMEOUT);
         };
 
-        scope.mouseout = function() {
+        scope.mouseleave = function() {
           if (scope.hoverFocus) {
             Logger.logInteraction(Logger.actions.CHART_MOUSEOUT, scope.chart.shorthand, {
               list: scope.listTitle
