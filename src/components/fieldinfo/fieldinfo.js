@@ -98,9 +98,9 @@ angular.module('vlui')
           return dict[type];
         }
 
-        var fieldDefWatcher = scope.$watch('fieldDef', function(fieldDef) {
-          scope.icon = getTypeDictValue(fieldDef.type, TYPE_ICONS);
-          scope.typeName = getTypeDictValue(fieldDef.type, TYPE_NAMES);
+        var fieldDefWatcher = scope.$watch('fieldDef.type', function(type) {
+          scope.icon = getTypeDictValue(type, TYPE_ICONS);
+          scope.typeName = getTypeDictValue(type, TYPE_NAMES);
         });
 
         scope.$on('$destroy', function() {
