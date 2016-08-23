@@ -82,14 +82,6 @@
     <div class="popup-menu shelf-functions shelf-functions-{{channelId}}">
       <function-select ng-if="!preview" field-def="encoding[channelId]" channel-id="channelId"></function-select>
 
-      <div class="mb5" ng-if="allowedTypes.length>1">
-        <h4>Type</h4>
-        <label class="type-label"
-          ng-repeat="type in allowedTypes">
-          <input type="radio" ng-value="type" ng-model="encoding[channelId].type">
-          {{type}}
-        </label>
-      </div>
       <!-- <a class="remove-field" ng-click="removeField()">Remove Field</a> -->
     </div>
   </div>

@@ -14,17 +14,6 @@ angular.module('vlui')
         disabled: '<'
       },
       link: function(scope, element /*, attrs*/) {
-        var propsPopup;
-
-        // TODO(https://github.com/vega/vega-lite-ui/issues/187):
-        // consider if we can use validator / cql instead
-        scope.allowedCasting = {
-          quantitative: [vl.type.QUANTITATIVE, vl.type.ORDINAL, vl.type.NOMINAL],
-          ordinal: [vl.type.ORDINAL, vl.type.NOMINAL],
-          nominal: [vl.type.NOMINAL, vl.type.ORDINAL],
-          temporal: [vl.type.TEMPORAL, vl.type.ORDINAL, vl.type.NOMINAL]
-        };
-
         scope.Dataset = Dataset;
         scope.schema = Schema.getChannelSchema(scope.channelId);
         scope.pills = Pills.pills;
@@ -49,7 +38,7 @@ angular.module('vlui')
           return vl.channel.supportMark(channelId, mark);
         };
 
-        propsPopup = new Drop({
+        var propsPopup = new Drop({
           content: element.find('.shelf-properties')[0],
           target: element.find('.shelf-label')[0],
           position: 'bottom left',
@@ -106,10 +95,6 @@ angular.module('vlui')
           }
         }, true);
 
-        scope.$watchGroup(['allowedCasting[Dataset.schema.type(encoding[channelId].field)]', 'encoding[channel].aggregate'], function(arr){
-          var allowedTypes = arr[0], aggregate=arr[1];
-          scope.allowedTypes = aggregate === 'count' ? [vl.type.QUANTITATIVE] : allowedTypes;
-        });
 
         scope.$on('$destroy', function() {
           if (propsPopup && propsPopup.destroy) {

@@ -7,16 +7,20 @@
  * # schemaListItem
  */
 angular.module('vlui')
-  .directive('schemaListItem', function (Pills, cql) {
+  .directive('schemaListItem', function (Dataset, Drop, Pills, cql, vl) {
     return {
       templateUrl: 'components/schemalist/schemalistitem.html',
       restrict: 'E',
       replace: false,
       scope: {
-        fieldDef: '=', // TODO: determine if it's one way
+        fieldDef: '=', // Two-way
         showAdd:  '<',
       },
-      link: function postLink(scope) {
+      link: function postLink(scope, element) {
+        scope.isAnyField = false;
+
+        scope.fieldInfoPopupContent =  element.find('.schema-menu')[0];
+
         scope.isEnumSpec = cql.enumSpec.isEnumSpec;
 
         scope.fieldAdd = function(fieldDef) {
@@ -36,6 +40,34 @@ angular.module('vlui')
         };
 
         scope.fieldDragStop = Pills.dragStop;
+
+        // TODO(https://github.com/vega/vega-lite-ui/issues/187):
+        // consider if we can use validator / cql instead
+        var allowedCasting = {
+          quantitative: [vl.type.QUANTITATIVE, vl.type.ORDINAL, vl.type.NOMINAL],
+          ordinal: [vl.type.ORDINAL, vl.type.NOMINAL],
+          nominal: [vl.type.NOMINAL, vl.type.ORDINAL],
+          temporal: [vl.type.TEMPORAL, vl.type.ORDINAL, vl.type.NOMINAL],
+          all: [vl.type.QUANTITATIVE, vl.type.TEMPORAL, vl.type.ORDINAL, vl.type.NOMINAL]
+        };
+
+        var unwatchFieldDef = scope.$watch('fieldDef', function(fieldDef){
+          if (cql.enumSpec.isEnumSpec(fieldDef.field)) {
+            scope.allowedTypes = allowedCasting.all;
+          } else {
+            scope.allowedTypes = allowedCasting[Dataset.schema.type(fieldDef.field)];
+          }
+
+          scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
+        });
+
+        scope.$on('$destroy', function() {
+          scope.fieldAdd = null;
+          scope.fieldDragStop = null;
+          scope.isEnumSpec = null;
+
+          unwatchFieldDef();
+        });
       }
     };
   });
