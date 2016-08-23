@@ -1,0 +1,7 @@
+label {
+  display: inline-block;
+  &.type-label {
+    min-width: 75px;
+    margin-right: 5px;
+  }
+}
