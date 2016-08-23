@@ -29,7 +29,8 @@ describe('Directive: schemaListItem', function () {
 
     var mockDataset = {
       schema: {
-        stats: function() {return {}; }
+        stats: function() {return {}; },
+        type: function() {return {}; }
       },
       onUpdate: []
     };
