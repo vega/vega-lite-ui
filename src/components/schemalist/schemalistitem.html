@@ -10,7 +10,23 @@
   data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"
 
   show-add='showAdd'
+  show-caret="true"
+  disable-caret="fieldDef.immutable || fieldDef.aggregate === 'count' || allowedTypes.length<=1"
   show-type="true"
   add-action="fieldAdd(fieldDef)"
+
+  popup-content="fieldInfoPopupContent"
   >
 </field-info>
+<div class="drop-container">
+  <div class="popup-menu schema-menu">
+    <div class="mb5 field-type" ng-if="allowedTypes.length>1 && !isAnyField">
+      <h4>Type</h4>
+      <label class="type-label"
+        ng-repeat="type in allowedTypes">
+        <input type="radio" ng-value="type" ng-model="fieldDef.type">
+        {{type}}
+      </label>
+    </div>
+  </div>
+</div>
