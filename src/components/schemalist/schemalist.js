@@ -8,7 +8,8 @@ angular.module('vlui')
       scope: {
         orderBy: '<',
         fieldDefs: '<',
-        showAdd: '<'
+        showAdd: '<',
+        removeAction: '='
       },
       replace: true
     };

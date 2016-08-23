@@ -15,6 +15,8 @@ angular.module('vlui')
       scope: {
         fieldDef: '=', // TODO: determine if it's one way
         showAdd:  '<',
+        showRemove: '<',
+        removeAction: '&'
       },
       link: function postLink(scope) {
         scope.isEnumSpec = cql.enumSpec.isEnumSpec;

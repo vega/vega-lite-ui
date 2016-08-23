@@ -1,13 +1,17 @@
-<field-info field-def="fieldDef"
-  show-type="true"
-  show-add='showAdd'
+<field-info
   class="pill list-item draggable full-width no-right-margin"
   ng-class="{any: isEnumSpec(fieldDef.field)}"
+
+  field-def="fieldDef"
   ng-model="pill"
-  ng-dblclick="fieldAdd(fieldDef)"
-  add-action="fieldAdd(fieldDef)"
   data-drag="true"
   jqyoui-draggable="{placeholder: 'keep', deepCopy:  true, onStart: 'fieldDragStart', onStop:'fieldDragStop'}"
   data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"
-  >
-</field-info>
+
+  show-type="true"
+  show-add='showAdd'
+  show-remove="showRemove"
+  add-action="fieldAdd(fieldDef)"
+  ng-dblclick="fieldAdd(fieldDef)"
+  remove-action="removeAction"
+></field-info>

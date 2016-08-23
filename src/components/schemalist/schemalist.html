@@ -3,6 +3,8 @@
     ng-repeat="fieldDef in fieldDefs | orderBy : orderBy"
     field-def="fieldDef"
     show-add="showAdd"
+    show-remove="!!removeAction"
+    remove-action="removeAction($index)"
     >
   </schema-list-item>
 </div>
