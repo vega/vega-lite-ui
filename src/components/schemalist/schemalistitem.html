@@ -1,23 +1,34 @@
-<field-info
-  class="pill list-item draggable full-width no-right-margin"
-  ng-class="{any: isEnumSpec(fieldDef.field)}"
-  ng-dblclick="fieldAdd(fieldDef)"
-
-  field-def="fieldDef"
-  ng-model="pill"
-  data-drag="true"
-  jqyoui-draggable="{placeholder: 'keep', deepCopy:  true, onStart: 'fieldDragStart', onStop:'fieldDragStop'}"
-  data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"
-
-  show-add='showAdd'
-  show-caret="true"
-  disable-caret="fieldDef.immutable || fieldDef.aggregate === 'count' || allowedTypes.length<=1"
-  show-type="true"
-  add-action="fieldAdd(fieldDef)"
-
-  popup-content="fieldInfoPopupContent"
+<div class="schema-list-item"
+     ng-model="droppedFieldDef"
+     data-drop="isAnyField && fieldDef.field !== '?'"
+     jqyoui-droppable="{onDrop:'fieldDropped'}"
+     data-jqyoui-options="{activeClass: 'drop-active'}"
   >
-</field-info>
+  <field-info
+    ng-show="!isAnyField || fieldDef.field === '?' || fieldDef.field.enum.length > 0"
+    class="pill draggable full-width no-right-margin"
+    ng-class="{any: isEnumSpec(fieldDef.field)}"
+    ng-dblclick="fieldAdd(fieldDef)"
+
+    field-def="fieldDef"
+    ng-model="pill"
+    data-drag="true"
+    jqyoui-draggable="{placeholder: 'keep', deepCopy:  true, onStart: 'fieldDragStart', onStop:'fieldDragStop'}"
+    data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"
+
+    show-add='showAdd'
+    show-caret="true"
+    disable-caret="fieldDef.immutable || fieldDef.aggregate === 'count' || allowedTypes.length<=1"
+    show-type="true"
+    add-action="fieldAdd(fieldDef)"
+
+    popup-content="fieldInfoPopupContent"
+    >
+  </field-info>
+  <!--<span class="placeholder" ng-if="isAnyField && fieldDef.field.enum.length === 0">
+    drop a field here
+  </span>-->
+</div>
 <div class="drop-container">
   <div class="popup-menu schema-menu" ng-hide="!allowedTypes || allowedTypes.length<=1"><!--HACK: (ng-hide) popup is still being triggered-->
     <div class="mb5 field-type" ng-if="allowedTypes.length>1 && !isAnyField">
@@ -27,6 +38,32 @@
         <input type="radio" ng-value="type" ng-model="fieldDef.type">
         {{type}}
       </label>
+    </div>
+    <div class="wildcard-menu" ng-show="isAnyField && fieldDef.field.enum">
+      <div>
+        <label class="wildcard-title-label">
+          <h4>Name</h4>
+          <input type="text" ng-model="fieldDef.title" placeholder="Enter name here"/>
+        </label>
+      </div>
+
+      <h4>Wildcard Fields</h4>
+
+      <div class="wildcard-fields">
+        <field-info
+          ng-repeat="field in fieldDef.field.enum"
+          class="pill list-item full-width no-right-margin"
+          field-def="field === '*' ? countFieldDef : Dataset.schema.fieldSchema(field)"
+          show-type="true"
+          show-remove="true"
+          remove-action="removeWildcardField($index)"
+          >
+        </field-info>
+      </div>
+      <a class="remove-action" ng-click="removeWildcard()">
+        <i class="fa fa-times"></i>
+        Delete Wildcard
+      </a>
     </div>
   </div>
 </div>

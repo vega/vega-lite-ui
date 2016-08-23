@@ -84,7 +84,14 @@ angular.module('vlui')
         // FIXME: remove this confusing 2-way binding logics
         // If some external action changes the fieldDef, we also need to update the pill
         var channelEncodingWatcher = scope.$watch('encoding[channelId]', function(fieldDef) {
-          scope.hasFunctions = fieldDef.aggregate === "count" ? false : (fieldDef.type !== 'nominal' && fieldDef.type !== 'ordinal');
+          scope.hasFunctions = fieldDef.aggregate === 'count' ? false :
+            (
+              vl.util.contains(['quantitative', 'temporal'], fieldDef.type) ||
+              (
+                fieldDef.enum &&
+                (vl.util.contains(fieldDef.enum, 'quantitative') || vl.util.contains(fieldDef.enum, 'temporal'))
+              )
+            );
 
           // Preview shelf should not cause side effect
           if (scope.preview) {

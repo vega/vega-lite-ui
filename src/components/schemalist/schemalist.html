@@ -11,4 +11,13 @@
     show-add="true"
     >
   </schema-list-item>
+  <div class="schema-list-drop"
+    ng-show="showDrop"
+    ng-model="droppedFieldDef"
+    data-drop="true"
+    jqyoui-droppable="{onDrop:'fieldDropped'}"
+    data-jqyoui-options="{activeClass: 'drop-active'}"
+  >
+    Create a new wildcard.
+  </div>
 </div>

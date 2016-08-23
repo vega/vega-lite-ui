@@ -18,6 +18,7 @@ angular.module('vlui')
         showCaret: '<',
         showRemove: '<',
         showType: '<',
+        showEnumSpecFn: '<',
         popupContent: '<',
 
         action: '&',
@@ -28,12 +29,28 @@ angular.module('vlui')
       link: function(scope, element) {
         var funcsPopup;
         scope.vlType = vl.type;
-        scope.isEnumSpec = cql.enumSpec.isEnumSpec;
 
         // Properties that are created by a watcher later
         scope.typeName = null;
         scope.icon = null;
         scope.null = null;
+
+        scope.fieldTitle = function(field) {
+          if (cql.enumSpec.isEnumSpec(field)) {
+            return (field.enum || ['Wildcard'])
+              .map(function(field) {
+                return field === '*' ? 'COUNT' : field;
+              }).join(',');
+          }
+          return field;
+        };
+
+        scope.fieldCount = function(field) {
+          if (cql.enumSpec.isEnumSpec(field)) {
+            return field.enum ? ' (' + field.enum.length + ')' : '';
+          }
+          return '';
+        };
 
         scope.clicked = function($event){
           if(scope.action && $event.target !== element.find('.fa-caret-down')[0] &&
@@ -42,11 +59,33 @@ angular.module('vlui')
           }
         };
 
+        var isEnumSpec = cql.enumSpec.isEnumSpec;
+
         scope.func = function(fieldDef) {
-          return fieldDef.aggregate || fieldDef.timeUnit ||
-            (fieldDef.bin && 'bin') ||
-            fieldDef._aggregate || fieldDef._timeUnit ||
-            (fieldDef._bin && 'bin') || (fieldDef._any && 'auto');
+          if (fieldDef.aggregate) {
+            if (!isEnumSpec(fieldDef.aggregate)) {
+              return fieldDef.aggregate;
+            } else if (scope.showEnumSpecFn) {
+              return '?';
+            }
+          }
+          if (fieldDef.timeUnit) {
+            if (!isEnumSpec(fieldDef.timeUnit)) {
+              return fieldDef.timeUnit;
+            } else if (scope.showEnumSpecFn) {
+              return '?';
+            }
+          }
+          if (fieldDef.bin) {
+            if (!isEnumSpec(fieldDef.bin)) {
+              return 'bin';
+            } else if (scope.showEnumSpecFn) {
+              return '?';
+            }
+          }
+
+          return fieldDef._aggregate || fieldDef._timeUnit ||
+            (fieldDef._bin && 'bin') || (fieldDef._any && 'auto') || '';
         };
 
         var popupContentWatcher = scope.$watch('popupContent', function(popupContent) {
@@ -82,6 +121,10 @@ angular.module('vlui')
 
         function getTypeDictValue(type, dict) {
           if (cql.enumSpec.isEnumSpec(type)) { // is enumSpec
+            if (!type.enum) {
+              return ANY; // enum spec without specific values
+            }
+
             var val = null;
             for (var i = 0; i < type.enum.length; i++) {
               var _type = type.enum[i];

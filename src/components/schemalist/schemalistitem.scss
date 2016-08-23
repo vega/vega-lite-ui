@@ -5,3 +5,18 @@ label {
     margin-right: 5px;
   }
 }
+
+.schema-list-item {
+  margin-bottom: 4px;
+}
+
+.schema-list-item.drop-active .field-info {
+  box-sizing: border-box;
+  border: 1px dashed #4CAF50;
+
+  background-color: #C8E6C9;
+}
+
+.remove-action {
+  color: #b30a0a;
+}

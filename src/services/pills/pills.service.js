@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .service('Pills', function (ANY, consts, util) {
+  .service('Pills', function (ANY, consts, util, cql) {
     var Pills = {
       // Functions
       isAnyChannel: isAnyChannel,
@@ -12,6 +12,7 @@ angular.module('vlui')
 
       get: get,
       // Event
+      dragDrop: dragDrop,
       dragStart: dragStart,
       dragStop: dragStop,
       // Event, with handler in the listener
@@ -22,7 +23,7 @@ angular.module('vlui')
       /** Remove a fieldDef from a channel */
       remove: remove,
 
-      dragDrop: dragDrop,
+      countFieldDef: {field: '*', aggregate: vl.aggregate.AggregateOp.COUNT, type: vl.type.QUANTITATIVE},
 
       // Data
       // TODO: split between encoding related and non-encoding related
@@ -30,6 +31,7 @@ angular.module('vlui')
       highlighted: {},
       /** pill being dragged */
       dragging: null,
+      isDraggingWildcard: null,
       /** channelId that's the pill is being dragged from */
       cidDragFrom: null,
       /** Listener  */
@@ -40,7 +42,8 @@ angular.module('vlui')
     // FIXME: properly implement listener pattern
     [
       'add', 'parse', 'select', 'preview', 'update', 'reset',
-      'rescale', 'sort', 'toggleFilterInvalid', 'transpose'
+      'rescale', 'sort', 'toggleFilterInvalid', 'transpose',
+      'addWildcardField', 'addWildcard', 'removeWildcardField', 'removeWildcard'
     ].forEach(function(listenerType) {
       Pills[listenerType] = function() {
         if (Pills.listener && Pills.listener[listenerType]) {
@@ -132,6 +135,7 @@ angular.module('vlui')
      */
     function dragStart(pill, cidDragFrom) {
       Pills.dragging = pill;
+      Pills.isDraggingWildcard = cql.enumSpec.isEnumSpec(pill.field);
       Pills.cidDragFrom = cidDragFrom;
     }
 
