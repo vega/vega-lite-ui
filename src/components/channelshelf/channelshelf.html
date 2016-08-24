@@ -22,7 +22,7 @@
         }"
         field-def="encoding[channelId]"
         show-type="true"
-        show-caret="hasFunctions"
+        show-caret="true"
         disable-caret="encoding[channelId].aggregate==='count' || !hasFunctions"
         popup-content="fieldInfoPopupContent"
         show-remove="true"
@@ -41,7 +41,7 @@
   </div>
   </div>
   <div class="drop-container">
-    <div class="popup-menu shelf-properties shelf-properties-{{channelId}}">
+    <div class="popup-menu shelf-properties shelf-properties-{{channelId}}" ng-hide="!hasFunctions">
       <!--<div>
         <property-editor ng-show="schema.properties.value"
           id="channelId + 'value'"
