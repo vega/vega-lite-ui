@@ -58,7 +58,7 @@ angular.module('vlui')
 
           funcsPopup = new Drop({
             content: popupContent,
-            target: element.find('.type-caret')[0],
+            target: element.find('.fa-caret-down')[0],
             position: 'bottom left',
             openOn: 'click'
           });
