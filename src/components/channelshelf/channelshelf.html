@@ -41,7 +41,7 @@
   </div>
   </div>
   <div class="drop-container">
-    <div class="popup-menu shelf-properties shelf-properties-{{channelId}}" ng-hide="!hasFunctions">
+    <div class="popup-menu shelf-properties shelf-properties-{{channelId}}">
       <!--<div>
         <property-editor ng-show="schema.properties.value"
           id="channelId + 'value'"
@@ -79,7 +79,7 @@
       </div>
       -->
     </div>
-    <div class="popup-menu shelf-functions shelf-functions-{{channelId}}">
+    <div class="popup-menu shelf-functions shelf-functions-{{channelId}}" ng-hide="!hasFunctions"><!--HACK: (ng-hide) popup is still being triggered-->
       <function-select ng-if="!preview" field-def="encoding[channelId]" channel-id="channelId"></function-select>
 
       <!-- <a class="remove-field" ng-click="removeField()">Remove Field</a> -->
