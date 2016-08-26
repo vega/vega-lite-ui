@@ -45,7 +45,7 @@ angular.module('vlui')
           ]
         };
 
-        var cardinalityFilter = function(timeUnit) {
+        var timeUnitHasVariationFilter = function(timeUnit) {
 
           var pill =  Pills.get(scope.channelId);
           if (!pill) {
@@ -145,8 +145,8 @@ angular.module('vlui')
           } else {
             // TODO: check supported type based on primitive data?
             if (isT) {
-              scope.func.list.aboveFold = temporalFunctions.aboveFold.filter(cardinalityFilter);
-              scope.func.list.belowFold = temporalFunctions.belowFold.filter(cardinalityFilter);
+              scope.func.list.aboveFold = temporalFunctions.aboveFold.filter(timeUnitHasVariationFilter);
+              scope.func.list.belowFold = temporalFunctions.belowFold.filter(timeUnitHasVariationFilter);
             }
             else if (isQ) {
               scope.func.list.aboveFold = quantitativeFunctions.aboveFold;
