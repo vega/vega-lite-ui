@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('functionSelect', function(_, consts, vl, Pills, Logger, Dataset) {
+  .directive('functionSelect', function(_, consts, vl, cql, Pills, Logger, Dataset) {
     return {
       templateUrl: 'components/functionselect/functionselect.html',
       restrict: 'E',
@@ -54,7 +54,13 @@ angular.module('vlui')
           var field = pill.field;
           // Convert 'any' channel to '?'.
           var channel = Pills.isAnyChannel(scope.channelId) ? '?' : scope.channelId;
-          return !timeUnit || // Don't filter undefined.
+
+          if (cql.enumSpec.isEnumSpec(field)) {
+            // If field is ?, we can't really filter timeUnit
+            return true;
+          }
+
+          return !timeUnit || // Don't filter undefined
             // Remove timeUnits that do not have variation (cardinality <= 1).
             Dataset.schema.timeUnitHasVariation({field: field, channel: channel, timeUnit: timeUnit});
         };
