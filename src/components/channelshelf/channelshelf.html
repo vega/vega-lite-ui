@@ -55,10 +55,10 @@
           role="schema.properties.value.role"
           default="schema.properties.value.default"
         ></property-editor>
-      </div>
+      </div>-->
 
       <div ng-repeat="group in ['legend', 'scale', 'axis', 'bin']"
-           ng-show="schema.properties[group]">
+           ng-show="schema.properties[group] || isAnyChannel"> <!-- if channel is any, then show all of them -->
         <h4>{{ group }}</h4>
         <div ng-repeat="(propName, scaleProp) in schema.properties[group].properties"
              ng-init="id = channelId + group + $index"
@@ -77,7 +77,6 @@
         </div>
 
       </div>
-      -->
     </div>
     <div class="popup-menu shelf-functions shelf-functions-{{channelId}}" ng-hide="!hasFunctions"><!--HACK: (ng-hide) popup is still being triggered-->
       <function-select ng-if="!preview" field-def="encoding[channelId]" channel-id="channelId"></function-select>
