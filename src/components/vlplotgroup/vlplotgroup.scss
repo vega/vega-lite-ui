@@ -12,6 +12,7 @@
 // TODO consider if this can just be moved to .vis-list
 .vl-plot-group.wrapped-vl-plot-group {
   // max-width: 520px;
+  overflow-x: hidden;
   max-height: 390px;
   flex-grow: 1;
   padding-right: 11px;
