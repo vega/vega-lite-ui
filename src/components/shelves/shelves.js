@@ -44,8 +44,18 @@ angular.module('vlui')
           }
           // Only call Pills.update, which will trigger Spec.spec to update if it's not a preview.
           if (!$scope.preview) {
-            Logger.logInteraction(Logger.actions.SPEC_CHANGE, spec);
-            Pills.update(spec);
+            var Spec = Pills.update(spec);
+            var logData = null;
+            if (Spec) {
+              if (Spec.charts) {
+                logData = {specific: false, numCharts: Spec.charts.length};
+              } else if (Spec.chart) {
+                logData = {specific: true};
+              } else {
+                logData = {specific: false, numCharts: 0};
+              }
+            }
+            Logger.logInteraction(Logger.actions.SPEC_CHANGE, spec, logData);
           }
         }, true); //, true /* watch equality rather than reference */);
 

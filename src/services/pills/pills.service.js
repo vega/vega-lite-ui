@@ -191,7 +191,7 @@ angular.module('vlui')
      */
     function update(spec) {
       if (Pills.listener) {
-        Pills.listener.update(spec);
+        return Pills.listener.update(spec);
       }
     }
 
