@@ -33,6 +33,7 @@ angular.module('vlui')
 
       /** Parse a new spec */
       parse: parse,
+      select: select, // select a spec
 
       /** Preview a spec */
       preview: preview,
@@ -170,6 +171,17 @@ angular.module('vlui')
     function parse(spec) {
       if (Pills.listener) {
         Pills.listener.parse(spec);
+      }
+    }
+
+    /**
+     * Re-parse the spec.
+     *
+     * @param {any} spec
+     */
+    function select(spec) {
+      if (Pills.listener) {
+        Pills.listener.select(spec);
       }
     }
 
