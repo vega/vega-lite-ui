@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .service('Pills', function (ANY, consts, util, cql) {
+  .service('Pills', function (ANY, consts, util, vl, cql) {
     var Pills = {
       // Functions
       isAnyChannel: isAnyChannel,
