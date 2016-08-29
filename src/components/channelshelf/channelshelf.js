@@ -64,8 +64,6 @@ angular.module('vlui')
          */
         scope.fieldDropped = function() {
           var pill = Pills.get(scope.channelId);
-          scope.hasFunctions = pill.aggregate === "count" ? false : (pill.type !== 'nominal' && pill.type !== 'ordinal');
-
           // validate type
           var types = Schema.schema.definitions.Type.enum;
           if (!_.includes(types, pill.type) && !cql.enumSpec.isEnumSpec(pill.type)) {
@@ -86,6 +84,8 @@ angular.module('vlui')
         // FIXME: remove this confusing 2-way binding logics
         // If some external action changes the fieldDef, we also need to update the pill
         var channelEncodingWatcher = scope.$watch('encoding[channelId]', function(fieldDef) {
+          scope.hasFunctions = fieldDef.aggregate === "count" ? false : (fieldDef.type !== 'nominal' && fieldDef.type !== 'ordinal');
+
           // Preview shelf should not cause side effect
           if (scope.preview) {
             scope.isEnumeratedField = Pills.isEnumeratedField(scope.channelId);
