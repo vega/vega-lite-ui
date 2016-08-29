@@ -44,7 +44,7 @@ angular.module('vlui')
     ].forEach(function(listenerType) {
       Pills[listenerType] = function() {
         if (Pills.listener && Pills.listener[listenerType]) {
-          Pills.listener[listenerType].call(null, arguments);
+          return Pills.listener[listenerType].apply(null, arguments);
         }
       };
     });
