@@ -22,26 +22,6 @@ angular.module('vlui')
       /** Remove a fieldDef from a channel */
       remove: remove,
 
-      /** Add new field to the pills */
-      add: add,
-
-      /** Pass message to toggler listeners */
-      rescale: rescale,
-      sort: sort,
-      toggleFilterInvalid: toggleFilterInvalid,
-      transpose: transpose,
-
-      /** Parse a new spec */
-      parse: parse,
-      select: select, // select a spec
-
-      /** Preview a spec */
-      preview: preview,
-
-      /** If the spec/query gets updated */
-      update: update,
-
-      reset: reset,
       dragDrop: dragDrop,
 
       // Data
@@ -55,6 +35,19 @@ angular.module('vlui')
       /** Listener  */
       listener: null
     };
+
+    // Add listener type that Pills just pass arguments to its listener
+    // FIXME: properly implement listener pattern
+    [
+      'add', 'parse', 'select', 'preview', 'update', 'reset',
+      'rescale', 'sort', 'toggleFilterInvalid', 'transpose'
+    ].forEach(function(listenerType) {
+      Pills[listenerType] = function() {
+        if (Pills.listener && Pills.listener[listenerType]) {
+          Pills.listener[listenerType].call(null, arguments);
+        }
+      };
+    });
 
     /**
      * Returns whether the given channel id is an "any" channel
@@ -112,12 +105,6 @@ angular.module('vlui')
       return Pills.pills[channelId];
     }
 
-    function add(fieldDef) {
-      if (Pills.listener && Pills.listener.add) {
-        Pills.listener.add(fieldDef);
-      }
-    }
-
     function isEnumeratedChannel(channelId) {
       if (Pills.listener && Pills.listener.isEnumeratedChannel) {
         return Pills.listener.isEnumeratedChannel(channelId, Pills.pills[channelId]);
@@ -136,82 +123,6 @@ angular.module('vlui')
       delete Pills.pills[channelId];
       if (Pills.listener) {
         Pills.listener.remove(channelId);
-      }
-    }
-
-    function sort(channelId, sort) {
-      if (Pills.listener && Pills.listener.sort) {
-        Pills.listener.sort(channelId, sort);
-      }
-    }
-
-    function rescale(channelId, scaleType) {
-      if (Pills.listener && Pills.listener.rescale) {
-        Pills.listener.rescale(channelId, scaleType);
-      }
-    }
-
-    function toggleFilterInvalid() {
-      if (Pills.listener && Pills.listener.toggleFilterInvalid) {
-        Pills.listener.toggleFilterInvalid();
-      }
-    }
-
-    function transpose() {
-      if (Pills.listener && Pills.listener.transpose) {
-        Pills.listener.transpose();
-      }
-    }
-
-    /**
-     * Re-parse the spec.
-     *
-     * @param {any} spec
-     */
-    function parse(spec) {
-      if (Pills.listener) {
-        Pills.listener.parse(spec);
-      }
-    }
-
-    /**
-     * Re-parse the spec.
-     *
-     * @param {any} spec
-     */
-    function select(spec) {
-      if (Pills.listener) {
-        Pills.listener.select(spec);
-      }
-    }
-
-    /**
-     * Add Spec to be previewed (for Voyager2)
-     *
-     * @param {any} spec
-     */
-    function preview(enable, chart, listTitle) {
-      if (Pills.listener) {
-        Pills.listener.preview(enable, chart, listTitle);
-      }
-    }
-
-    /**
-     * Update the whole pill set
-     *
-     * @param {any} spec
-     */
-    function update(spec) {
-      if (Pills.listener) {
-        return Pills.listener.update(spec);
-      }
-    }
-
-
-    /** Reset Pills */
-    function reset() {
-      if (Pills.listener) {
-        Pills.listener.reset();
       }
     }
 
