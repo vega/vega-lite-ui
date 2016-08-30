@@ -73,9 +73,4 @@ angular.module('vlui')
           };
       }
     }
-
-    // FIXME remove
-    this.update = function(field, filter) {
-      // self.filterIndex[field] = filter;
-    };
   });
