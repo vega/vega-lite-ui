@@ -17,7 +17,7 @@ angular.module('vlui')
         filter: '='
       },
       link: function(scope, element) {
-        var domain = Dataset.domain(scope.field);
+        var domain = Dataset.schema.domain({field: scope.field});
         scope.domainMin = domain[0];
         scope.domainMax = domain[1];
       }
