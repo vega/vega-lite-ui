@@ -21,15 +21,14 @@ angular.module('vlui')
         scope.domainMin = domain[0];
         scope.domainMax = domain[1];
 
-        var unwatchRange = scope.$watch('filter.range', function(range, oldRange) {
-          if (!oldRange || !range || (range === oldRange)) return; // skip first time
+        // don't update until range slider handle released
+        scope.localMin = scope.filter.range[0];
+        scope.localMax = scope.filter.range[1];
+        scope.updateRange = function() {
+          scope.filter.range[0] = scope.localMin;
+          scope.filter.range[1] = scope.localMax;
           Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
-        }, true);
-
-        scope.$on('$destroy', function() {
-          // Clean up watcher
-          unwatchRange();
-        });
+        };
       }
     };
   });
