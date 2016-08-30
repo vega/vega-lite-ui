@@ -90,11 +90,11 @@ angular.module('vlui')
           BIN, undefined);
 
         function isPillQ(pill) {
-          return pill && (pill.type === vl.type.QUANTITATIVE || (pill.type.enum && vl.util.contains(pill.type.enum,vl.type.QUANTITATIVE)));
+          return pill && pill.type && (pill.type === vl.type.QUANTITATIVE || (pill.type.enum && vl.util.contains(pill.type.enum,vl.type.QUANTITATIVE)));
         }
 
         function isPillT(pill) {
-          return pill && (pill.type === vl.type.TEMPORAL || (pill.type.enum && vl.util.contains(pill.type.enum,vl.type.TEMPORAL)));
+          return pill && pill.type && (pill.type === vl.type.TEMPORAL || (pill.type.enum && vl.util.contains(pill.type.enum,vl.type.TEMPORAL)));
         }
 
         scope.selectChanged = function() {

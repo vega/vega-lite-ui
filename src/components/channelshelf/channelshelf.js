@@ -88,7 +88,7 @@ angular.module('vlui')
             (
               vl.util.contains(['quantitative', 'temporal'], fieldDef.type) ||
               (
-                fieldDef.type.enum &&
+                fieldDef.type && fieldDef.type.enum &&
                 (vl.util.contains(fieldDef.type.enum, 'quantitative') || vl.util.contains(fieldDef.type.enum, 'temporal'))
               )
             );
