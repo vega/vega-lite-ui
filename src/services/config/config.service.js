@@ -20,13 +20,13 @@ angular.module('vlui')
     Config.large = function() {
       return {
         cell: {
-          width: 400,
-          height: 400
+          width: 300,
+          height: 300
         },
         facet: {
           cell: {
-            width: 200,
-            height: 200
+            width: 150,
+            height: 150
           }
         }
       };
