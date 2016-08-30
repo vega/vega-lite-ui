@@ -8,6 +8,7 @@ angular.module('vlui')
       scope: {
         orderBy: '<',
         fieldDefs: '<',
+        filterManager: '=',
         showAdd: '<',
         showCount: '<',
         showDrop: '<'
