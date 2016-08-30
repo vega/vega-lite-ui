@@ -1,0 +1,67 @@
+quantitative-filter {
+  .domain-label {
+    padding: 0px 4px;
+    color: gray;
+  }
+
+  // slider general look
+  .ngrs-range-slider {
+    border: none;
+    background: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+  .ngrs-range-slider.ngrs-focus {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+
+  // slider body
+  .ngrs-range-slider {
+    .ngrs-join {
+      background-color: rgba(31, 119, 180, 0.8);
+      background-image: none;
+    }
+
+    .ngrs-runner {
+      background-color: lightgray;
+      border-radius: 3px;
+      height: 8px;
+      margin: 0px 12px;
+    }
+
+    .ngrs-attached-handles {
+      margin: 0px 12px;
+    }
+  }
+
+  // slider labels
+  .ngrs-range-slider {
+    .ngrs-value {
+      color: rgba(31, 119, 180, 0.8);
+      font-size: 11px;
+      text-align: center;
+    }
+  }
+  .ngrs-range-slider.ngrs-handle-min-down,
+  .ngrs-range-slider.ngrs-handle-max-down {
+    .ngrs-value {
+      color: rgba(31, 119, 180, 1);
+    }
+  }
+
+  // slider handles
+  .ngrs-range-slider {
+    .ngrs-handle {
+      background-color: white;
+      height: 18px;
+      width: 10px;
+      margin: -5px 0 0 -5px;
+    }
+    .ngrs-handle i {
+      display: none; 
+    }
+  }
+}

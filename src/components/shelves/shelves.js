@@ -10,12 +10,14 @@ angular.module('vlui')
         spec: '=',
         preview: '<',
         supportAny: '<',
-        supportAutoMark: '<'
+        supportAutoMark: '<',
+        filterManager: '='
       },
       replace: true,
       controller: function($scope, ANY, util, vl, Config, Dataset, Logger, Pills) {
         $scope.ANY = ANY;
         $scope.anyChannelIds = [];
+        $scope.Dataset = Dataset;
 
         $scope.marks = ['point', 'tick', 'bar', 'line', 'area', 'text'];
         $scope.marksWithAny = [ANY].concat($scope.marks);

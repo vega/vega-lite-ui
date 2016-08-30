@@ -14,7 +14,8 @@ angular.module('vlui')
       replace: false,
       scope: {
         fieldDef: '=', // Two-way
-        showAdd:  '<'
+        showAdd:  '<',
+        filterManager: '='
       },
       link: function postLink(scope, element) {
         scope.Dataset = Dataset;
@@ -28,6 +29,11 @@ angular.module('vlui')
 
         scope.fieldAdd = function(fieldDef) {
           Pills.add(fieldDef);
+        };
+
+        scope.toggleFilter = function() {
+          if (!scope.filterManager) return;
+          scope.filterManager.toggle(scope.fieldDef.field);
         };
 
         scope.fieldDragStart = function() {
