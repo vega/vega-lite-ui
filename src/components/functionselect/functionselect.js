@@ -89,6 +89,14 @@ angular.module('vlui')
         var aggregates = _.pull(_.concat(quantitativeFunctions.aboveFold, quantitativeFunctions.belowFold, [COUNT]),
           BIN, undefined);
 
+        function isPillQ(pill) {
+          return pill && (pill.type === vl.type.QUANTITATIVE || (pill.type.enum && vl.util.contains(pill.type.enum,vl.type.QUANTITATIVE)));
+        }
+
+        function isPillT(pill) {
+          return pill && (pill.type === vl.type.TEMPORAL || (pill.type.enum && vl.util.contains(pill.type.enum,vl.type.TEMPORAL)));
+        }
+
         scope.selectChanged = function() {
           Logger.logInteraction(Logger.actions.FUNC_CHANGE, scope.func.selected);
 
@@ -96,9 +104,8 @@ angular.module('vlui')
 
           var oldPill = Pills.get(scope.channelId),
             pill = _.clone(oldPill),
-            type = pill ? pill.type : '',
-            isQ = type === vl.type.QUANTITATIVE,
-            isT = type === vl.type.TEMPORAL;
+            isQ = isPillQ(pill),
+            isT = isPillT(pill);
 
           if(!pill){
             return; // not ready
@@ -121,16 +128,14 @@ angular.module('vlui')
             return;
           }
 
-          var type = pill.field ? pill.type : '';
-
           // hack: save the maxbins
           if (pill.bin) {
             maxbins = pill.bin.maxbins;
           }
 
           var isOrdinalShelf = ['row','column','shape'].indexOf(scope.channelId) !== -1,
-            isQ = type === vl.type.QUANTITATIVE,
-            isT = type === vl.type.TEMPORAL;
+            isQ = isPillQ(pill),
+            isT = isPillT(pill);
 
           // for making belowFold timeUnits single-column
           scope.func.isTemporal = isT;
