@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('filterShelves', function (FilterManager, Dataset) {
+  .directive('filterShelves', function (FilterManager, Dataset, vl) {
     return {
       templateUrl: 'components/filter/filtershelves.html',
       restrict: 'E',
@@ -19,6 +19,19 @@ angular.module('vlui')
         scope.filterManager = FilterManager;
         scope.clearFilter = clearFilter;
         scope.removeFilter = removeFilter;
+        scope.filterType = filterType;
+
+        function filterType(field) {
+          switch (Dataset.schema.type(field)) {
+            case 'nominal':
+            case 'ordinal':
+              return 'categorical';
+            case 'quantitative':
+              return 'quantitative';
+            case 'temporal':
+              return vl.timeUnit.defaultScaleType(field) === 'ordinal' ? 'categorical' : 'quantitative';
+          }
+        };
 
         function clearFilter(field) {
           FilterManager.reset();
