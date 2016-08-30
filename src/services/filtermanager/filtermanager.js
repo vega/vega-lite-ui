@@ -25,7 +25,9 @@ angular.module('vlui')
       }
 
       if (oldFilter) {
-        console.error('We do not support loading filter yet!');
+        oldFilter.forEach(function(filter) {
+          self.filterIndex[filter.field] = vl.util.extend({enabled: true}, filter);
+        });
       }
 
       return self.filterIndex;
@@ -51,7 +53,7 @@ angular.module('vlui')
           return {
             enabled: true,
             field: field,
-            in: Dataset.domain(field)
+            in: Dataset.schema.domain({field: field})
           };
         case vl.type.QUANTITATIVE:
           return {
