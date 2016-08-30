@@ -20,6 +20,14 @@ angular.module('vlui')
         var domain = Dataset.domain(scope.field);
         scope.domainMin = domain[0];
         scope.domainMax = domain[1];
+
+        // don't update until range slider handle released
+        scope.localMin = scope.filter.range[0];
+        scope.localMax = scope.filter.range[1];
+        scope.updateRange = function() {
+          scope.filter.range[0] = scope.localMin;
+          scope.filter.range[1] = scope.localMax;
+        };
       }
     };
   });
