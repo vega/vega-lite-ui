@@ -51,7 +51,7 @@ angular.module('vlui')
           return {
             enabled: true,
             field: field,
-            in: Dataset.domain(field)
+            in: Dataset.schema.domain({field: field})
           };
         case vl.type.QUANTITATIVE:
           return {

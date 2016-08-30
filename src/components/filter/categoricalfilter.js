@@ -39,7 +39,7 @@ angular.module('vlui')
         }
 
         scope.$watch('field', function(field) {
-          scope.values = Dataset.domain(field);
+          scope.values = Dataset.schema.domain({field: field});
         });
 
         scope.$watch('filter', function(filter) {
