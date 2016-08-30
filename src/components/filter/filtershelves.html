@@ -1,4 +1,13 @@
-<a class="right"  ng-click="clearFilter()"><i class="fa fa-eraser"></i> Clear</a>
+<!--<a class="right"  ng-click="clearFilter()"><i class="fa fa-eraser"></i> Clear</a>-->
+<div class="right">
+  <label>
+    <input ng-model="spec.transform.filterInvalid"
+      type="checkbox"
+      ng-true-value="true"
+      ng-false-value="undefined"
+    > <a><i class="fa fa-filter"></i> invalid values</a>
+  </label>
+</div>
 <h2>Filter</h2>
 <div class="filter-absolute-container scroll-y no-scroll-x">
   <div class="shelf-group"

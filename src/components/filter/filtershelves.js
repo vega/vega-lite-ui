@@ -13,6 +13,7 @@ angular.module('vlui')
       restrict: 'E',
       replace: false,
       scope: {
+        spec: '='
       },
       link: function(scope) {
         scope.Dataset = Dataset;
