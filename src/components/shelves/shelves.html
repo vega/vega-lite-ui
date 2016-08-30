@@ -36,7 +36,7 @@
     <div class="right">
       <select class="markselect" ng-model="spec.mark"
               ng-class="{auto: spec.mark === ANY}"
-              ng-options="(type === ANY ? 'auto' : type) for type in (supportAny ? marksWithAny : marks)"
+              ng-options="(type === ANY ? 'auto' : type) for type in (supportAny || supportAutoMark ? marksWithAny : marks)"
               ng-change="markChange()"></select>
     </div>
     <h3>Marks</h3>

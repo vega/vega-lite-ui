@@ -9,7 +9,8 @@ angular.module('vlui')
       scope: {
         spec: '=',
         preview: '<',
-        supportAny: '<'
+        supportAny: '<',
+        supportAutoMark: '<'
       },
       replace: true,
       controller: function($scope, ANY, util, vl, Config, Dataset, Logger, Pills) {
