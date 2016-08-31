@@ -10,7 +10,7 @@
 angular.module('vlui')
   .service('Bookmarks', function(_, vl, localStorageService, Logger, Dataset) {
     var Bookmarks = function() {
-      this.list = [];
+      this.list = []; // save to local storage
       this.dict = {};
       this.isSupported = localStorageService.isSupported;
     };
@@ -22,9 +22,11 @@ angular.module('vlui')
     };
 
     proto.saveAnnotations = _.throttle(function(shorthand) {
+      var annotation = this.dict[shorthand].annotation;
       _.find(this.list, function(bookmark) { return bookmark.shorthand === shorthand; })
-        .chart.annotation = this.dict[shorthand].annotation;
+        .chart.annotation = annotation;
       this.save();
+      Logger.logInteraction(Logger.actions.BOOKMARK_ANNOTATE, shorthand, annotation);
     }, 1000, {trailing: true});
 
     // export all bookmarks and annotations
