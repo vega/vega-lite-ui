@@ -8,18 +8,21 @@
       channel-id="'x'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf
       channel-id="'y'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf
       channel-id="'column'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark"
       disabled="!spec.encoding.x.field">
     >
@@ -28,6 +31,7 @@
       channel-id="'row'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark"
       disabled="!spec.encoding.y.field">
     </channel-shelf>
@@ -44,26 +48,31 @@
     <channel-shelf channel-id="'size'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'color'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'shape'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'detail'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark">
     </channel-shelf>
     <channel-shelf channel-id="'text'"
       preview="preview"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark">
     </channel-shelf>
   </div>
@@ -75,11 +84,12 @@
       preview="preview"
       channel-id="channelId"
       encoding="spec.encoding"
+      support-any="supportAny"
       mark="spec.mark">
     </channel-shelf>
   </div>
 
-  <div class="shelf-pane shelf-filter-pane full-width">
+  <div class="shelf-pane shelf-filter-pane full-width" ng-if="!preview">
     <filter-shelves></filter-shelves>
   </div>
 

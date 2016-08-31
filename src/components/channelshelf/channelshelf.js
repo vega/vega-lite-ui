@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('channelShelf', function(ANY, Dataset, Pills, _, Drop, Logger, vl, cql, Schema) {
+  .directive('channelShelf', function(ANY, Dataset, Pills, _, Drop, Logger, vl, cql, Schema, consts) {
     return {
       templateUrl: 'components/channelshelf/channelshelf.html',
       restrict: 'E',
@@ -11,12 +11,14 @@ angular.module('vlui')
         encoding: '=',
         mark: '<',
         preview: '<',
-        disabled: '<'
+        disabled: '<',
+        supportAny: '<',
       },
       link: function(scope, element /*, attrs*/) {
         scope.Dataset = Dataset;
         scope.schema = Schema.getChannelSchema(scope.channelId);
         scope.pills = Pills.pills;
+        scope.consts = consts;
 
         scope.isHighlighted = function (channelId) {
           var highlighted = Pills.highlighted || {};
@@ -27,6 +29,7 @@ angular.module('vlui')
         // These will get updated in the watcher
         scope.isAnyChannel = false;
         scope.isAnyField = false;
+        scope.isAnyFunction = false;
 
         scope.supportMark = function(channelId, mark) {
           if (Pills.isAnyChannel(channelId)) {
@@ -49,6 +52,7 @@ angular.module('vlui')
 
         scope.removeField = function() {
           Pills.remove(scope.channelId);
+          Logger.logInteraction(Logger.actions.FIELD_REMOVED, scope.channelId, {fieldDef: scope.encoding[scope.channelId]});
         };
 
         scope.fieldDragStart = function() {
@@ -88,8 +92,8 @@ angular.module('vlui')
             (
               vl.util.contains(['quantitative', 'temporal'], fieldDef.type) ||
               (
-                fieldDef.enum &&
-                (vl.util.contains(fieldDef.enum, 'quantitative') || vl.util.contains(fieldDef.enum, 'temporal'))
+                fieldDef.type && fieldDef.type.enum &&
+                (vl.util.contains(fieldDef.type.enum, 'quantitative') || vl.util.contains(fieldDef.type.enum, 'temporal'))
               )
             );
 
@@ -100,6 +104,9 @@ angular.module('vlui')
           } else {
             Pills.set(scope.channelId, fieldDef ? _.cloneDeep(fieldDef) : {});
             scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
+            scope.isAnyFunction = cql.enumSpec.isEnumSpec(fieldDef.aggregate) ||
+              cql.enumSpec.isEnumSpec(fieldDef.bin) ||
+              cql.enumSpec.isEnumSpec(fieldDef.timeUnit);
           }
         }, true);
 

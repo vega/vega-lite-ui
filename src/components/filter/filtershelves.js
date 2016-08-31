@@ -7,21 +7,22 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('filterShelves', function (FilterManager, Dataset) {
+  .directive('filterShelves', function (FilterManager, Dataset, Logger) {
     return {
       templateUrl: 'components/filter/filtershelves.html',
       restrict: 'E',
       replace: false,
       scope: {
       },
-      link: function(scope, element) {
+      link: function(scope) {
         scope.Dataset = Dataset;
         scope.filterManager = FilterManager;
         scope.clearFilter = clearFilter;
         scope.removeFilter = removeFilter;
 
-        function clearFilter(field) {
+        function clearFilter() {
           FilterManager.reset();
+          Logger.logInteraction(Logger.actions.FILTER_CLEAR);
         }
 
         function removeFilter(field) {

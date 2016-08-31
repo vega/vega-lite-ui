@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('categoricalFilter', function (Dataset, util, FilterManager) {
+  .directive('categoricalFilter', function (Dataset, util, Logger) {
     return {
       templateUrl: 'components/filter/categoricalfilter.html',
       restrict: 'E',
@@ -16,19 +16,25 @@ angular.module('vlui')
         field: '=',
         filter: '='
       },
-      link: function(scope, element) {
+      link: function(scope) {
         scope.values = [];
         scope.include = {};
 
         scope.selectAll = selectAll;
         scope.selectNone = selectNone;
 
+        scope.filterChange = function() {
+          Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
+        };
+
         function selectAll() {
           setInclude(scope.values);
+          scope.filterChange();
         }
 
         function selectNone() {
           setInclude([]);
+          scope.filterChange();
         }
 
         function setInclude(list) {
@@ -39,7 +45,7 @@ angular.module('vlui')
         }
 
         scope.$watch('field', function(field) {
-          scope.values = Dataset.domain(field);
+          scope.values = Dataset.schema.domain({field: field});
         });
 
         scope.$watch('filter', function(filter) {

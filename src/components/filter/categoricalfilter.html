@@ -9,7 +9,7 @@
   <div class="values">
     <div ng-repeat="val in values">
       <label>
-        <input type="checkbox" ng-model="include[val]">
+        <input type="checkbox" ng-model="include[val]" ng-change="filterChange()">
         {{val}}
       </label>
     </div>

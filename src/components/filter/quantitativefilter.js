@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('quantitativeFilter', function (Dataset) {
+  .directive('quantitativeFilter', function (Dataset, Logger) {
     return {
       templateUrl: 'components/filter/quantitativefilter.html',
       restrict: 'E',
@@ -16,8 +16,8 @@ angular.module('vlui')
         field: '=',
         filter: '='
       },
-      link: function(scope, element) {
-        var domain = Dataset.domain(scope.field);
+      link: function(scope) {
+        var domain = Dataset.schema.domain({field: scope.field});
         scope.domainMin = domain[0];
         scope.domainMax = domain[1];
 
@@ -29,6 +29,16 @@ angular.module('vlui')
           scope.filter.range[1] = scope.localMax;
           scope.$apply();
         };
+
+        var unwatchRange = scope.$watch('filter.range', function(range, oldRange) {
+          if (!oldRange || !range || (range === oldRange)) return; // skip first time
+          Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
+        }, true);
+
+        scope.$on('$destroy', function() {
+          // Clean up watcher
+          unwatchRange();
+        });
       }
     };
   });

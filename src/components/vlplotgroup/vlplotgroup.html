@@ -128,7 +128,7 @@
   <textarea class="annotation"
     ng-if="Bookmarks.isBookmarked(chart.shorthand)"
     ng-model="Bookmarks.dict[chart.shorthand].annotation"
-    ng-change="Bookmarks.saveAnnotations(chart.shorthand)"
+    ng-blur="Bookmarks.saveAnnotations(chart.shorthand)"
     placeholder = "notes"
   ></textarea>
 </div>
