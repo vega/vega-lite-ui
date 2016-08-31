@@ -1,3 +1,12 @@
+.filter-scroll-y-container {
+  overflow-y: scroll;
+  position: absolute;
+  top: 30px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .shelf.filter-shelf {
   display: flex;
   flex-direction: column;
