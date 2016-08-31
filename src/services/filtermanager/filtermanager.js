@@ -31,10 +31,10 @@ angular.module('vlui')
       }
 
       return self.filterIndex;
-    }
+    };
 
     this.getVlFilter = function() {
-      var vlFilter = _.reduce(self.filterIndex, function (filters, filter, field) {
+      var vlFilter = _.reduce(self.filterIndex, function (filters, filter) {
         if (filter.enabled) {
           filters.push(_.omit(filter, 'enabled'));
         }
@@ -42,7 +42,7 @@ angular.module('vlui')
       }, []);
 
       return vlFilter.length ? vlFilter : undefined;
-    }
+    };
 
     function initFilter(field) {
       var type = Dataset.schema.type(field);
