@@ -11,3 +11,13 @@ label.func-label.field-func.single-column {
   text-align: center;
   margin-bottom: -5px;
 }
+
+.function-select.wildcard {
+  padding: 5px;
+  background-color: #d8eaec;
+  border-radius: 3px;
+
+  // HACK to take over the outer background
+  margin: -5px;
+  padding: 5px;
+}
