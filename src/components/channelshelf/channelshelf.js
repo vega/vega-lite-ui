@@ -49,6 +49,7 @@ angular.module('vlui')
 
         scope.removeField = function() {
           Pills.remove(scope.channelId);
+          Logger.logInteraction(Logger.actions.FIELD_REMOVED, scope.channelId, {fieldDef: scope.encoding[scope.channelId]});
         };
 
         scope.fieldDragStart = function() {
