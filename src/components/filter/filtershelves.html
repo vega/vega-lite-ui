@@ -15,13 +15,14 @@
         -->
 
         <!-- ng-show="encoding[channelId].field"-->
+        <!-- (zening): remove draggable class for now because filter is not yet draggable -->
         <field-info
           ng-class="{expanded: funcsExpanded}"
           field-def="{field: field}"
           show-type="true"
           show-remove="true"
           remove-action="removeFilter(field)"
-          class="selected draggable full-width"
+          class="selected full-width"
           >
           <!--
           remove-action=""
