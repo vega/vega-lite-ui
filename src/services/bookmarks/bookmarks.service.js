@@ -21,13 +21,13 @@ angular.module('vlui')
       localStorageService.set('bookmarkList', this.list);
     };
 
-    proto.saveAnnotations = _.throttle(function(shorthand) {
+    proto.saveAnnotations = function(shorthand) {
       var annotation = this.dict[shorthand].annotation;
       _.find(this.list, function(bookmark) { return bookmark.shorthand === shorthand; })
         .chart.annotation = annotation;
       this.save();
       Logger.logInteraction(Logger.actions.BOOKMARK_ANNOTATE, shorthand, annotation);
-    }, 1000, {trailing: true});
+    };
 
     // export all bookmarks and annotations
     proto.export = function() {
