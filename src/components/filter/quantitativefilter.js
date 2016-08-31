@@ -27,6 +27,7 @@ angular.module('vlui')
         scope.updateRange = function() {
           scope.filter.range[0] = scope.localMin;
           scope.filter.range[1] = scope.localMax;
+          scope.$apply();
         };
       }
     };
