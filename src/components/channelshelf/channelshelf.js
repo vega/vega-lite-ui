@@ -29,6 +29,7 @@ angular.module('vlui')
         // These will get updated in the watcher
         scope.isAnyChannel = false;
         scope.isAnyField = false;
+        scope.isAnyFunction = false;
 
         scope.supportMark = function(channelId, mark) {
           if (Pills.isAnyChannel(channelId)) {
@@ -103,6 +104,9 @@ angular.module('vlui')
           } else {
             Pills.set(scope.channelId, fieldDef ? _.cloneDeep(fieldDef) : {});
             scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
+            scope.isAnyFunction = cql.enumSpec.isEnumSpec(fieldDef.aggregate) ||
+              cql.enumSpec.isEnumSpec(fieldDef.bin) ||
+              cql.enumSpec.isEnumSpec(fieldDef.timeUnit);
           }
         }, true);
 

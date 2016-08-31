@@ -15,7 +15,7 @@
       <field-info ng-show="encoding[channelId].field"
         ng-class="{
           expanded: funcsExpanded,
-          any: isAnyField,
+          any: isAnyField || isAnyFunction,
           'enumerated-field': isEnumeratedField,
           'enumerated-channel': isEnumeratedChannel,
           highlighted: isHighlighted(channelId)
