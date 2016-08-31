@@ -40,6 +40,25 @@ angular.module('vlui')
 
     this.getVlFilter = function() {
       var vlFilter = _.reduce(self.filterIndex, function (filters, filter) {
+        var field = filter.field;
+        var timeUnit = filter.timeUnit;
+
+        if (filter.in) {
+          if ( filter.in.length === 0 ||
+               filter.in.length === Dataset.schema.cardinality({field: field}) ) {
+            return filters;
+          }
+        } else if (filter.range) {
+          var domain = Dataset.schema.domain({
+            field: field,
+            timeUnit: timeUnit
+          });
+
+          if (filter.range[0] === domain[0] && filter.range[1] === domain[1]) {
+            return filters;
+          }
+        }
+
         if (filter.enabled) {
           filters.push(_.omit(filter, 'enabled'));
         }
