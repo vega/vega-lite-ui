@@ -1,22 +1,54 @@
-<div class="mb5" ng-if="func.list.aboveFold.length > 1 || func.list.aboveFold[0] !== undefined">
-  <h4>Function</h4>
-  <!-- Above the fold functions -->
-  <div>
-    <label class="func-label field-func"
-      ng-repeat="f in func.list.aboveFold">
-      <input type="radio" ng-value="f" ng-model="func.selected" ng-change="selectChanged()">
-      {{f || 'NONE'}}
+<div class="function-select mb5"
+  ng-if="func.list.aboveFold.length > 1 || func.list.aboveFold[0] !== undefined"
+  ng-class="{wildcard: func.isAny}"
+>
+  <div class="right" ng-if="supportAny">
+    <label>
+      <input type="checkbox" ng-model="func.isAny" ng-change="isAnyChanged()"> Wildcard
     </label>
   </div>
 
-  <!-- Below the fold functions -->
-  <div ng-show="showAllFunctions">
-    <label class="func-label field-func"
-      ng-class="{'single-column': func.isTemporal}"
-      ng-repeat="f in func.list.belowFold">
-      <input type="radio" ng-value="f" ng-model="func.selected" ng-change="selectChanged()">
-      {{f}}
-    </label>
+  <h4>Function</h4>
+  <div class="radios" ng-if="!func.isAny || !supportAny">
+    <!-- Above the fold functions -->
+    <div>
+      <label class="func-label field-func"
+        ng-repeat="f in func.list.aboveFold">
+        <input type="radio" ng-value="f" ng-model="func.selected" ng-change="selectChanged()">
+        {{f || 'NONE'}}
+      </label>
+    </div>
+
+    <!-- Below the fold functions -->
+    <div ng-show="showAllFunctions">
+      <label class="func-label field-func"
+        ng-class="{'single-column': func.isTemporal}"
+        ng-repeat="f in func.list.belowFold">
+        <input type="radio" ng-value="f" ng-model="func.selected" ng-change="selectChanged()">
+        {{f}}
+      </label>
+    </div>
+  </div>
+
+  <div class="checkboxes" ng-if="func.isAny && supportAny">
+    <!-- Above the fold functions -->
+    <div>
+      <label class="func-label field-func"
+        ng-repeat="f in func.list.aboveFold">
+        <input type="checkbox" ng-model="func.checked[f]" ng-change="checkChanged()">
+        {{f || 'NONE'}}
+      </label>
+    </div>
+
+    <!-- Below the fold functions -->
+    <div ng-show="showAllFunctions">
+      <label class="func-label field-func"
+        ng-class="{'single-column': func.isTemporal}"
+        ng-repeat="f in func.list.belowFold">
+        <input type="checkbox" ng-model="func.checked[f]" ng-change="checkChanged()">
+        {{f}}
+      </label>
+    </div>
   </div>
 
   <!-- more and less toggles -->

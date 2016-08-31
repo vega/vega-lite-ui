@@ -23,6 +23,7 @@
         field-def="encoding[channelId]"
         show-type="true"
         show-caret="true"
+        show-enum-spec-fn="true"
         disable-caret="encoding[channelId].aggregate==='count' || !hasFunctions"
         popup-content="fieldInfoPopupContent"
         show-remove="true"
@@ -80,7 +81,11 @@
       -->
     </div>
     <div class="popup-menu shelf-functions shelf-functions-{{channelId}}" ng-hide="!hasFunctions"><!--HACK: (ng-hide) popup is still being triggered-->
-      <function-select ng-if="!preview" field-def="encoding[channelId]" channel-id="channelId"></function-select>
+      <function-select ng-if="!preview"
+        field-def="encoding[channelId]"
+        channel-id="channelId"
+        support-any="supportAny && consts.wildcardFn"
+      ></function-select>
 
       <!-- <a class="remove-field" ng-click="removeField()">Remove Field</a> -->
     </div>

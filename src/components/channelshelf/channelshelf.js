@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('channelShelf', function(ANY, Dataset, Pills, _, Drop, Logger, vl, cql, Schema) {
+  .directive('channelShelf', function(ANY, Dataset, Pills, _, Drop, Logger, vl, cql, Schema, consts) {
     return {
       templateUrl: 'components/channelshelf/channelshelf.html',
       restrict: 'E',
@@ -11,12 +11,14 @@ angular.module('vlui')
         encoding: '=',
         mark: '<',
         preview: '<',
-        disabled: '<'
+        disabled: '<',
+        supportAny: '<',
       },
       link: function(scope, element /*, attrs*/) {
         scope.Dataset = Dataset;
         scope.schema = Schema.getChannelSchema(scope.channelId);
         scope.pills = Pills.pills;
+        scope.consts = consts;
 
         scope.isHighlighted = function (channelId) {
           var highlighted = Pills.highlighted || {};

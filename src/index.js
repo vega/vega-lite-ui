@@ -44,5 +44,6 @@ angular.module('vlui', [
       vislist: 1000
     },
     myriaRest: 'http://ec2-52-1-38-182.compute-1.amazonaws.com:8753',
-    defaultTimeFn: 'year'
+    defaultTimeFn: 'year',
+    wildcardFn: true
   });
