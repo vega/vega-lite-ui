@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .service('FilterManager', function (_, vl, Dataset) {
+  .service('FilterManager', function (_, vl, Dataset, Logger) {
     var self = this;
 
     /** local object for this object */
@@ -13,6 +13,11 @@ angular.module('vlui')
       } else {
         self.filterIndex[field].enabled = !self.filterIndex[field].enabled;
       }
+      Logger.logInteraction(
+        self.filterIndex[field].enabled ? Logger.actions.FILTER_ENABLED : Logger.actions.FILTER_DISABLED,
+        field,
+        self.filterIndex[field]
+      );
     };
 
     this.reset = function(oldFilter, hard) {

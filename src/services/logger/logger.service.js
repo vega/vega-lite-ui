@@ -72,12 +72,18 @@ angular.module('vlui')
       REMOVE_WILDCARD_FIELD: {category: 'WILDCARD', id: 'REMOVE_WILDCARD_FIELD', level: service.levels.INFO},
       REMOVE_WILDCARD: {category: 'WILDCARD', id: 'REMOVE_WILDCARD', level: service.levels.INFO},
 
-      //POLESTAR
+      // POLESTAR
       SPEC_CLEAN: {category:'POLESTAR', id: 'SPEC_CLEAN', level: service.levels.INFO},
       SPEC_CHANGE: {category:'POLESTAR', id: 'SPEC_CHANGE', level: service.levels.INFO},
       FIELD_DROP: {category: 'POLESTAR', id: 'FIELD_DROP', level: service.levels.INFO},
       FIELD_REMOVED: {category: 'POLESTAR', id: 'FIELD_REMOVED', level: service.levels.INFO},
       MARK_CHANGE: {category: 'POLESTAR', id: 'MARK_CHANGE', level: service.levels.INFO},
+
+      // Filter
+      FILTER_ENABLED: {category:'FILTER', id: 'FILTER_ENABLED', level: service.levels.INFO},
+      FILTER_DISABLED: {category:'FILTER', id: 'FILTER_DISABLED', level: service.levels.INFO},
+      FILTER_CHANGE: {category:'FILTER', id: 'FILTER_CHANGE', level: service.levels.INFO},
+      FILTER_CLEAR: {category:'FILTER', id: 'FILTER_CLEAR', level: service.levels.INFO},
 
       // Voyager 2
       SPEC_SELECT: {category:'VOYAGER2', id: 'SPEC_SELECT', level: service.levels.INFO},
