@@ -35,7 +35,8 @@
     <div class="mb5 field-type" ng-if="allowedTypes.length>1 && !isAnyField">
       <h4>Type</h4>
       <label class="type-label"
-        ng-repeat="type in allowedTypes">
+        ng-repeat="type in allowedTypes"
+        ng-if="type !== 'ordinal' || !consts.hideOrdinalTypeSelect">
         <input type="radio" ng-value="type" ng-model="fieldDef.type">
         {{type}}
       </label>

@@ -7,7 +7,7 @@
  * # schemaListItem
  */
 angular.module('vlui')
-  .directive('schemaListItem', function (Dataset, Drop, Logger, Pills, cql, vl) {
+  .directive('schemaListItem', function (Dataset, Drop, Logger, Pills, cql, vl, consts) {
     return {
       templateUrl: 'components/schemalist/schemalistitem.html',
       restrict: 'E',
@@ -19,6 +19,7 @@ angular.module('vlui')
       },
       link: function postLink(scope, element) {
         scope.Dataset = Dataset;
+        scope.consts = consts;
         scope.countFieldDef = Pills.countFieldDef;
 
         scope.isAnyField = false;
