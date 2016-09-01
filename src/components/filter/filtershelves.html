@@ -1,6 +1,6 @@
 <a class="right"  ng-click="clearFilter()"><i class="fa fa-eraser"></i> Clear</a>
 <h2>Filter</h2>
-<div class="filter-scroll-y-container">
+<div class="filter-scroll-y-container scroll-y no-scroll-x">
   <div class="shelf-group"
     ng-repeat="(field, filter) in filterManager.filterIndex"
     ng-if="filter.enabled"
@@ -40,20 +40,13 @@
       <categorical-filter
         field="field"
         filter="filter"
-        ng-if="Dataset.schema.type(field) === 'nominal' || Dataset.schema.type(field) === 'ordinal'
-      "></categorical-filter>
+        ng-if="filterType(field) === 'categorical'">
+      </categorical-filter>
       <quantitative-filter
         field="field"
         filter="filter"
-        ng-if="Dataset.schema.type(field) === 'quantitative'"
+        ng-if="filterType(field) === 'quantitative'"
       ></quantitative-filter>
-      <div
-        field="field"
-        filter="filter"
-        ng-if="Dataset.schema.type(field) === 'temporal'"
-        >
-        {{field}} is a temporal field and we do not support filter for temporal field yet.
-      </div>
     </div>
   </div>
 </div>

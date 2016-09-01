@@ -2,16 +2,12 @@
   margin-bottom: 12px;
 }
 
-.shelf-encoding-pane, .shelf-filter-pane {
+.shelf-encoding-pane {
   margin-bottom: 18px;
 }
 
-.shelf-encoding-pane {
-  flex-basis: 60%;
-}
-
 .shelf-filter-pane {
-  flex-basis: 40%;
+  flex-grow: 1;
   position: relative;
 }
 

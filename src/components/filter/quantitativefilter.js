@@ -30,6 +30,28 @@ angular.module('vlui')
           scope.$apply(); // Force watcher to observe change
           Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
         };
+
+        if (Dataset.schema.type(scope.field) === 'temporal') {
+          // convert dates to numerical types
+          scope.domainMin = (new Date(scope.domainMin)).getTime();
+          scope.domainMax = (new Date(scope.domainMax)).getTime();
+        }
       }
     };
   });
+
+// for formatting dates according to the selected timeUnit (just for display purposes)
+// angular.module('vlui')
+//   .filter('timeUnitFilter', function() {
+//     return function(dateNumber) {
+//       var timeUnit = 'year'; // testing purposes
+//       var date = new Date(dateNumber);
+//       switch (timeUnit) {
+//         case 'year':
+//           return date.getFullYear();
+//         case 'date':
+//           return date.getDate();
+//       }
+//       return new Date(dateNumber);
+//     };
+//   });
