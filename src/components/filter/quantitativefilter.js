@@ -41,17 +41,17 @@ angular.module('vlui')
   });
 
 // for formatting dates according to the selected timeUnit (just for display purposes)
-angular.module('vlui')
-  .filter('timeUnitFilter', function() {
-    return function(dateNumber) {
-      var timeUnit = 'year'; // testing purposes
-      var date = new Date(dateNumber);
-      switch (timeUnit) {
-        case 'year':
-          return date.getFullYear();
-        case 'date':
-          return date.getDate();
-      }
-      return new Date(dateNumber);
-    };
-  });
+// angular.module('vlui')
+//   .filter('timeUnitFilter', function() {
+//     return function(dateNumber) {
+//       var timeUnit = 'year'; // testing purposes
+//       var date = new Date(dateNumber);
+//       switch (timeUnit) {
+//         case 'year':
+//           return date.getFullYear();
+//         case 'date':
+//           return date.getDate();
+//       }
+//       return new Date(dateNumber);
+//     };
+//   });
