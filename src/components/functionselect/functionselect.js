@@ -28,12 +28,11 @@ angular.module('vlui')
         // functions for T = timeUnits + undefined
         var temporalFunctions = {
           aboveFold: [
-            undefined, 'year',
-            'quarter', 'month',
+            undefined, 'yearmonthdate',
+            'year', 'month', // hide 'quarter' for user study because it's buggy
             'date','day',
             'hours', 'minutes',
-            'seconds', 'milliseconds',
-            'yearmonthdate'
+            'seconds', 'milliseconds'
           ],
           belowFold: [
             'yearquarter',
@@ -69,7 +68,7 @@ angular.module('vlui')
         };
 
         // timeUnits = T functions - undefined
-        var timeUnits = _.pull(_.concat(temporalFunctions.aboveFold, temporalFunctions.belowFold), undefined);
+        var timeUnits = _.pull(_.concat(temporalFunctions.aboveFold, 'quarter', temporalFunctions.belowFold), undefined);
 
         // functions for Q = aggregates + BIN + undefined - COUNT
         var quantitativeFunctions = {
