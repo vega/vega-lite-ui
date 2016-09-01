@@ -148,7 +148,7 @@ angular.module('vlui')
           var typeName = type;
           if (typeName === 'ordinal' || typeName === 'nominal') {
             typeName += (' (' + Dataset.schema.primitiveType(scope.fieldDef.field) + ')');
-          } else if (type.enum) {
+          } else if (type && type.enum) {
             typeName = type.enum[0]; // FIXME join them if we support many types
           }
           scope.typeName = typeName;
