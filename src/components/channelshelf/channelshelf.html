@@ -43,21 +43,6 @@
   </div>
   <div class="drop-container">
     <div class="popup-menu shelf-properties shelf-properties-{{channelId}}">
-      <!--<div>
-        <property-editor ng-show="schema.properties.value"
-          id="channelId + 'value'"
-          type="schema.properties.value.type"
-          enum="schema.properties.value.enum"
-          prop-name="'value'"
-          group="encoding[channelId]"
-          description="schema.properties.value.description"
-          min="schema.properties.value.minimum"
-          max="schema.properties.value.maximum"
-          role="schema.properties.value.role"
-          default="schema.properties.value.default"
-        ></property-editor>
-      </div>-->
-
       <div ng-repeat="group in ['legend', 'scale', 'axis', 'bin']"
            ng-show="schema.properties[group] || isAnyChannel"> <!-- if channel is any, then show all of them -->
         <h4>{{ group }}</h4>
