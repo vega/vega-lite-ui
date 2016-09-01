@@ -29,7 +29,8 @@ describe('Service: Config', function() {
           width: 150,
           height: 150
         }
-      }
+      },
+      scale: {useRawDomain: false}
     };
 
     expect(Config.large()).to.eql(config);
