@@ -40,20 +40,13 @@
       <categorical-filter
         field="field"
         filter="filter"
-        ng-if="Dataset.schema.type(field) === 'nominal' || Dataset.schema.type(field) === 'ordinal'
-      "></categorical-filter>
+        ng-if="filterType(field) === 'categorical'">
+      </categorical-filter>
       <quantitative-filter
         field="field"
         filter="filter"
-        ng-if="Dataset.schema.type(field) === 'quantitative'"
+        ng-if="filterType(field) === 'quantitative'"
       ></quantitative-filter>
-      <div
-        field="field"
-        filter="filter"
-        ng-if="Dataset.schema.type(field) === 'temporal'"
-        >
-        {{field}} is a temporal field and we do not support filter for temporal field yet.
-      </div>
     </div>
   </div>
 </div>
