@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('fieldInfo', function (ANY, Drop, vl, cql) {
+  .directive('fieldInfo', function (ANY, Drop, vl, cql, Dataset) {
     return {
       templateUrl: 'components/fieldinfo/fieldinfo.html',
       restrict: 'E',
@@ -129,22 +129,29 @@ angular.module('vlui')
             var val = null;
             for (var i = 0; i < type.enum.length; i++) {
               var _type = type.enum[i];
+              var v = dict ? dict[_type] : _type;
               if (val === null) {
-                val = dict[_type];
+                val = v;
               } else {
-                if (val !== dict[_type]) {
+                if (val !== v) {
                   return ANY; // If there are many conflicting types
                 }
               }
             }
             return val;
           }
-          return dict[type];
+          return dict ? dict[type] : type;
         }
 
         var fieldDefWatcher = scope.$watch('fieldDef.type', function(type) {
           scope.icon = getTypeDictValue(type, TYPE_ICONS);
-          scope.typeName = getTypeDictValue(type, TYPE_NAMES);
+          var typeName = type;
+          if (typeName === 'ordinal' || typeName === 'nominal') {
+            typeName += (' (' + Dataset.schema.primitiveType(scope.fieldDef.field) + ')');
+          } else if (type && type.enum) {
+            typeName = type.enum[0]; // FIXME join them if we support many types
+          }
+          scope.typeName = typeName;
         });
 
         scope.$on('$destroy', function() {

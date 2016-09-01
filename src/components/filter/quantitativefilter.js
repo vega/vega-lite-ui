@@ -27,7 +27,8 @@ angular.module('vlui')
         scope.updateRange = function() {
           scope.filter.range[0] = scope.localMin;
           scope.filter.range[1] = scope.localMax;
-          scope.$apply();
+          scope.$apply(); // Force watcher to observe change
+          Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
         };
 
         if (Dataset.schema.type(scope.field) === 'temporal') {
@@ -35,16 +36,6 @@ angular.module('vlui')
           scope.domainMin = (new Date(scope.domainMin)).getTime();
           scope.domainMax = (new Date(scope.domainMax)).getTime();
         }
-
-        var unwatchRange = scope.$watch('filter.range', function(range, oldRange) {
-          if (!oldRange || !range || (range === oldRange)) return; // skip first time
-          Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
-        }, true);
-
-        scope.$on('$destroy', function() {
-          // Clean up watcher
-          unwatchRange();
-        });
       }
     };
   });

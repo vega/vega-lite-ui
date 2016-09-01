@@ -9,8 +9,8 @@
   <div class="values">
     <div ng-repeat="val in values">
       <label>
-        <input type="checkbox" ng-model="include[val]" ng-change="filterChange()">
-        {{val}}
+        <input type="checkbox" ng-model="include[stringify(val)]" ng-change="filterChange()">
+        {{val+''}} <!-- have to coerce to string so null appear-->
       </label>
     </div>
   </div>

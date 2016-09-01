@@ -1,92 +1,94 @@
-<div class="card shelves no-top-margin no-right-margin abs-100">
-  <a class="right"  ng-click="clear()"><i class="fa fa-eraser"></i> Clear</a>
-  <h2>Encoding</h2>
-
+<div class="card vflex shelves no-top-margin no-right-margin abs-100">
   <div class="shelf-pane shelf-encoding-pane full-width">
-    <h3>Positional</h3>
-    <channel-shelf
-      channel-id="'x'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark">
-    </channel-shelf>
-    <channel-shelf
-      channel-id="'y'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark">
-    </channel-shelf>
-    <channel-shelf
-      channel-id="'column'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark"
-      disabled="!spec.encoding.x.field">
-    >
-    </channel-shelf>
-    <channel-shelf
-      channel-id="'row'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark"
-      disabled="!spec.encoding.y.field">
-    </channel-shelf>
-  </div>
-  <div class="shelf-pane shelf-marks-pane full-width">
-    <div class="right">
-      <select class="markselect" ng-model="spec.mark"
-              ng-class="{auto: spec.mark === ANY}"
-              ng-options="(type === ANY ? 'auto' : type) for type in (supportAny || supportAutoMark ? marksWithAny : marks)"
-              ng-change="markChange()"></select>
+    <a class="right"  ng-click="clear()"><i class="fa fa-eraser"></i> Clear</a>
+    <h2>Encoding</h2>
+
+    <div class="shelf-pane shelf-positional-pane full-width">
+      <h3>Positional</h3>
+      <channel-shelf
+        channel-id="'x'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark">
+      </channel-shelf>
+      <channel-shelf
+        channel-id="'y'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark">
+      </channel-shelf>
+      <channel-shelf
+        channel-id="'column'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark"
+        disabled="!spec.encoding.x.field">
+      >
+      </channel-shelf>
+      <channel-shelf
+        channel-id="'row'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark"
+        disabled="!spec.encoding.y.field">
+      </channel-shelf>
     </div>
-    <h3>Marks</h3>
 
-    <channel-shelf channel-id="'size'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark">
-    </channel-shelf>
-    <channel-shelf channel-id="'color'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark">
-    </channel-shelf>
-    <channel-shelf channel-id="'shape'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark">
-    </channel-shelf>
-    <channel-shelf channel-id="'detail'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark">
-    </channel-shelf>
-    <channel-shelf channel-id="'text'"
-      preview="preview"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark">
-    </channel-shelf>
-  </div>
+    <div class="shelf-pane shelf-marks-pane full-width">
+      <div class="right">
+        <select class="markselect" ng-model="spec.mark"
+                ng-class="{auto: spec.mark === ANY}"
+                ng-options="(type === ANY ? 'auto' : type) for type in (supportAny || supportAutoMark ? marksWithAny : marks)"
+                ng-change="markChange()"></select>
+      </div>
+      <h3>Marks</h3>
+      <channel-shelf channel-id="'size'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark">
+      </channel-shelf>
+      <channel-shelf channel-id="'color'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark">
+      </channel-shelf>
+      <channel-shelf channel-id="'shape'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark">
+      </channel-shelf>
+      <channel-shelf channel-id="'detail'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark">
+      </channel-shelf>
+      <channel-shelf channel-id="'text'"
+        preview="preview"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark">
+      </channel-shelf>
+    </div>
 
-  <div class="shelf-pane shelf-any-pane full-width" ng-if="supportAny && !preview">
-    <h3>Automatic</h3>
-    <channel-shelf
-      ng-repeat="channelId in anyChannelIds"
-      preview="preview"
-      channel-id="channelId"
-      encoding="spec.encoding"
-      support-any="supportAny"
-      mark="spec.mark">
-    </channel-shelf>
+    <div class="shelf-pane shelf-any-pane full-width" ng-if="supportAny && !preview">
+      <h3>Automatic</h3>
+      <channel-shelf
+        ng-repeat="channelId in anyChannelIds"
+        preview="preview"
+        channel-id="channelId"
+        encoding="spec.encoding"
+        support-any="supportAny"
+        mark="spec.mark">
+      </channel-shelf>
+    </div>
   </div>
 
   <div class="shelf-pane shelf-filter-pane full-width" ng-if="!preview">
