@@ -19,7 +19,7 @@ angular.module('vlui')
       },
       link: function postLink(scope /*, element, attrs*/) {
         scope.consts = consts;
-        scope.limit = scope.initialLimit || 3;
+        scope.limit = scope.initialLimit || 2;
 
         // Functions
         scope.getChart = Chart.getChart;
