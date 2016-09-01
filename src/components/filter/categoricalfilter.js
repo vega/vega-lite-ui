@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('categoricalFilter', function (Dataset, util, Logger) {
+  .directive('categoricalFilter', function (Dataset, vg, util, Logger) {
     return {
       templateUrl: 'components/filter/categoricalfilter.html',
       restrict: 'E',
@@ -22,6 +22,7 @@ angular.module('vlui')
 
         scope.selectAll = selectAll;
         scope.selectNone = selectNone;
+        scope.stringify = JSON.stringify;
 
         scope.filterChange = function() {
           Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
@@ -38,8 +39,8 @@ angular.module('vlui')
         }
 
         function setInclude(list) {
-          scope.include = _.reduce(list, function(include, x) {
-            include[x] = true;
+          scope.include = list.reduce(function(include, x) {
+            include[JSON.stringify(x)] = true;
             return include;
           }, {});
         }
@@ -56,9 +57,10 @@ angular.module('vlui')
           scope.filter.in = util.keys(include).filter(function(val) {
             return include[val];
           }).map(function(x) {
-            if (+x === +x) { return +x; }
-            return x;
-          }).sort();
+            return JSON.parse(x);
+            // if (+x === +x) { return +x; }
+            // return x;
+          }).sort(vg.util.cmp); // Use Vega
         }, true);
       }
     };
