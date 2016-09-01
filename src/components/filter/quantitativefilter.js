@@ -27,7 +27,7 @@ angular.module('vlui')
         scope.updateRange = function() {
           scope.filter.range[0] = scope.localMin;
           scope.filter.range[1] = scope.localMax;
-          scope.$apply();
+          scope.$apply(); // Force watcher to observe change
           Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
         };
       }
