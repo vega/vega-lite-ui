@@ -3,9 +3,10 @@
     <span class="right domain-label">{{domainMax}}</span>
     <span class="domain-label">{{domainMin}}</span>
   </div>
-  <div range-slider min="domainMin"" max="domainMax" 
-    model-min="filter.range[0]" model-max="filter.range[1]"
-    show-values="true" attach-handle-values="true">
+  <div range-slider min="domainMin" max="domainMax"
+    model-min="localMin" model-max="localMax"
+    show-values="true" attach-handle-values="true"
+    on-handle-up="updateRange()">
   </div>
 </div>
 
