@@ -2,6 +2,7 @@
   <schema-list-item
     ng-repeat="fieldDef in fieldDefs | orderBy : orderBy"
     field-def="fieldDef"
+    filter-manager="filterManager"
     show-add="showAdd"
     >
   </schema-list-item>
@@ -11,4 +12,13 @@
     show-add="true"
     >
   </schema-list-item>
+  <div class="schema-list-drop"
+    ng-show="showDrop"
+    ng-model="droppedFieldDef"
+    data-drop="true"
+    jqyoui-droppable="{onDrop:'fieldDropped'}"
+    data-jqyoui-options="{activeClass: 'drop-active'}"
+  >
+    Create a new wildcard.
+  </div>
 </div>

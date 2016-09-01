@@ -90,7 +90,7 @@
         <i class="fa fa-expand"></i>
       </a>
       <a ng-if="showSelect"
-        title="Set encoding to this chart"
+        title="Specify this chart"
         ng-click="select(chart)"
         class="command select">
         <i class="fa fa-server"></i>
@@ -128,7 +128,7 @@
   <textarea class="annotation"
     ng-if="Bookmarks.isBookmarked(chart.shorthand)"
     ng-model="Bookmarks.dict[chart.shorthand].annotation"
-    ng-change="Bookmarks.saveAnnotations(chart.shorthand)"
+    ng-blur="Bookmarks.saveAnnotations(chart.shorthand)"
     placeholder = "notes"
   ></textarea>
 </div>

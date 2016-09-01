@@ -167,7 +167,7 @@ angular.module('vlui')
           Logger.logInteraction(Logger.actions.SPEC_SELECT, chart.shorthand, {
             list: scope.listTitle
           });
-          Pills.parse(chart.vlSpec);
+          Pills.select(chart.vlSpec);
           if (scope.$parent.postSelectAction) {
             scope.$parent.postSelectAction();
           }
@@ -208,7 +208,7 @@ angular.module('vlui')
         scope.log.toggle = function(spec, channel) {
           if (!scope.log.support(spec, channel)) { return; }
 
-          var fieldDef = spec.encoding[channel],
+          var fieldDef = Pills.get(channel),
             scale = fieldDef.scale = fieldDef.scale || {};
 
           if (scope.toggleShelf) {
@@ -220,6 +220,8 @@ angular.module('vlui')
           Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand, {
             list: scope.listTitle
           });
+
+          Pills.set(channel, fieldDef, true);
         };
 
         scope.log.active = function(spec, channel) {

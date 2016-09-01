@@ -7,7 +7,7 @@
  * # schemaListItem
  */
 angular.module('vlui')
-  .directive('schemaListItem', function (Dataset, Drop, Pills, cql, vl) {
+  .directive('schemaListItem', function (Dataset, Drop, Logger, Pills, cql, vl, consts) {
     return {
       templateUrl: 'components/schemalist/schemalistitem.html',
       restrict: 'E',
@@ -15,16 +15,26 @@ angular.module('vlui')
       scope: {
         fieldDef: '=', // Two-way
         showAdd:  '<',
+        filterManager: '='
       },
       link: function postLink(scope, element) {
-        scope.isAnyField = false;
+        scope.Dataset = Dataset;
+        scope.consts = consts;
+        scope.countFieldDef = Pills.countFieldDef;
 
+        scope.isAnyField = false;
+        scope.droppedFieldDef = null;
         scope.fieldInfoPopupContent =  element.find('.schema-menu')[0];
 
         scope.isEnumSpec = cql.enumSpec.isEnumSpec;
 
         scope.fieldAdd = function(fieldDef) {
           Pills.add(fieldDef);
+        };
+
+        scope.toggleFilter = function() {
+          if (!scope.filterManager) return;
+          scope.filterManager.toggle(scope.fieldDef.field);
         };
 
         scope.fieldDragStart = function() {
@@ -40,6 +50,27 @@ angular.module('vlui')
         };
 
         scope.fieldDragStop = Pills.dragStop;
+
+        scope.fieldDropped = function() {
+          Pills.addWildcardField(scope.fieldDef, scope.droppedFieldDef);
+          Logger.logInteraction(Logger.actions.ADD_WILDCARD_FIELD, scope.fieldDef, {
+            addedField: scope.droppedFieldDef
+          });
+          scope.droppedFieldDef = null;
+        };
+
+        scope.removeWildcardField = function(index) {
+          var field = scope.fieldDef.field;
+          Logger.logInteraction(Logger.actions.REMOVE_WILDCARD_FIELD, scope.fieldDef, {
+            removedField: field.enum[index] === '*' ? 'COUNT' : field.enum[index]
+          });
+          Pills.removeWildcardField(scope.fieldDef, index);
+        };
+
+        scope.removeWildcard = function() {
+          Logger.logInteraction(Logger.actions.REMOVE_WILDCARD, scope.fieldDef);
+          Pills.removeWildcard(scope.fieldDef);
+        };
 
         // TODO(https://github.com/vega/vega-lite-ui/issues/187):
         // consider if we can use validator / cql instead

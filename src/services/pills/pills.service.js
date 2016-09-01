@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .service('Pills', function (ANY, consts, util) {
+  .service('Pills', function (ANY, consts, util, vl, cql) {
     var Pills = {
       // Functions
       isAnyChannel: isAnyChannel,
@@ -12,6 +12,7 @@ angular.module('vlui')
 
       get: get,
       // Event
+      dragDrop: dragDrop,
       dragStart: dragStart,
       dragStop: dragStop,
       // Event, with handler in the listener
@@ -22,26 +23,7 @@ angular.module('vlui')
       /** Remove a fieldDef from a channel */
       remove: remove,
 
-      /** Add new field to the pills */
-      add: add,
-
-      /** Pass message to toggler listeners */
-      rescale: rescale,
-      sort: sort,
-      toggleFilterInvalid: toggleFilterInvalid,
-      transpose: transpose,
-
-      /** Parse a new spec */
-      parse: parse,
-
-      /** Preview a spec */
-      preview: preview,
-
-      /** If the spec/query gets updated */
-      update: update,
-
-      reset: reset,
-      dragDrop: dragDrop,
+      countFieldDef: {field: '*', aggregate: vl.aggregate.AggregateOp.COUNT, type: vl.type.QUANTITATIVE},
 
       // Data
       // TODO: split between encoding related and non-encoding related
@@ -49,11 +31,26 @@ angular.module('vlui')
       highlighted: {},
       /** pill being dragged */
       dragging: null,
+      isDraggingWildcard: null,
       /** channelId that's the pill is being dragged from */
       cidDragFrom: null,
       /** Listener  */
       listener: null
     };
+
+    // Add listener type that Pills just pass arguments to its listener
+    // FIXME: properly implement listener pattern
+    [
+      'add', 'parse', 'select', 'preview', 'update', 'reset',
+      'rescale', 'sort', 'toggleFilterInvalid', 'transpose',
+      'addWildcardField', 'addWildcard', 'removeWildcardField', 'removeWildcard'
+    ].forEach(function(listenerType) {
+      Pills[listenerType] = function() {
+        if (Pills.listener && Pills.listener[listenerType]) {
+          return Pills.listener[listenerType].apply(null, arguments);
+        }
+      };
+    });
 
     /**
      * Returns whether the given channel id is an "any" channel
@@ -111,12 +108,6 @@ angular.module('vlui')
       return Pills.pills[channelId];
     }
 
-    function add(fieldDef) {
-      if (Pills.listener && Pills.listener.add) {
-        Pills.listener.add(fieldDef);
-      }
-    }
-
     function isEnumeratedChannel(channelId) {
       if (Pills.listener && Pills.listener.isEnumeratedChannel) {
         return Pills.listener.isEnumeratedChannel(channelId, Pills.pills[channelId]);
@@ -138,77 +129,13 @@ angular.module('vlui')
       }
     }
 
-    function sort(channelId, sort) {
-      if (Pills.listener && Pills.listener.sort) {
-        Pills.listener.sort(channelId, sort);
-      }
-    }
-
-    function rescale(channelId, scaleType) {
-      if (Pills.listener && Pills.listener.rescale) {
-        Pills.listener.rescale(channelId, scaleType);
-      }
-    }
-
-    function toggleFilterInvalid() {
-      if (Pills.listener && Pills.listener.toggleFilterInvalid) {
-        Pills.listener.toggleFilterInvalid();
-      }
-    }
-
-    function transpose() {
-      if (Pills.listener && Pills.listener.transpose) {
-        Pills.listener.transpose();
-      }
-    }
-
-    /**
-     * Re-parse the spec.
-     *
-     * @param {any} spec
-     */
-    function parse(spec) {
-      if (Pills.listener) {
-        Pills.listener.parse(spec);
-      }
-    }
-
-    /**
-     * Add Spec to be previewed (for Voyager2)
-     *
-     * @param {any} spec
-     */
-    function preview(enable, chart, listTitle) {
-      if (Pills.listener) {
-        Pills.listener.preview(enable, chart, listTitle);
-      }
-    }
-
-    /**
-     * Update the whole pill set
-     *
-     * @param {any} spec
-     */
-    function update(spec) {
-      if (Pills.listener) {
-        Pills.listener.update(spec);
-      }
-    }
-
-
-    /** Reset Pills */
-    function reset() {
-      if (Pills.listener) {
-        Pills.listener.reset();
-      }
-    }
-
     /**
      * @param {any} pill pill being dragged
      * @param {any} cidDragFrom channel id that the pill is dragged from
      */
     function dragStart(pill, cidDragFrom) {
       Pills.dragging = pill;
+      Pills.isDraggingWildcard = cql.enumSpec.isEnumSpec(pill.field);
       Pills.cidDragFrom = cidDragFrom;
     }
 

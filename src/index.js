@@ -5,7 +5,8 @@ angular.module('vlui', [
     'LocalStorageModule',
     'angular-google-analytics',
     'angular-sortable-view',
-    'angular-websql'
+    'angular-websql',
+    'ui-rangeSlider'
   ])
   .constant('_', window._)
   // datalib, vegalite, vega
@@ -33,6 +34,7 @@ angular.module('vlui', [
     logLevel: 'INFO',
     logPrintLevel: 'INFO',
     logToWebSql: false, // in user studies, set this to true
+    hideMoreFn: true, // hide belowFold functions and "more" & "less" toggles in functionselect during user studies
     defaultConfigSet: 'large',
     appId: 'vlui',
     // embedded polestar and voyager with known data
@@ -43,5 +45,7 @@ angular.module('vlui', [
       vislist: 1000
     },
     myriaRest: 'http://ec2-52-1-38-182.compute-1.amazonaws.com:8753',
-    defaultTimeFn: 'year'
+    defaultTimeFn: 'year',
+    wildcardFn: true,
+    hideOrdinalTypeSelect: true
   });

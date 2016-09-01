@@ -21,15 +21,16 @@ describe('Service: Config', function() {
   it('should have correct config ', function() {
     var config = {
       cell: {
-        width: 400,
-        height: 400
+        width: 300,
+        height: 300
       },
       facet: {
         cell: {
-          width: 200,
-          height: 200
+          width: 150,
+          height: 150
         }
-      }
+      },
+      scale: {useRawDomain: false}
     };
 
     expect(Config.large()).to.eql(config);

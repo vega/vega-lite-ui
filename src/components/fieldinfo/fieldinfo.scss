@@ -41,6 +41,7 @@ $any-hover-color: #666;
   .field-info-text {
     display: flex;
     flex-grow: 1;
+    overflow: hidden;
   }
 
   .field-func, .field-count {
@@ -84,7 +85,7 @@ $any-hover-color: #666;
 }
 
 .field-info {
-  .fa.fa-caret-down, .fa.fa-times {
+  .fa.fa-caret-down, .fa.fa-times, .fa.fa-filter, .fa.fa-plus {
     flex-shrink:0;
     // visibility: hidden;
     border-radius: 3px;
@@ -93,8 +94,12 @@ $any-hover-color: #666;
   .fa.fa-caret-down {
     padding: 2px 3px 1px;
   }
-  .fa.fa-times {
+  .fa.fa-times, .fa.fa-filter, .fa.fa-plus {
     padding: 1px 2px;
+  }
+
+  .filter, .add {
+    margin-left: 2px;
   }
 
   .type-caret .fa-caret-down {
@@ -110,6 +115,7 @@ $any-hover-color: #666;
   }
 
   .type-caret.active:hover .fa.fa-caret-down, .fa.fa-times:hover,
+  .fa.fa-filter:hover, .fa.fa-plus:hover,
   &:hover .type-caret.active:hover .fa.fa-caret-down,
   &.highlighted .type-caret.active:hover .fa.fa-caret-down {
     color: white;
@@ -121,14 +127,6 @@ $any-hover-color: #666;
     color: black;
   }
 }
-
-.field-info .info {
-  opacity: 0.5;
-  &:hover {
-    opacity: 1;
-  }
-}
-
 
 .field-info.unselected {
   border: 1px dashed hsla(0,0%,0%,0.15);
@@ -162,7 +160,7 @@ $any-hover-color: #666;
   font-weight: 500;
 }
 
-.field-info.list-item {
+.field-info.list-item { // TODO: remove as it's not used on Voyager2
   margin-bottom: 4px;
 }
 

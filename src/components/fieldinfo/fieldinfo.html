@@ -22,7 +22,11 @@
       </span><!--prevent unnecessary space
       --><span class="field-name"
         ng-class="{hasfunc: func(fieldDef), any: fieldDef._any}"
-        >{{ (fieldDef.title || fieldDef.field) | underscore2space }}</span>
+        >{{ (fieldDef.title || fieldTitle(fieldDef.field)) | underscore2space }}</span>
+
+        <span class="wildcard-field-count">
+          {{ fieldCount(fieldDef.field) }}
+        </span>
     </span>
 
     <span ng-if="fieldDef.aggregate==='count' || fieldDef.autoCount"
@@ -33,6 +37,14 @@
     <span class="no-shrink remove" ng-show="showRemove">
       <a class="remove-field" ng-click="removeAction()">
         <i class="fa fa-times"></i>
+      </a>
+    </span>
+
+    <!-- Hide Filter for count field since we don't have post-aggregation filter yet--> 
+    <span ng-if="fieldDef.aggregate!=='count'"
+      class="no-shrink filter" ng-show="showFilter">
+      <a class="filter-field" ng-click="filterAction()">
+        <i class="fa fa-filter"></i>
       </a>
     </span>
 

@@ -1,5 +1,14 @@
 .shelf-pane {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+}
+
+.shelf-encoding-pane {
+  margin-bottom: 18px;
+}
+
+.shelf-filter-pane {
+  flex-grow: 1;
+  position: relative;
 }
 
 .card.shelves.preview {

@@ -1,0 +1,52 @@
+<a class="right"  ng-click="clearFilter()"><i class="fa fa-eraser"></i> Clear</a>
+<h2>Filter</h2>
+<div class="filter-scroll-y-container scroll-y no-scroll-x">
+  <div class="shelf-group"
+    ng-repeat="(field, filter) in filterManager.filterIndex"
+    ng-if="filter.enabled"
+  >
+    <div class="shelf filter-shelf">
+      <div class="field-drop">
+        <!-- TODO: make it drag-and-drop like typical shelf -->
+        <!--
+          data-drop="supportMark(channelId, mark)"
+          jqyoui-droppable="{onDrop:'fieldDropped'}"
+          data-jqyoui-options="{activeClass: 'drop-active'}"
+        -->
+
+        <!-- ng-show="encoding[channelId].field"-->
+        <!-- (zening): remove draggable class for now because filter is not yet draggable -->
+        <field-info
+          ng-class="{expanded: funcsExpanded}"
+          field-def="{field: field}"
+          show-type="true"
+          show-remove="true"
+          remove-action="removeFilter(field)"
+          class="selected full-width"
+          >
+          <!--
+          remove-action=""
+            data-drag="true"
+            ng-model="pills[channelId]"
+            jqyoui-draggable="{onStart: 'fieldDragStart', onStop:'fieldDragStop'}"
+            data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"
+          -->
+        </field-info>
+
+        <!--<span class="placeholder" ng-if="!encoding[channelId].field">
+          drop a field here
+        </span>-->
+      </div>
+      <categorical-filter
+        field="field"
+        filter="filter"
+        ng-if="filterType(field) === 'categorical'">
+      </categorical-filter>
+      <quantitative-filter
+        field="field"
+        filter="filter"
+        ng-if="filterType(field) === 'quantitative'"
+      ></quantitative-filter>
+    </div>
+  </div>
+</div>
