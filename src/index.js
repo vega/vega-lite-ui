@@ -34,6 +34,7 @@ angular.module('vlui', [
     logLevel: 'INFO',
     logPrintLevel: 'INFO',
     logToWebSql: false, // in user studies, set this to true
+    hideMoreFn: true, // hide belowFold functions and "more" & "less" toggles in functionselect during user studies
     defaultConfigSet: 'large',
     appId: 'vlui',
     // embedded polestar and voyager with known data

@@ -52,7 +52,7 @@
   </div>
 
   <!-- more and less toggles -->
-  <div ng-hide="func.isCount || func.list.belowFold.length == 0"
+  <div ng-hide="hideMoreFn || func.isCount || func.list.belowFold.length == 0"
     class="expand-collapse">
     <a ng-click="showAllFunctions=!showAllFunctions">
       <span ng-show="!showAllFunctions"> more <i class="fa fa-angle-down" aria-hidden="true"></i> </span>
