@@ -13,6 +13,8 @@ angular.module('vlui')
       link: function(scope /*,element, attrs*/) {
         var BIN='bin', COUNT='count', maxbins;
 
+        scope.hideMoreFn = consts.hideMoreFn;
+
         scope.func = {
           selected: undefined,
           checked: {undefined: true},
