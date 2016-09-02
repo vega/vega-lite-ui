@@ -29,7 +29,10 @@ angular.module('vlui')
             height: 150
           }
         },
-        scale: {useRawDomain: false}
+        scale: {useRawDomain: false},
+        mark: {
+          tickThickness: 2
+        }
       };
     };
 
@@ -40,6 +43,9 @@ angular.module('vlui')
             width: 150,
             height: 150
           }
+        },
+        mark: {
+          tickThickness: 2
         }
       };
     };
