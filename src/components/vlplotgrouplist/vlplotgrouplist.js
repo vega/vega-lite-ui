@@ -19,7 +19,7 @@ angular.module('vlui')
       },
       link: function postLink(scope /*, element, attrs*/) {
         scope.consts = consts;
-        scope.limit = scope.initialLimit || 2;
+        scope.limit = scope.initialLimit || 4;
 
         // Functions
         scope.getChart = Chart.getChart;
@@ -36,7 +36,7 @@ angular.module('vlui')
         // });
 
         function increaseLimit() {
-          scope.limit += 5;
+          scope.limit += 4;
           Logger.logInteraction(Logger.actions.LOAD_MORE, scope.limit, {
             list: scope.listTitle
           });
