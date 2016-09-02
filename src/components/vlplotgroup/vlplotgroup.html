@@ -1,6 +1,4 @@
-<div class="vl-plot-group vflex"
-  ng-dblclick="select(chart)"
-  >
+<div class="vl-plot-group vflex">
   <div ng-show="showExpand || fieldSet || showTranspose || showBookmark && Bookmarks.isSupported || showToggle"
       class="vl-plot-group-header no-shrink"
     >
@@ -92,6 +90,8 @@
       <a ng-if="showSelect"
         title="Specify this chart"
         ng-click="select(chart)"
+        ng-mouseenter="enablePreview()"
+        ng-mouseleave="disablePreview()"
         class="command select">
         <i class="fa fa-server"></i>
       </a>
