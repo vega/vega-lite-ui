@@ -48,4 +48,7 @@ angular.module('vlui', [
     defaultTimeFn: 'year',
     wildcardFn: true,
     hideOrdinalTypeSelect: true
+  })
+  .config(function(cql) {
+    cql.config.DEFAULT_QUERY_CONFIG.channels = ['x', 'y', 'column', 'size', 'color'];
   });
