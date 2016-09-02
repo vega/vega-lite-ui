@@ -273,7 +273,7 @@ angular.module('vlui')
           var currentMode = toggleSort.mode(spec);
           var currentModeIndex = toggleSort.modes.indexOf(currentMode);
 
-          var newModeIndex = (currentModeIndex + 1) % (toggleSort.modes.length - 1);
+          var newModeIndex = (currentModeIndex + 3) % (toggleSort.modes.length - 1);
           var newMode = toggleSort.modes[newModeIndex];
 
           Logger.logInteraction(Logger.actions.SORT_TOGGLE, scope.chart.shorthand, {
