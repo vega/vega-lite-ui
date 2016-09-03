@@ -36,7 +36,8 @@ angular.module('vlui')
         priority: '<',
         rescale: '<',
         thumbnail: '<',
-        tooltip: '<'
+        tooltip: '<',
+        mouseEnterAction: '='
       },
       replace: true,
       link: function(scope, element) {
@@ -83,6 +84,10 @@ angular.module('vlui')
             });
             scope.hoverFocus = !scope.thumbnail;
           }, HOVER_TIMEOUT);
+
+          if (scope.mouseEnterAction) {
+            scope.mouseEnterAction();
+          }
         };
 
         scope.mouseleave = function() {
