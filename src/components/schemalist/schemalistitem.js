@@ -93,6 +93,16 @@ angular.module('vlui')
           scope.isAnyField = cql.enumSpec.isEnumSpec(fieldDef.field);
         });
 
+        scope.fieldTitle = function(field) {
+          if (cql.enumSpec.isEnumSpec(field)) {
+            return (field.enum || ['Wildcard'])
+              .map(function(field) {
+                return field === '*' ? 'COUNT' : field;
+              }).join(',');
+          }
+          return field;
+        };
+
         scope.$on('$destroy', function() {
           scope.fieldAdd = null;
           scope.fieldDragStop = null;
