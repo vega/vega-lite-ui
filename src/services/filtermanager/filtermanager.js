@@ -20,6 +20,15 @@ angular.module('vlui')
       );
     };
 
+    this.add = function(field) {
+      if (!self.filterIndex[field]) {
+        self.filterIndex[field] = initFilter(field);
+        Logger.logInteraction(Logger.actions.FILTER_ENABLED, field, self.filterIndex[field]);
+        return true;
+      }
+      return false;
+    }
+
     this.reset = function(oldFilter, hard) {
       if (hard) {
         self.filterIndex = {};

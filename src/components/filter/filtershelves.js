@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('filterShelves', function (FilterManager, Dataset, Logger, vl) {
+  .directive('filterShelves', function (FilterManager, Dataset, Logger, vl, Alerts) {
     return {
       templateUrl: 'components/filter/filtershelves.html',
       restrict: 'E',
@@ -42,6 +42,14 @@ angular.module('vlui')
         function removeFilter(field) {
           FilterManager.toggle(field);
         }
+
+        scope.fieldDropped = function() {
+          var added = FilterManager.add(scope.droppedFieldDef.field);
+          if (!added) {
+            Alerts.add('Already have filter for ' + scope.droppedFieldDef.field + '.');
+          }
+          scope.droppedFieldDef = {};
+        };
       }
     };
   });

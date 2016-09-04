@@ -30,3 +30,22 @@
   display: flex;
   flex-direction: column;
 }
+
+$filter-drop-color: hsla(215,41%,80%,1);
+
+.filter-drop {
+  font-size: 11px;
+  border-radius: 3px;
+  border: 1px dashed $filter-drop-color;
+  color: $filter-drop-color;
+  padding: 0 0.5em;
+  visibility: hidden;
+
+  &.drop-active {
+    visibility: visible;
+    color: $text-color;
+    border: 1px dashed #4CAF50;
+    background-color: #C8E6C9;
+  }
+
+}

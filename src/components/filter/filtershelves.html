@@ -58,4 +58,12 @@
       ></quantitative-filter>
     </div>
   </div>
+  <div class="filter-drop"
+    ng-model="droppedFieldDef"
+    data-drop="true"
+    jqyoui-droppable="{onDrop:'fieldDropped'}"
+    data-jqyoui-options="{activeClass: 'drop-active'}"
+  >
+    Drop a field here.
+  </div>
 </div>
