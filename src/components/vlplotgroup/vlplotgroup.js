@@ -220,8 +220,6 @@ angular.module('vlui')
           Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand, {
             list: scope.listTitle
           });
-
-          Pills.set(channel, fieldDef, true);
         };
 
         scope.log.active = function(spec, channel) {
