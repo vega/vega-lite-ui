@@ -51,4 +51,5 @@ angular.module('vlui', [
   })
   .config(function(cql) {
     cql.config.DEFAULT_QUERY_CONFIG.channels = ['x', 'y', 'column', 'size', 'color'];
+    cql.config.DEFAULT_QUERY_CONFIG.stylize = false;
   });
