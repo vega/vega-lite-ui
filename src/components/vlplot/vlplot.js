@@ -153,9 +153,12 @@ angular.module('vlui')
               (encoding.x.scale = encoding.x.scale || {}).bandSize = 12;
             }
 
-            if (encoding.color && encoding.color.type === vl.type.NOMINAL &&
-                schema.cardinality(encoding.color) > 10) {
-              (encoding.color.scale = encoding.color.scale || {}).range = 'category20';
+            if (encoding.color && encoding.color.type === vl.type.NOMINAL) {
+              if (schema.cardinality(encoding.color) > 10) {
+                (encoding.color.scale = encoding.color.scale || {}).range = 'category20';
+              }
+              // Make sure we always set the same color to the same value
+              (encoding.color.scale = encoding.color.scale || {}).domain = Dataset.schema.domain(encoding.color);
             }
 
             if ((encoding.x && encoding.x.scale && encoding.x.scale.type === 'log') &&
