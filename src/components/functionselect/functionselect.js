@@ -154,9 +154,10 @@ angular.module('vlui')
             channel: scope.channelId
           });
 
+          // store checked nofn, aggregates, timeUnits but exclude bin as we will check for bin directly
           var fns = Object.keys(scope.func.checked)
-            .filter(function(f) { return f !== 'bin'; })
-            .map(function(f) { return f === 'undefined' ? undefined : f });
+            .filter(function(f) { return f !== 'bin' && scope.func.checked[f]; })
+            .map(function(f) { return f === 'undefined' ? undefined : f; });
 
           // FIXME temporal / ordinal / nominal can actually have aggregation in practice too
           if (isQ) {
