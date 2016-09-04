@@ -157,6 +157,16 @@ angular.module('vlui')
                 schema.cardinality(encoding.color) > 10) {
               (encoding.color.scale = encoding.color.scale || {}).range = 'category20';
             }
+
+            if ((encoding.x && encoding.x.scale && encoding.x.scale.type === 'log') &&
+                (encoding.y && encoding.y.scale && encoding.y.scale.type === 'log')) {
+              [encoding.x, encoding.y].forEach(function(fieldDef) {
+                fieldDef.axis = fieldDef.axis || {};
+                fieldDef.axis.properties = fieldDef.axis.properties || {};
+                fieldDef.axis.properties.grid = fieldDef.axis.properties.grid || {};
+                fieldDef.axis.properties.grid.opacity = {value: 0.5};
+              });
+            }
           }
           return vl.compile(vlSpec).spec;
         }
