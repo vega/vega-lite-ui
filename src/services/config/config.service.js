@@ -29,6 +29,7 @@ angular.module('vlui')
             height: 150
           }
         },
+        overlay: {line: true},
         scale: {useRawDomain: false}
       };
     };
@@ -40,7 +41,9 @@ angular.module('vlui')
             width: 150,
             height: 150
           }
-        }
+        },
+        overlay: {line: true},
+        scale: {useRawDomain: false}
       };
     };
 
