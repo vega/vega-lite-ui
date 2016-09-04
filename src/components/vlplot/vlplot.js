@@ -133,9 +133,9 @@ angular.module('vlui')
           // Special Rules
           var encoding = vlSpec.encoding;
           if (encoding) {
-            // put x-axis on top if too high-cardinality
+            // put x-axis on top if too high-cardinality and there is no column
             if (encoding.y && encoding.y.field && [vl.type.NOMINAL, vl.type.ORDINAL].indexOf(encoding.y.type) > -1) {
-              if (encoding.x) {
+              if (encoding.x && !encoding.column) {
                 if (schema.cardinality(encoding.y) > 30) {
                   (encoding.x.axis = encoding.x.axis || {}).orient = 'top';
                 }
