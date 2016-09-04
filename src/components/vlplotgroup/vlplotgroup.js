@@ -103,7 +103,7 @@ angular.module('vlui')
             (scope.highlighted||{})[fieldDef.field] = true;
 
             // Link to original field in the CQL-based spec
-            if (scope.chart.enumSpecIndex) {
+            if (scope.chart && scope.chart.enumSpecIndex) {
               var enumSpecIndex = scope.chart.enumSpecIndex;
               if (enumSpecIndex.encodings && enumSpecIndex.encodings[index] && enumSpecIndex.encodings[index].field) {
                 var fieldEnumSpecName = enumSpecIndex.encodings[index].field.name;
