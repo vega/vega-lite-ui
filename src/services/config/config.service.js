@@ -30,7 +30,7 @@ angular.module('vlui')
           }
         },
         overlay: {line: true},
-        scale: {useRawDomain: false}
+        scale: {useRawDomain: true}
       };
     };
 
