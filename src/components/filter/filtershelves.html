@@ -1,12 +1,10 @@
 <!--<a class="right"  ng-click="clearFilter()"><i class="fa fa-eraser"></i> Clear</a>-->
 <div class="right">
-  <label>
-    <input ng-model="spec.transform.filterInvalid"
-      type="checkbox"
-      ng-true-value="true"
-      ng-false-value="undefined"
-      ng-change="filterInvalidChanged()"
-    > <a><i class="fa fa-filter"></i> invalid values</a>
+  <label class="no-user-select">
+    <select name="singleSelect" ng-model="spec.transform.filterInvalid"
+      ng-options="opt.value as opt.label for opt in filterInvalidOptions"
+      ng-change="filterInvalidChanged()">
+    </select>
   </label>
 </div>
 <h2>Filter</h2>

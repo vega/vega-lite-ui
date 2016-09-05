@@ -22,8 +22,14 @@ angular.module('vlui')
         scope.removeFilter = removeFilter;
         scope.filterType = filterType;
 
+        scope.filterInvalidOptions = [
+          {value: true, label: 'Filter all invalid values'},
+          {value: undefined, label: 'Filter invalid numbers'},
+          {value: false, label: 'Show all invalid values'},
+        ];
+
         scope.filterInvalidChanged = function() {
-          Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE);
+          Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE, scope.spec.transform.filterInvalid);
         };
 
         function filterType(field) {
