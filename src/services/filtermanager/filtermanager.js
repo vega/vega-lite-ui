@@ -25,6 +25,9 @@ angular.module('vlui')
         self.filterIndex[field] = initFilter(field);
         Logger.logInteraction(Logger.actions.FILTER_ENABLED, field, self.filterIndex[field]);
         return true;
+      } else if (!self.filterIndex[field].enabled) {
+        self.filterIndex[field].enabled = true;
+        return true;
       }
       return false;
     }
