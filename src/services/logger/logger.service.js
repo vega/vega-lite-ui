@@ -91,6 +91,7 @@ angular.module('vlui')
       SPEC_SELECT: {category:'VOYAGER2', id: 'SPEC_SELECT', level: service.levels.INFO},
       QUERY_SELECT: {category:'VOYAGER2', id: 'QUERY_SELECT', level: service.levels.INFO},
       GROUP_BY_CHANGED: {category:'VOYAGER2', id: 'GROUP_BY_CHANGED', level: service.levels.INFO},
+      AUTO_ADD_COUNT_CHANGED: {category:'VOYAGER2', id: 'AUTO_ADD_COUNT_CHANGED', level: service.levels.INFO},
 
       // Alternatives
       SET_ALTERNATIVES_TYPE: {category:'ALTERNATIVES', id: 'SET_ALTERNATIVES_TYPE', level: service.levels.INFO},
