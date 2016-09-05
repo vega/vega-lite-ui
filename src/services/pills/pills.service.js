@@ -71,7 +71,7 @@ angular.module('vlui')
           return channelId;
         }
       }
-      throw new Error('No empty any channel available!');
+      return null;
     }
 
     function getNextAnyChannelId() {
