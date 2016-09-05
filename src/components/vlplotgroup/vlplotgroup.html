@@ -54,27 +54,27 @@
         <small>Log Y</small>
       </a>
 
-      <a ng-show="showAxisProp && ((chart.vlSpec || {}).encoding||{}).x"
+      <a ng-show="showAxisProp && (((chart.vlSpec || {}).encoding||{}).x||{}).type === 'quantitative'"
         class="command x-prop-toggle"
         title="X-Axis Properties"
         ng-click="">
         <i class="fa fa-long-arrow-right"></i>
-        <small>X</small>
+        <small ng-if="showLabel">X-Axis</small>
         <i class="fa fa-caret-down"></i>
       </a>
 
-      <a ng-show="showAxisProp && ((chart.vlSpec || {}).encoding||{}).y"
+      <a ng-show="showAxisProp && (((chart.vlSpec || {}).encoding||{}).y||{}).type === 'quantitative'"
         class="command y-prop-toggle"
         title="Y-Axis Properties"
         ng-click="">
         <i class="fa fa-long-arrow-up"></i>
-        <small>Y</small>
+        <small ng-if="showLabel">Y-Axis</small>
         <i class="fa fa-caret-down"></i>
       </a>
 
       <div class="drop-container">
         <div class="popup-menu x-prop-popup axis-prop-popup"
-          ng-show="((chart.vlSpec || {}).encoding||{}).x">
+          ng-show="(((chart.vlSpec || {}).encoding||{}).x||{}).type === 'quantitative'">
           <channel-property ng-if="((chart.vlSpec || {}).encoding||{}).x"
             channel-id="'x'"
             field-def="chart.vlSpec.encoding.x"
@@ -84,7 +84,7 @@
       </div>
       <div class="drop-container">
         <div class="popup-menu y-prop-popup axis-prop-popup"
-          ng-show="((chart.vlSpec || {}).encoding||{}).y">
+          ng-show="(((chart.vlSpec || {}).encoding||{}).y||{}).type === 'quantitative'">
           <channel-property ng-if="((chart.vlSpec || {}).encoding||{}).y"
             channel-id="'y'"
             field-def="chart.vlSpec.encoding.y"

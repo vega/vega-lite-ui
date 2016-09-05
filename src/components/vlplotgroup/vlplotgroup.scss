@@ -76,6 +76,11 @@
     display: none;
   }
 
+  &.x-prop-toggle, &.y-prop-toggle {
+    .fa-caret-down {
+      margin-left: 2px;
+    }
+  }
 }
 
 
