@@ -30,7 +30,15 @@ angular.module('vlui')
         scope.Pills = Pills;
 
         scope.select = function() {
+          Logger.logInteraction(Logger.actions.QUERY_SELECT, cql.query.shorthand.spec(scope.query), {
+            list: scope.listTitle
+          });
           Pills.selectQuery(scope.query);
+
+          // scroll to top if parent action is provided.
+          if (scope.postSelectAction) {
+            scope.postSelectAction();
+          }
         };
 
         var previewPromise = null;
