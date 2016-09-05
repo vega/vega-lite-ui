@@ -7,7 +7,7 @@
  * # fieldInfo
  */
 angular.module('vlui')
-  .directive('filterShelves', function (FilterManager, Dataset, Logger, vl, Alerts) {
+  .directive('filterShelves', function (FilterManager, Dataset, Logger, cql, vl, Alerts) {
     return {
       templateUrl: 'components/filter/filtershelves.html',
       restrict: 'E',
@@ -54,9 +54,15 @@ angular.module('vlui')
         }
 
         scope.fieldDropped = function() {
-          var added = FilterManager.add(scope.droppedFieldDef.field);
-          if (!added) {
-            Alerts.add('Already have filter for ' + scope.droppedFieldDef.field + '.');
+          if (scope.droppedFieldDef.aggregate === 'count') {
+            Alerts.add('Cannot add filter for count field');
+          } else if (cql.enumSpec.isEnumSpec(scope.droppedFieldDef.field)) {
+            Alerts.add('Cannot add filter for wildcard field');
+          } else {
+            var added = FilterManager.add(scope.droppedFieldDef.field);
+            if (!added) {
+              Alerts.add('Already have filter for ' + scope.droppedFieldDef.field + '.');
+            }
           }
           scope.droppedFieldDef = {};
         };
