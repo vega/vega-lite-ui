@@ -1,11 +1,9 @@
 <!--<a class="right"  ng-click="clearFilter()"><i class="fa fa-eraser"></i> Clear</a>-->
 <div class="right">
-  <label class="no-user-select">
-    <select name="singleSelect" ng-model="spec.transform.filterInvalid"
-      ng-options="opt.value as opt.label for opt in filterInvalidOptions"
-      ng-change="filterInvalidChanged()">
-    </select>
-  </label>
+  <select name="singleSelect" ng-model="spec.transform.filterInvalid"
+    ng-options="opt.value as opt.label for opt in filterInvalidOptions"
+    ng-change="filterInvalidChanged()">
+  </select>
 </div>
 <h2>Filter</h2>
 <div class="filter-absolute-container scroll-y no-scroll-x">
