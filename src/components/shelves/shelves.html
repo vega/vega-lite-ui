@@ -78,7 +78,7 @@
       </channel-shelf>
     </div>
 
-    <div class="shelf-pane shelf-any-pane full-width" ng-if="supportAny && !preview">
+    <div class="shelf-pane shelf-any-pane full-width" ng-if="supportAny && (!preview || spec.encoding['__ANY__0'])">
       <!--<h3>Automatic</h3>-->
       <br/>
       <channel-shelf

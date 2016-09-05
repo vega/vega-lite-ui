@@ -36,12 +36,26 @@ angular.module('vlui')
         scope.icon = null;
         scope.null = null;
 
-        scope.fieldTitle = function(field) {
+        scope.fieldTitle = function(fieldDef) {
+          var field = fieldDef.field;
           if (cql.enumSpec.isEnumSpec(field)) {
-            return (field.enum || ['Wildcard'])
-              .map(function(field) {
+            if (field.enum) {
+              return field.enum.map(function(field) {
                 return field === '*' ? 'COUNT' : field;
               }).join(',');
+            } else {
+              // FIXME sync with Wildcards
+              if (fieldDef.type === 'temporal') {
+                return 'Temporal Fields';
+              } else if (fieldDef.type === 'quantitative') {
+                return 'Quantitative Fields';
+              } else if (fieldDef.type === 'nominal') {
+                return 'Categorical Fields';
+              } else {
+                return 'Any Fields';
+              }
+            }
+
           }
           return field;
         };

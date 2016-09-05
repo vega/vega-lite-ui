@@ -1,6 +1,17 @@
 <div class="vl-plot-group-list-container">
   <div class="vis-list-header" ng-show="listTitle && !hideListTitle">
-    <h3>{{listTitle}}</h3>
+    <h3>
+      {{listTitle}}
+
+      <a ng-if="showQuerySelect"
+        title="Specify this chart"
+        ng-click="select()"
+        ng-mouseenter="enablePreview()"
+        ng-mouseleave="disablePreview()"
+        class="query-select">
+        <i class="fa fa-server flip"></i><!-- hack: Currently sharing css with vlplotgroup-->
+      </a>
+    </h3>
     <span class="description"></span>
   </div>
   <div class="vis-list hflex flex-wrap">

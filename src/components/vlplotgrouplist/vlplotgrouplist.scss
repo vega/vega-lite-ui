@@ -18,6 +18,20 @@
   .field-info {
     margin-top: -6px;
   }
+
+  h3 {
+    display: inline-block;
+  }
+
+  h3 .query-select {
+    visibility: hidden;
+    font-size: 12px;
+    color: #aaa;
+  }
+}
+
+.vis-list-header h3:hover .query-select {
+  visibility: visible;
 }
 
 .vis-list {

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('vlPlotGroupList', function (vl, cql, jQuery, consts, _, Logger, Pills, Chart) {
+  .directive('vlPlotGroupList', function (vl, cql, jQuery, consts, _, Logger, Pills, Chart, $timeout) {
     return {
       templateUrl: 'components/vlplotgrouplist/vlplotgrouplist.html',
       restrict: 'E',
@@ -15,7 +15,9 @@ angular.module('vlui')
         charts: '<',
         priority: '<',
         showMore: '<',
-        postSelectAction: '&'
+        postSelectAction: '&',
+        showQuerySelect: '<',
+        query: '='
       },
       link: function postLink(scope /*, element, attrs*/) {
         scope.consts = consts;
@@ -26,6 +28,28 @@ angular.module('vlui')
         scope.increaseLimit = increaseLimit;
         scope.isInlist = isInList;
         scope.Pills = Pills;
+
+        scope.select = function() {
+          Pills.selectQuery(scope.query);
+        };
+
+        var previewPromise = null;
+
+        scope.enablePreview = function() {
+          previewPromise = $timeout(function() {
+            Pills.previewQuery(true, scope.query, scope.listTitle);
+          }, 500);
+
+        };
+
+        scope.disablePreview = function() {
+          if (previewPromise) {
+            $timeout.cancel(previewPromise);
+          }
+          previewPromise = null;
+
+          Pills.previewQuery(false, scope.query, scope.listTitle);
+        };
 
         // element.bind('scroll', function(){
         //    if(jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight){

@@ -83,7 +83,9 @@
   }
 }
 
-
+.fa-server.flip {
+  transform: scaleX(-1);
+}
 
 .vl-plot-group-header {
   margin-bottom: 5px;
@@ -96,12 +98,6 @@
   }
   .toolbox .command {
     text-transform: uppercase;
-  }
-
-  .command.select {
-    .fa-server {
-      transform: scaleX(-1);
-    }
   }
 }
 

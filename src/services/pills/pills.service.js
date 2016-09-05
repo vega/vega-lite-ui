@@ -44,6 +44,7 @@ angular.module('vlui')
     // FIXME: properly implement listener pattern
     [
       'add', 'parse', 'select', 'preview', 'update',
+      'previewQuery', 'selectQuery',
       'rescale', 'sort', 'toggleFilterInvalid', 'transpose',
       'addWildcardField', 'addWildcard', 'removeWildcardField', 'removeWildcard'
     ].forEach(function(listenerType) {
