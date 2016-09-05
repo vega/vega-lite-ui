@@ -2,16 +2,16 @@
   <div class="scale-type" ng-if="fieldDef.type === 'quantitative' && !fieldDef.bin">
     <h4>Scale Type</h4>
     <label class="channel-prop-radio-label">
-      <input type="radio" ng-value="undefined" ng-model="fieldDef.scale.type">
+      <input type="radio" ng-value="undefined" ng-model="fieldDef.scale.type" ng-change="typeChanged()">
       Linear
     </label>
 
     <label class="channel-prop-radio-label">
-      <input type="radio" ng-value="'log'" ng-model="fieldDef.scale.type">
+      <input type="radio" ng-value="'log'" ng-model="fieldDef.scale.type" ng-change="typeChanged()">
       Log
     </label>
   </div>
-  <div class="scale-domain" ng-if="consts.showUseRawDomain && fieldDef.type === 'quantitative'">
+  <div class="scale-domain" ng-if="fieldDef.type === 'quantitative' && fieldDef.aggregate !== 'count'">
     <h4>Scale Domain</h4>
     <label>
       <input type="checkbox" ng-model="useRawDomain" ng-change="useRawDomainChange(useRawDomain)">

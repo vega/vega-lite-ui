@@ -54,6 +54,46 @@
         <small>Log Y</small>
       </a>
 
+      <a ng-show="showAxisProp && ((chart.vlSpec || {}).encoding||{}).x"
+        class="command x-prop-toggle"
+        title="X-Axis Properties"
+        ng-click="">
+        <i class="fa fa-long-arrow-right"></i>
+        <small>X</small>
+        <i class="fa fa-caret-down"></i>
+      </a>
+
+      <a ng-show="showAxisProp && ((chart.vlSpec || {}).encoding||{}).y"
+        class="command y-prop-toggle"
+        title="Y-Axis Properties"
+        ng-click="">
+        <i class="fa fa-long-arrow-up"></i>
+        <small>Y</small>
+        <i class="fa fa-caret-down"></i>
+      </a>
+
+      <div class="drop-container">
+        <div class="popup-menu x-prop-popup axis-prop-popup"
+          ng-show="((chart.vlSpec || {}).encoding||{}).x">
+          <channel-property ng-if="((chart.vlSpec || {}).encoding||{}).x"
+            channel-id="'x'"
+            field-def="chart.vlSpec.encoding.x"
+            toggle-shelf="toggleShelf"
+          ></channel-property>
+        </div>
+      </div>
+      <div class="drop-container">
+        <div class="popup-menu y-prop-popup axis-prop-popup"
+          ng-show="((chart.vlSpec || {}).encoding||{}).y">
+          <channel-property ng-if="((chart.vlSpec || {}).encoding||{}).y"
+            channel-id="'y'"
+            field-def="chart.vlSpec.encoding.y"
+            toggle-shelf="toggleShelf"
+          ></channel-property>
+        </div>
+      </div>
+
+
       <a ng-if="showSort && chart.vlSpec && toggleSort.support(chart.vlSpec)"
         class="command" ng-click="toggleSort.toggle(chart.vlSpec)"
         title="Sort">

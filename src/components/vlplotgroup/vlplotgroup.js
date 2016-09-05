@@ -7,7 +7,7 @@
  * # visListItem
  */
 angular.module('vlui')
-  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _, Pills, Chart, $timeout, Modals) {
+  .directive('vlPlotGroup', function (Bookmarks, consts, vg, vl, Dataset, Logger, _, Pills, Chart, $timeout, Modals, Drop) {
     return {
       templateUrl: 'components/vlplotgroup/vlplotgroup.html',
       restrict: 'E',
@@ -41,6 +41,7 @@ angular.module('vlui')
         fieldSet: '<',
         showFilterInfo: '<',
 
+        showAxisProp: '<',
         showBookmark: '<',
         showDebug: '<',
         showExpand: '<',
@@ -60,9 +61,23 @@ angular.module('vlui')
         expandAction: '&',
         selectAction: '&'
       },
-      link: function postLink(scope) {
+      link: function postLink(scope, element) {
         scope.Bookmarks = Bookmarks;
         scope.consts = consts;
+
+        var xPopup = new Drop({
+          content: element.find('.x-prop-popup')[0],
+          target: element.find('.x-prop-toggle')[0],
+          position: 'bottom right',
+          openOn: 'click'
+        });
+
+        var yPopup = new Drop({
+          content: element.find('.y-prop-popup')[0],
+          target: element.find('.y-prop-toggle')[0],
+          position: 'bottom right',
+          openOn: 'click'
+        });
 
 
         // bookmark alert
@@ -243,9 +258,9 @@ angular.module('vlui')
             scale = fieldDef.scale = fieldDef.scale || {};
 
           if (scope.toggleShelf) {
-            Pills.rescale(channel, scale.type === 'log' ? 'linear' : 'log');
+            Pills.rescale(channel, scale.type === 'log' ? undefined : 'log');
           } else {
-            scale.type = scale.type === 'log' ? 'linear' : 'log';
+            scale.type = scale.type === 'log' ? undefined : 'log';
           }
 
           Logger.logInteraction(Logger.actions.LOG_TOGGLE, scope.chart.shorthand, {
@@ -441,6 +456,12 @@ angular.module('vlui')
         scope.$on('$destroy', function() {
           unwatchFilter();
           scope.chart = null;
+          if (xPopup && xPopup.destroy) {
+            xPopup.destroy();
+          }
+          if (yPopup && yPopup.destroy) {
+            yPopup.destroy();
+          }
         });
       }
     };
