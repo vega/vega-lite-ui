@@ -22,6 +22,10 @@ angular.module('vlui')
         scope.removeFilter = removeFilter;
         scope.filterType = filterType;
 
+        scope.filterInvalidChanged = function() {
+          Logger.logInteraction(Logger.actions.NULL_FILTER_TOGGLE);
+        };
+
         function filterType(field) {
           switch (Dataset.schema.type(field)) {
             case 'nominal':

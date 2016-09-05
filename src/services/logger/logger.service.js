@@ -53,6 +53,7 @@ angular.module('vlui')
       LOG_TOGGLE: {category: 'CHART', id: 'LOG_TOGGLE', level: service.levels.INFO},
       TRANSPOSE_TOGGLE: {category: 'CHART', id: 'TRANSPOSE_TOGGLE', level: service.levels.INFO},
       NULL_FILTER_TOGGLE: {category: 'CHART', id:'NULL_FILTER_TOGGLE', level: service.levels.INFO},
+      USE_RAW_DOMAIN_TOGGLE: {category: 'CHART', id:'USE_RAW_DOMAIN_TOGGLE', level: service.levels.INFO},
 
       CLUSTER_SELECT: {category: 'CHART', id:'CLUSTER_SELECT', level: service.levels.INFO},
       LOAD_MORE: {category: 'CHART', id:'LOAD_MORE', level: service.levels.INFO},

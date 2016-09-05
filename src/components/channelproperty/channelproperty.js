@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vlui')
-  .directive('channelProperty', function(consts, Pills) {
+  .directive('channelProperty', function(consts, Pills, Logger) {
     return {
       templateUrl: 'components/channelproperty/channelproperty.html',
       restrict: 'E',
@@ -19,6 +19,7 @@ angular.module('vlui')
         // FIXME have option to hide log for in applicable mark
 
         scope.typeChanged = function() {
+          Logger.logInteraction(Logger.actions.LOG_TOGGLE, (scope.fieldDef.scale || {}).type);
           if (scope.toggleShelf) {
             Pills.set(scope.channelId, scope.fieldDef, true);
           }
@@ -28,6 +29,8 @@ angular.module('vlui')
           var scale = scope.fieldDef.scale || {};
           scale.useRawDomain = useRawDomain;
           scope.fieldDef.scale = scale;
+
+          Logger.logInteraction(Logger.actions.USE_RAW_DOMAIN_TOGGLE, useRawDomain);
 
           if (scope.toggleShelf) {
             Pills.set(scope.channelId, scope.fieldDef, true);
