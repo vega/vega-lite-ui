@@ -64,6 +64,8 @@ angular.module('vlui')
     }
 
     function getEmptyAnyChannelId() {
+      // FIXME this isn't always correct.
+      // Currently I make it okay by adding ANY0 whenever we reset and it seems fine.
       var anyChannels = util.keys(Pills.pills).filter(function(channelId) {
         return channelId.indexOf(ANY) === 0;
       });
@@ -131,6 +133,9 @@ angular.module('vlui')
           delete Pills.pills[channelId];
         }
       });
+
+      // HACK this is a hack to get around incorrect logic in getEmptyAnyChannelId()
+      Pills.pills[ANY+0] = {};
 
       if (Pills.listener && Pills.listener.reset) {
         Pills.listener.reset();
