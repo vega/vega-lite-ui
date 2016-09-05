@@ -1,0 +1,21 @@
+<div class="channel-property mb5">
+  <div class="scale-type" ng-if="fieldDef.type === 'quantitative' && !fieldDef.bin">
+    <h4>Scale Type</h4>
+    <label class="channel-prop-radio-label">
+      <input type="radio" ng-value="undefined" ng-model="fieldDef.scale.type">
+      Linear
+    </label>
+
+    <label class="channel-prop-radio-label">
+      <input type="radio" ng-value="'log'" ng-model="fieldDef.scale.type">
+      Log
+    </label>
+  </div>
+  <div class="scale-domain" ng-if="consts.showUseRawDomain && fieldDef.type === 'quantitative'">
+    <h4>Scale Domain</h4>
+    <label>
+      <input type="checkbox" ng-model="useRawDomain" ng-change="useRawDomainChange(useRawDomain)">
+      Always include raw min & max values
+    </label>
+  </div>
+</div>
