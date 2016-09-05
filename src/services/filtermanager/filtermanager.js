@@ -34,7 +34,9 @@ angular.module('vlui')
         self.filterIndex = {};
       } else {
         _.forEach(self.filterIndex, function(value, field) {
-          self.filterIndex[field] = initFilter(field);
+          if (self.filterIndex[field].enabled) {
+            self.filterIndex[field] = initFilter(field);
+          }
         });
       }
 
