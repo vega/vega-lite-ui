@@ -20,6 +20,8 @@ angular.module('vlui')
       /** Set a fieldDef for a channel */
       set: set,
 
+      reset: reset,
+
       /** Remove a fieldDef from a channel */
       remove: remove,
 
@@ -41,7 +43,7 @@ angular.module('vlui')
     // Add listener type that Pills just pass arguments to its listener
     // FIXME: properly implement listener pattern
     [
-      'add', 'parse', 'select', 'preview', 'update', 'reset',
+      'add', 'parse', 'select', 'preview', 'update',
       'rescale', 'sort', 'toggleFilterInvalid', 'transpose',
       'addWildcardField', 'addWildcard', 'removeWildcardField', 'removeWildcard'
     ].forEach(function(listenerType) {
@@ -120,6 +122,19 @@ angular.module('vlui')
         return Pills.listener.isEnumeratedField(channelId, Pills.pills[channelId]);
       }
       return false;
+    }
+
+    function reset() {
+      // Clean Any Channel Shelf
+      Object.keys(Pills.pills).forEach(function(channelId) {
+        if (isAnyChannel(channelId)) {
+          delete Pills.pills[channelId];
+        }
+      });
+
+      if (Pills.listener && Pills.listener.reset) {
+        Pills.listener.reset();
+      }
     }
 
     function remove(channelId) {
