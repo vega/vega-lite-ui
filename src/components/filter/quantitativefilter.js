@@ -18,23 +18,38 @@ angular.module('vlui')
       },
       link: function(scope) {
         var domain = Dataset.schema.domain({field: scope.field});
-        scope.domainMin = domain[0];
-        scope.domainMax = domain[1];
 
         // don't update until range slider handle released
         scope.localMin = scope.filter.range[0];
         scope.localMax = scope.filter.range[1];
+        scope.type = Dataset.schema.type(scope.field);
         scope.updateRange = function() {
           scope.filter.range[0] = scope.localMin;
           scope.filter.range[1] = scope.localMax;
+          if (scope.type === 'temporal') {
+            scope.localMinText = new Date(scope.localMin).toDateString();
+            scope.localMaxText = new Date(scope.localMax).toDateString();
+          } else {
+            scope.localMinText = scope.localMaxText = null;
+          }
+
           scope.$apply(); // Force watcher to observe change
           Logger.logInteraction(Logger.actions.FILTER_CHANGE, scope.field, scope.filter);
         };
 
-        if (Dataset.schema.type(scope.field) === 'temporal') {
+        if (scope.type === 'temporal') {
           // convert dates to numerical types
-          scope.domainMin = (new Date(scope.domainMin)).getTime();
-          scope.domainMax = (new Date(scope.domainMax)).getTime();
+          var min = new Date(domain[0]);
+          var max = new Date(domain[1]);
+          scope.domainMin = min.getTime();
+          scope.domainMax = max.getTime();
+          scope.domainMinText = min.toDateString();
+          scope.domainMaxText = max.toDateString();
+        } else {
+          scope.domainMin = domain[0];
+          scope.domainMax = domain[1];
+          scope.domainMinText = null;
+          scope.domainMaxText = null;
         }
       }
     };

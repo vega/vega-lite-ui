@@ -38,6 +38,16 @@ quantitative-filter {
   }
 
   // slider labels
+  .time .ngrs-range-slider {
+    .ngrs-value {
+      display:none;
+    }
+  }
+  .value-label {
+    color: rgba(31, 119, 180, 0.8);
+    font-size: 11px;
+  }
+
   .ngrs-range-slider {
     .ngrs-value {
       color: rgba(31, 119, 180, 0.8);
@@ -61,7 +71,7 @@ quantitative-filter {
       margin: -5px 0 0 -5px;
     }
     .ngrs-handle i {
-      display: none; 
+      display: none;
     }
   }
 }

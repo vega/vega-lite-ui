@@ -1,12 +1,17 @@
-<div>
-  <div>
-    <span class="right domain-label">{{domainMax}}</span>
-    <span class="domain-label">{{domainMin}}</span>
+<div ng-class="{time: type==='temporal'}">
+  <div >
+    <span class="right domain-label">{{ domainMaxText || domainMax}}</span>
+    <span class="domain-label">{{ domainMinText || domainMin}}</span>
   </div>
   <div range-slider min="domainMin" max="domainMax"
     model-min="localMin" model-max="localMax"
     show-values="true" attach-handle-values="true"
     on-handle-up="updateRange()">
+  </div>
+
+  <div ng-show="type==='temporal'">
+    <span class="right value-label">{{ localMaxText }}</span>
+    <span class="value-label">{{ localMinText }}</span>
   </div>
 </div>
 
