@@ -1,13 +1,19 @@
 'use strict';
 
 angular.module('vlui')
-  .service('FilterManager', function (_, vl, Dataset, Logger) {
+  .service('FilterManager', function (_, vl, Dataset, Logger, Alerts) {
     var self = this;
 
     /** local object for this object */
     self.filterIndex = {};
 
     this.toggle = function(field) {
+      var type = Dataset.schema.type(field);
+      if (type === 'temporal') {
+        Alerts.add('Sorry temporal filter is not available');
+        return;
+      }
+
       if (!self.filterIndex[field]) {
         self.filterIndex[field] = initFilter(field);
       } else {
@@ -21,6 +27,12 @@ angular.module('vlui')
     };
 
     this.add = function(field) {
+      var type = Dataset.schema.type(field);
+      if (type === 'temporal') {
+        Alerts.add('Sorry temporal filter is not available');
+        return;
+      }
+
       if (!self.filterIndex[field]) {
         self.filterIndex[field] = initFilter(field);
         Logger.logInteraction(Logger.actions.FILTER_ENABLED, field, self.filterIndex[field]);
