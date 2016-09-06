@@ -128,7 +128,7 @@ angular.module('vlui')
           vg.util.extend(vlSpec.config, Config[configSet]());
 
           // FIXME: use chart stats if available (for example from bookmarks)
-          var schema = scope.chart.schema || Dataset.schema;
+          var schema = Dataset.schema;
 
           // Special Rules
           var encoding = vlSpec.encoding;
