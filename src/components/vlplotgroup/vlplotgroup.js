@@ -90,7 +90,7 @@ angular.module('vlui')
             Bookmarks.add(chart, scope.listTitle);
 
             $timeout(function () {
-                element.children()[2].focus();
+                element.find('textarea.annotation')[0].focus();
             });
           }
         };
